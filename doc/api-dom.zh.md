@@ -18,7 +18,7 @@ _.dom.$win.on('resize', function (ev) {
 })
 ```
 
-### `_.dom.$doc`<a name="js-var-$doc"></a>
+### `_.dom.$root`<a name="js-var-$root"></a>
 
 `document.documentElement` 对象（即 `<html>` 元素）的 Zepto 包装对象。
 

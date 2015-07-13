@@ -1,0 +1,20 @@
+{
+  "name": "gearbox",
+  "homepage": "https://github.com/CMUI/gearbox",
+  "author": "cssmagic <cssmagic.cn@gmail.com>",
+  "description": "Lightweight JavaScript utilities for mobile web development.",
+  "license": "MIT",
+  "scripts": {
+    "dist": "gulp",
+    "clean": "gulp clean",
+    "js": "gulp js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "3.*",
+    "del": "^1.1.1",
+    "gulp-concat": "2.*",
+    "gulp-uglifyjs": "0.*"
+  }
+}
