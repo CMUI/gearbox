@@ -231,7 +231,7 @@ _.str.toFixed('foo123')  // => NaN
 
 `str` 模块提供的部分接口与 Underscore.string 类库的同名接口完全一致。这些接口的源码均引用了 Underscore.string 的实现，并存放在 `src/str-backup.js` 文件中。
 
-如果你的项目已经加载了 Underscore.string 类库，则可以自行构建一个不包含这部分源码的 GearBox 包；此时使用完整的 GearBox 包也没有关系，因为它会自动跳过这些同名接口的加载。
+如果你的项目已经加载了 Underscore.string 类库，则可以自行构建一个不包含这部分源码的 Gearbox 包；此时使用完整的 Gearbox 包也没有关系，因为它会自动跳过这些同名接口的加载。
 
 ### 字符串裁剪
 

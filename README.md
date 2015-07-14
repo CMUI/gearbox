@@ -1,4 +1,4 @@
-# GearBox
+# Gearbox
 
 > Lightweight JavaScript utilities for mobile web, based on Underscore and Zepto.
 
@@ -29,7 +29,7 @@
     $ bower install gearbox
     ```
 
-0. 在页面中加载 GearBox 以及必要的依赖：
+0. 在页面中加载 Gearbox 以及必要的依赖：
     ```html
     <script src="bower_components/underscore/underscore-min.js"></script>
     <script src="bower_components/zepto.js/dist/zepto.min.js"></script>
@@ -42,7 +42,7 @@
 
 ## 谁在用？
 
-移动 UI 框架 [CMUI](https://github.com/CMUI/CMUI) 采用 GearBox 作为全局的工具库，因此所有 CMUI 用户都在使用它：
+移动 UI 框架 [CMUI](https://github.com/CMUI/CMUI) 采用 Gearbox 作为全局的工具库，因此所有 CMUI 用户都在使用它：
 
 * [百姓网 - 手机版](http://m.baixing.com/)
 * [薇姿官方电子商城 - 手机版](http://m.vichy.com.cn/)
@@ -54,7 +54,7 @@
 
 #### 功能模块
 
-GearBox 的部分功能模块已经分离出去，成为独立项目。这些模块以开发依赖的方式引入，并打包到发布文件中。因此，参与这些独立项目的开发即可修改这些模块。
+Gearbox 的部分功能模块已经分离出去，成为独立项目。这些模块以开发依赖的方式引入，并打包到发布文件中。因此，参与这些独立项目的开发即可修改这些模块。
 
 * `_.action` - [Action](https://github.com/cssmagic/action)
 * `_.template` - [Underscore-template](https://github.com/cssmagic/underscore-template)
