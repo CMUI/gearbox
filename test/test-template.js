@@ -6,7 +6,9 @@ describe('Template', function () {
 			variable: 'data'
 		}
 		_.extend(_.templateSettings, _config)
-		_.extend(_.template, template)
+
+		// for source code testing
+		if (!_.template.render) _.extend(_.template, template)
 	})
 
 	describe('APIs', function () {

@@ -94,6 +94,7 @@ describe('URL', function () {
 		})
 	})
 
+	/*
 	describe('Parse URL', function () {
 		describe('_.url.parseUrl()', function () {
 			it('(dummy test)', function () {
@@ -101,5 +102,6 @@ describe('URL', function () {
 			})
 		})
 	})
+	*/
 
 })

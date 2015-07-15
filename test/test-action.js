@@ -6,8 +6,9 @@ describe('Action', function () {
 		actionSet = {}
 	})
 
+	// for source code testing
 	before(function () {
-		_.action = action
+		if (!_.action) _.action = action
 	})
 
 	describe('APIs', function () {
