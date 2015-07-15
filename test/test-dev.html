@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>UT (Dev) - Gearbox</title>
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="../bower_components/mocha/mocha.css">
+<link rel="stylesheet" href="../bower_components/mocha.css/src/mocha.css">
+</head>
+<body>
+<header>
+	<h1>UT (Dev) - Gearbox</h1>
+	<p><a href="https://github.com/CMUI/gearbox">View on GitHub</a></p>
+</header>
+<div id="mocha"></div>
+<!-- deps -->
+<script src="../bower_components/underscore/underscore.js"></script>
+<script src="../bower_components/zepto.js/dist/zepto.js"></script>
+<!-- testing framework -->
+<script src="../bower_components/mocha/mocha.js"></script>
+<script src="../bower_components/chai/chai.js"></script>
+<script>
+mocha.setup('bdd')
+mocha.checkLeaks()
+var expect = chai.expect
+</script>
+<!-- source code -->
+<script src="../src/core.js"></script>
+<script src="../src/str-alt.js"></script>
+<script src="../src/str.js"></script>
+<script src="../src/root.js"></script>
+<script src="../src/ua.js"></script>
+<script src="../src/url.js"></script>
+<script src="../src/dom.js"></script>
+<script src="../bower_components/action/src/action.js"></script>
+<script>_.action = action</script>
+<script src="../bower_components/underscore-template/src/underscore-template.js"></script>
+<script>_.extend(_.template, template)</script>
+<!-- test-case -->
+<script src="test-str-alt.js"></script>
+<script src="test-str.js"></script>
+<script src="test-root.js"></script>
+<script src="test-ua.js"></script>
+<script src="test-url.js"></script>
+<script src="test-dom.js"></script>
+<script src="test-action.js"></script>
+<script src="test-template.js"></script>
+<!-- init -->
+<script>mocha.run()</script>
+</body>
+</html>
