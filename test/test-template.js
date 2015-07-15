@@ -6,6 +6,7 @@ describe('Template', function () {
 			variable: 'data'
 		}
 		_.extend(_.templateSettings, _config)
+		_.extend(_.template, template)
 	})
 
 	describe('APIs', function () {

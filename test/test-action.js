@@ -6,6 +6,10 @@ describe('Action', function () {
 		actionSet = {}
 	})
 
+	before(function () {
+		_.action = action
+	})
+
 	describe('APIs', function () {
 		describe('_.action.add()', function () {
 			it('(this api will be tested in below test cases)', function () {
