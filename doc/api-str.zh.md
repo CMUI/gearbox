@@ -249,9 +249,9 @@ _.str.toFixed('foo123')  // => NaN
 
 ### 字符串包含关系
 
-* `_.str.include(string, substring)`<a name="js-api-include"></a>
+* `_.str.contains(string, substring)`<a name="js-api-contains"></a>
 
-	> **别名**： `_.str.contains()`
+	> **别名**： `_.str.include()`
 
 	请参考 Underscore.string 的文档： [`include`](https://epeli.github.io/underscore.string/#include-string-substring-gt-boolean)
 

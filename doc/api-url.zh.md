@@ -109,11 +109,92 @@ url = _.url.appendParam(url, {test: 1})  // => 'http://domain.com/path/file?foo=
 
 ***
 
+### `_.url.removeHashFromUrl(url)`<a name="js-api-removeHashFromUrl"></a>
+
+把 URL 中的 hash 部分去除。
+
+#### 参数
+
+* `url` -- 字符串。待处理的 URL。
+
+#### 返回值
+
+字符串。若参数不合法则返回空字符串。
+
+#### 示例
+
+```js
+var url = 'http://domain.com/foo#bar'
+_.url.composeUrl(url)  // => 'http://domain.com/foo'
+```
+
+***
+
+### `_.url.getHashFromUrl(url)`<a name="js-api-getHashFromUrl"></a>
+
+获取 URL 中的 hash 部分。获取结果包含开头的 `#` 字符。
+
+若需要得到当前页面 URL 的 hash 部分，请直接使用 `location.hash`。
+
+#### 参数
+
+* `url` -- 字符串。待处理的 URL，可以是完整的 URL，也可以是相对路径。
+
+#### 返回值
+
+字符串。若参数不合法则返回空字符串；若 URL 中不包含 hash 部分则返回空字符串。
+
+#### 示例
+
+```js
+var url = 'http://domain.com/foo#bar'
+_.url.getHashFromUrl(url)  // => '#bar'
+```
+
+***
+
+### `_.url.getHashFromLink(link)`<a name="js-api-getHashFromLink"></a>
+
+获取指定链接的 `href` 属性值中的 hash 部分。获取结果包含开头的 `#` 字符。
+
+#### 参数
+
+* `link` -- DOM 元素。待处理的链接元素（`<a>`、`<area>` 或 `<link>`）。
+
+#### 返回值
+
+字符串。若参数不合法则返回空字符串；若元素的 `href` 属性值中不包含 hash 部分则返回空字符串。
+
+#### 示例
+
+```html
+<a id="test" href="foo.html#bar">test link</a>
+```
+
+```js
+var elem = document.getElementById('test')
+_.url.getHashFromLink(href)  // => '#bar'
+```
+
+## 别名<a name="js-api-alias"></a>
+
+### `_.url.isHash()`<a name="js-api-isHash"></a>
+
+`_.str.isHash()` 的别名。
+
+### `_.url.stripHash()`<a name="js-api-stripHash"></a>
+
+`_.str.stripHash()` 的别名。
+
+***
+
+## 暂未实现的接口
+
 ### `_.url.parse(url)`<a name="js-api-parseUrl"></a>
 
 > **别名**： `_.url.parseUrl()`
 
-> 此接口的行为与 Node.js 内置的 `url` 模块的 `.parse()` 接口的功能保持基本一致，但仍然有细微差异，详见 “注意事项” 部分。
+> 此接口的行为与 Node.js 内置的 [`url` 模块](https://iojs.org/api/url.html) 的 `.parse()` 接口的功能保持基本一致，但仍然有细微差异，详见 “注意事项” 部分。
 
 解析 URL 的各个要素，解析结果以对象的方式输出。举例来说，当传入以下 URL 时：
 
@@ -233,82 +314,3 @@ _.url.format(urlParts)  // => 'http://domain.com/foo/bar'
 	* `search` -- 若省略则取 `query`。
 	* `query` -- 若省略则不输出。
 	* `hash` -- 若省略则不输出。
-
-***
-
-### `_.url.removeHashFromUrl(url)`<a name="js-api-removeHashFromUrl"></a>
-
-把 URL 中的 hash 部分去除。
-
-#### 参数
-
-* `url` -- 字符串。待处理的 URL。
-
-#### 返回值
-
-字符串。若参数不合法则返回空字符串。
-
-#### 示例
-
-```js
-var url = 'http://domain.com/foo#bar'
-_.url.composeUrl(url)  // => 'http://domain.com/foo'
-```
-
-***
-
-### `_.url.getHashFromUrl(url)`<a name="js-api-getHashFromUrl"></a>
-
-获取 URL 中的 hash 部分。获取结果包含开头的 `#` 字符。
-
-若需要得到当前页面 URL 的 hash 部分，请直接使用 `location.hash`。
-
-#### 参数
-
-* `url` -- 字符串。待处理的 URL，可以是完整的 URL，也可以是相对路径。
-
-#### 返回值
-
-字符串。若参数不合法则返回空字符串；若 URL 中不包含 hash 部分则返回空字符串。
-
-#### 示例
-
-```js
-var url = 'http://domain.com/foo#bar'
-_.url.getHashFromUrl(url)  // => '#bar'
-```
-
-***
-
-### `_.url.getHashFromLink(link)`<a name="js-api-getHashFromLink"></a>
-
-获取指定链接的 `href` 属性值中的 hash 部分。获取结果包含开头的 `#` 字符。
-
-#### 参数
-
-* `link` -- DOM 元素。待处理的链接元素（`<a>` 或 `<link>`）。
-
-#### 返回值
-
-字符串。若参数不合法则返回空字符串；若元素的 `href` 属性值中不包含 hash 部分则返回空字符串。
-
-#### 示例
-
-```html
-<a id="test" href="foo.html#bar">test link</a>
-```
-
-```js
-var elem = document.getElementById('test')
-_.url.getHashFromLink(href)  // => '#bar'
-```
-
-## 别名<a name="js-api-alias"></a>
-
-### `_.url.isHash()`<a name="js-api-isHash"></a>
-
-`_.str.isHash()` 的别名。
-
-### `_.url.stripHash()`<a name="js-api-stripHash"></a>
-
-`_.str.stripHash()` 的别名。
