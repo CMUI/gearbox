@@ -1,43 +1,72 @@
 'use strict'
 
+var path = require('path')
 var gulp = require('gulp')
-var concat = require('gulp-concat')
-var uglify = require('gulp-uglifyjs')
 var del = require('del')
+var concat = require('gulp-concat')
+var rename = require('gulp-rename')
+var wrap = require('gulp-wrap')
+var replace = require('gulp-replace')
+var uglify = require('gulp-uglify')
+
+var myPath = {
+	temp: './.tmp/',
+	src: './src/',
+	dest: './dist/',
+}
 
 var scripts = [
-	'./src/adapter-dist-trad/_intro.js',
-	'./src/adapter-dist-trad/var.js',
-	'./src/adapter-dist-trad/_defense.js',
 	'./src/core.js',
-	'./src/str-backup.js',
+	'./src/str-alt.js',
 	'./src/str.js',
 	'./src/root.js',
 	'./src/ua.js',
 	'./src/url.js',
 	'./src/dom.js',
-	'./src/adapter-mod-action/_intro.js',
-	'./bower_components/action/src/action.js',
-	'./src/adapter-mod-action/_outro.js',
-	'./src/adapter-mod-template/_intro.js',
-	'./bower_components/underscore-template/src/underscore-template.js',
-	'./src/adapter-mod-template/config.js',
-	'./src/adapter-mod-template/_outro.js',
-	'./src/adapter-dist-trad/_outro.js'
 ]
 
-gulp.task('default', ['clean'], function () {
+var modules = {
+	action:   './bower_components/action/src/action.js',
+	template: './bower_components/underscore-template/src/underscore-template.js',
+}
+
+gulp.task('default', ['clean', 'prepare-module'], function () {
 	gulp.start('js')
 })
 
 gulp.task('clean', function () {
-	del('./dist/*.js')
+	del(path.join(myPath.dest, '*.*'))
 })
 
-gulp.task('js', function() {
+gulp.task('clean-temp', function () {
+	del(path.join(myPath.temp, '*.*'))
+})
+
+gulp.task('prepare-module', ['clean-temp'], function () {
+	Object.keys(modules).forEach(function (key) {
+		var src = modules[key]
+		gulp.src(src)
+			.pipe(wrap({src: path.join(myPath.src, '_wrapper/mod-' + key + '.ejs')}))
+			.pipe(rename(key + '.js'))
+			.pipe(gulp.dest(myPath.temp))
+	})
+})
+
+gulp.task('js', ['prepare-module'], function() {
+	// combine external modules
+	Object.keys(modules).forEach(function (key) {
+		scripts.push(path.join(myPath.temp, key + '.js'))
+	})
+
 	gulp.src(scripts)
 		.pipe(concat('gearbox.js'))
-		.pipe(gulp.dest('./dist'))
-		.pipe(uglify('gearbox.min.js'))
-		.pipe(gulp.dest('./dist'))
+		.pipe(wrap({src: path.join(myPath.src, '_wrapper/dist-trad.ejs')}))
+		.pipe(replace(/\/\*\* DEBUG_INFO_START \*\*\//g, '/*'))
+		.pipe(replace(/\/\*\* DEBUG_INFO_END \*\*\//g, '*/'))
+		.pipe(gulp.dest(myPath.dest))
+		.pipe(uglify({
+			preserveComments: 'some'
+		}))
+		.pipe(rename('gearbox.min.js'))
+		.pipe(gulp.dest(myPath.dest))
 })

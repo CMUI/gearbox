@@ -13,8 +13,12 @@
   "dependencies": {},
   "devDependencies": {
     "gulp": "3.*",
-    "del": "^1.1.1",
+    "del": "1.*",
+    "gulp-stylus": "2.*",
     "gulp-concat": "2.*",
-    "gulp-uglifyjs": "0.*"
+    "gulp-rename": "1.*",
+    "gulp-wrap": "^0.11.0",
+    "gulp-replace": "^0.5.3",
+    "gulp-uglify": "1.*"
   }
 }
