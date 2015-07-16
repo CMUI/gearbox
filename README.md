@@ -9,13 +9,13 @@
 #### 浏览器支持
 
 * 支持以下移动平台的主流浏览器：
-    * iOS 5+
-    * Android 2.3+
+	* iOS 5+
+	* Android 2.3+
 
 * 同样支持以下桌面浏览器：
-    * Firefox (edge)
-    * Chrome (edge)
-    * Safari (edge)
+	* Firefox (edge)
+	* Chrome (edge)
+	* Safari (edge)
 
 #### 外部依赖
 
@@ -25,16 +25,18 @@
 ## 安装
 
 0. 通过 Bower 安装：
-    ```sh
-    $ bower install gearbox
-    ```
+
+	```sh
+	$ bower install gearbox
+	```
 
 0. 在页面中加载 Gearbox 以及必要的依赖：
-    ```html
-    <script src="bower_components/underscore/underscore-min.js"></script>
-    <script src="bower_components/zepto.js/dist/zepto.min.js"></script>
-    <script src="bower_components/gearbox/dist/gearbox.min.js"></script>
-    ```
+
+	```html
+	<script src="bower_components/underscore/underscore-min.js"></script>
+	<script src="bower_components/zepto.js/dist/zepto.min.js"></script>
+	<script src="bower_components/gearbox/dist/gearbox.min.js"></script>
+	```
 
 ## API 文档
 
