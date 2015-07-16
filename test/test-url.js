@@ -92,7 +92,91 @@ describe('URL', function () {
 				expect(_.url.getParam('blah=blah')).to.equal('1')
 			})
 		})
+
+		describe('_.url.appendParam()', function () {
+			it('does basic functionality', function () {
+				var url = 'http://domain.com/path/file'
+				var url2 = _.url.appendParam(url, {foo: 'bar'})
+				var url3 = _.url.appendParam(url2, {test: 1})
+				expect(url2).to.equal('http://domain.com/path/file?foo=bar')
+				expect(url3).to.equal('http://domain.com/path/file?foo=bar&test=1')
+			})
+		})
 	})
+
+	describe('Hash Handling', function () {
+		describe('_.url.removeHashFromUrl()', function () {
+			it('does basic functionality', function () {
+				var url
+				url = _.url.removeHashFromUrl('http://domain.com/path/file?query=1#hash')
+				expect(url).to.equal('http://domain.com/path/file?query=1')
+				url = _.url.removeHashFromUrl('http://domain.com/path/file#hash')
+				expect(url).to.equal('http://domain.com/path/file')
+				url = _.url.removeHashFromUrl('//domain.com/path/file#hash')
+				expect(url).to.equal('//domain.com/path/file')
+				url = _.url.removeHashFromUrl('/path/file#hash')
+				expect(url).to.equal('/path/file')
+				url = _.url.removeHashFromUrl('file#hash')
+				expect(url).to.equal('file')
+				url = _.url.removeHashFromUrl('#hash')
+				expect(url).to.equal('')
+				url = _.url.removeHashFromUrl('http://domain.com/path/file#hash#foo')
+				expect(url).to.equal('http://domain.com/path/file')
+			})
+			it('converts param to string if it\'s not a string', function () {
+				var url
+				url = _.url.removeHashFromUrl(null)
+				expect(url).to.equal('null')
+				url = _.url.removeHashFromUrl(undefined)
+				expect(url).to.equal('undefined')
+				url = _.url.removeHashFromUrl(3.1415)
+				expect(url).to.equal('3.1415')
+				url = _.url.removeHashFromUrl(false)
+				expect(url).to.equal('false')
+			})
+			it('returns empty string if no param', function () {
+				var url
+				url = _.url.removeHashFromUrl()
+				expect(url).to.equal('')
+			})
+		})
+		describe('_.url.getHashFromUrl()', function () {
+			it('does basic functionality', function () {
+				var url
+				url = _.url.getHashFromUrl('http://domain.com/path/file?query=1#hash')
+				expect(url).to.equal('#hash')
+				url = _.url.getHashFromUrl('http://domain.com/path/file#hash')
+				expect(url).to.equal('#hash')
+				url = _.url.getHashFromUrl('//domain.com/path/file#hash')
+				expect(url).to.equal('#hash')
+				url = _.url.getHashFromUrl('/path/file#hash')
+				expect(url).to.equal('#hash')
+				url = _.url.getHashFromUrl('file#hash')
+				expect(url).to.equal('#hash')
+				url = _.url.getHashFromUrl('#hash')
+				expect(url).to.equal('#hash')
+				url = _.url.getHashFromUrl('http://domain.com/path/file#hash#foo')
+				expect(url).to.equal('#hash#foo')
+			})
+			it('converts param to string if it\'s not a string', function () {
+				var url
+				url = _.url.getHashFromUrl(null)
+				expect(url).to.equal('')
+				url = _.url.getHashFromUrl(undefined)
+				expect(url).to.equal('')
+				url = _.url.getHashFromUrl(3.1415)
+				expect(url).to.equal('')
+				url = _.url.getHashFromUrl(false)
+				expect(url).to.equal('')
+			})
+			it('returns empty string if no param', function () {
+				var url
+				url = _.url.getHashFromUrl()
+				expect(url).to.equal('')
+			})
+		})
+	})
+
 
 	/*
 	describe('Parse URL', function () {

@@ -115,11 +115,11 @@ url = _.url.appendParam(url, {test: 1})  // => 'http://domain.com/path/file?foo=
 
 #### 参数
 
-* `url` -- 字符串。待处理的 URL。
+* `url` -- 字符串。待处理的 URL，可以是完整的 URL，也可以是相对路径。若传入其它类型的数值，将被转换为字符串。
 
 #### 返回值
 
-字符串。若参数不合法则返回空字符串。
+字符串。去除 hash 之后的 URL。若未传入参数则返回空字符串。
 
 #### 示例
 
@@ -134,15 +134,15 @@ _.url.composeUrl(url)  // => 'http://domain.com/foo'
 
 获取 URL 中的 hash 部分。获取结果包含开头的 `#` 字符。
 
-若需要得到当前页面 URL 的 hash 部分，请直接使用 `location.hash`。
+如果需要得到当前页面 URL 的 hash 部分，直接使用 `location.hash` 即可。
 
 #### 参数
 
-* `url` -- 字符串。待处理的 URL，可以是完整的 URL，也可以是相对路径。
+* `url` -- 字符串。待处理的 URL，可以是完整的 URL，也可以是相对路径。若传入其它类型的数值，将被转换为字符串。
 
 #### 返回值
 
-字符串。若参数不合法则返回空字符串；若 URL 中不包含 hash 部分则返回空字符串。
+字符串。若传入的 URL 不包含 hash 部分则返回空字符串；若未传入参数则返回空字符串。
 
 #### 示例
 
@@ -151,30 +151,6 @@ var url = 'http://domain.com/foo#bar'
 _.url.getHashFromUrl(url)  // => '#bar'
 ```
 
-***
-
-### `_.url.getHashFromLink(link)`<a name="js-api-getHashFromLink"></a>
-
-获取指定链接的 `href` 属性值中的 hash 部分。获取结果包含开头的 `#` 字符。
-
-#### 参数
-
-* `link` -- DOM 元素。待处理的链接元素（`<a>`、`<area>` 或 `<link>`）。
-
-#### 返回值
-
-字符串。若参数不合法则返回空字符串；若元素的 `href` 属性值中不包含 hash 部分则返回空字符串。
-
-#### 示例
-
-```html
-<a id="test" href="foo.html#bar">test link</a>
-```
-
-```js
-var elem = document.getElementById('test')
-_.url.getHashFromLink(href)  // => '#bar'
-```
 
 ## 别名<a name="js-api-alias"></a>
 
@@ -186,6 +162,8 @@ _.url.getHashFromLink(href)  // => '#bar'
 
 `_.str.stripHash()` 的别名。
 
+
+***
 ***
 
 ## 暂未实现的接口

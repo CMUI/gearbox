@@ -68,17 +68,12 @@ void function (window, _ext) {
 
 	// hash processing
 	url.removeHashFromUrl = function (s) {
-		return String(s).split('#')[0]
+		return arguments.length ? String(s).split('#')[0] : ''
 	}
 	url.getHashFromUrl = function (s) {
 		var a = String(s).split('#')
-		a.shift()
+		a[0] = ''
 		return a.join('#')
-	}
-	url.getHashFromLink = function (e) {
-		if (!_.isElement(e)) return ''
-		var url = e.href || ''
-		return this.getHashFromUrl(url)
 	}
 
 	// aliases
