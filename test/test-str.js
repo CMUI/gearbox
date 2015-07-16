@@ -2,37 +2,37 @@ describe('String', function () {
 	describe('Shortcuts', function () {
 		describe('RegExp', function () {
 			describe('_.str.RE_EMAIL', function () {
-				var CHAR_AT = '@'	//to avoid email crawler and spammer
+				var CHAR_AT = '@'	// to avoid email crawler and spammer
 				it('matches email', function () {
 					var arg
-					//normal email addr
+					// normal email addr
 					arg = 'dev' + CHAR_AT + 'cmui.net'
 					expect(_.str.RE_EMAIL.test(arg)).to.be.true
-					//domain can be any level
+					// domain can be any level
 					arg = 'dev' + CHAR_AT + 'underscore.ext.by.cmui.net'
 					expect(_.str.RE_EMAIL.test(arg)).to.be.true
-					//future proof for unknown domain suffix
+					// future proof for unknown domain suffix
 					arg = 'dev' + CHAR_AT + 'underscore.ext'
 					expect(_.str.RE_EMAIL.test(arg)).to.be.true
-					//username can be numbers
+					// username can be numbers
 					arg = '007' + CHAR_AT + 'cmui.net'
 					expect(_.str.RE_EMAIL.test(arg)).to.be.true
-					//domain name can be numbers
+					// domain name can be numbers
 					arg = 'username' + CHAR_AT + '126.com'
 					expect(_.str.RE_EMAIL.test(arg)).to.be.true
-					//email can be in upper case
+					// email can be in upper case
 					arg = 'DEV' + CHAR_AT + 'UNDERSCORE.EXT'
 					expect(_.str.RE_EMAIL.test(arg)).to.be.true
 				})
 				it('recognizes bad value', function () {
 					var arg
-					//domain suffix need at least 2 letters
+					// domain suffix need at least 2 letters
 					arg = 'a' + CHAR_AT + 'a.a'
 					expect(_.str.RE_EMAIL.test(arg)).to.be.false
-					//domain suffix cannot be numbers
+					// domain suffix cannot be numbers
 					arg = '007' + CHAR_AT + '007.007'
 					expect(_.str.RE_EMAIL.test(arg)).to.be.false
-					//domain cannot be ip addr
+					// domain cannot be ip addr
 					arg = 'a' + CHAR_AT + '192.168.10.10'
 					expect(_.str.RE_EMAIL.test(arg)).to.be.false
 				})
@@ -94,9 +94,24 @@ describe('String', function () {
 				})
 			})
 		})
+		describe('Special Characters', function () {
+			describe('_.str.CNY', function () {
+				it('(dummy test)', function () {})
+				it('has an alias `_.str.RMB`', function () {
+					expect(_.str.CNY).to.equal(_.str.RMB)
+				})
+			})
+			describe('_.str.FULL_WIDTH_CNY', function () {
+				it('(dummy test)', function () {})
+				it('has an alias `_.str.FULL_WIDTH_RMB`', function () {
+					expect(_.str.FULL_WIDTH_CNY).to.equal(_.str.FULL_WIDTH_RMB)
+				})
+			})
+		})
+
 	})
 
-	describe('Methods', function () {
+	describe('Hash Handling', function () {
 		describe('_.str.isHash()', function () {
 			it('returns `true` if a string starts with `#`', function () {
 				var arg
@@ -173,5 +188,61 @@ describe('String', function () {
 			})
 		})
 	})
+
+	describe('String Array', function () {
+		describe('_.str.uniq()', function () {
+			it('(dummy test)', function () {})
+		})
+	})
+
+	describe('To Number', function () {
+		describe('_.str.toFloat()', function () {
+			it('does basic functionality', function () {
+				expect(_.str.toFloat('0')).to.equal(0)
+				expect(_.str.toFloat('1.77')).to.equal(1.77)
+				expect(_.str.toFloat('-1.77')).to.equal(-1.77)
+				expect(_.str.toFloat('2.3.6')).to.equal(2.3)
+				expect(_.str.toFloat('-2.3.6')).to.equal(-2.3)
+				expect(_.str.toFloat('2e3')).to.equal(2000)
+				expect(_.str.toFloat('-2e3')).to.equal(-2000)
+				expect(_.str.toFloat('1.23foo')).to.equal(1.23)
+				expect(_.str.toFloat('-1.23foo')).to.equal(-1.23)
+				expect(isNaN(_.str.toFloat('foo123'))).to.be.true
+			})
+		})
+		describe('_.str.toInt()', function () {
+			it('does basic functionality', function () {
+				expect(_.str.toInt('0')).to.equal(0)
+				expect(_.str.toInt('1.77')).to.equal(1)
+				expect(_.str.toInt('-1.77')).to.equal(-1)
+				expect(_.str.toInt('2.3.6')).to.equal(2)
+				expect(_.str.toInt('-2.3.6')).to.equal(-2)
+				expect(_.str.toInt('2e3')).to.equal(2000)
+				expect(_.str.toInt('-2e3')).to.equal(-2000)
+				expect(_.str.toInt('2e100')).to.equal(2e100)
+				expect(_.str.toInt('-2e100')).to.equal(-2e100)
+				expect(_.str.toInt('1.23foo')).to.equal(1)
+				expect(_.str.toInt('-1.23foo')).to.equal(-1)
+				expect(isNaN(_.str.toInt('foo123'))).to.be.true
+			})
+		})
+		describe('_.str.toFixed()', function () {
+			it('does basic functionality', function () {
+				expect(_.str.toFixed('0')).to.equal(0)
+				expect(_.str.toFixed('0', 2)).to.equal(0)
+				expect(_.str.toFixed('1.77')).to.equal(2)
+				expect(_.str.toFixed('1.77', 1)).to.equal(1.8)
+				expect(_.str.toFixed('-1.77', 1)).to.equal(-1.8)
+				expect(_.str.toFixed('2.3.6', 2)).to.equal(2.3)
+				expect(_.str.toFixed('-2.3.6', 2)).to.equal(-2.3)
+				expect(_.str.toFixed('2e3', 3)).to.equal(2000)
+				expect(_.str.toFixed('-2e3', 3)).to.equal(-2000)
+				expect(_.str.toFixed('1.23foo', 1)).to.equal(1.2)
+				expect(_.str.toFixed('-1.23foo', 1)).to.equal(-1.2)
+				expect(isNaN(_.str.toFixed('foo123'))).to.be.true
+			})
+		})
+	})
+
 
 })

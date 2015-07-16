@@ -21,7 +21,15 @@ void function (window, _ext) {
 	var nativeTrimRight = String.prototype.trimRight
 	var nativeTrimLeft = String.prototype.trimLeft
 
-	var defaultToWhiteSpace = function (characters) {
+	function makeString(object) {
+		if (object == null) return ''
+		return '' + object
+	}
+	function toPositive(number) {
+		return number < 0 ? 0 : (+number || 0)
+	}
+
+	function defaultToWhiteSpace(characters) {
 		if (characters == null)
 			return '\\s'
 		else if (characters.source)
@@ -31,7 +39,7 @@ void function (window, _ext) {
 	}
 	str.escapeRegExp = function (str) {
 		if (str == null) return ''
-		return String(str).replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1')
+		return makeString(str).replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1')
 	}
 
 	// trim
@@ -39,40 +47,42 @@ void function (window, _ext) {
 		if (str == null) return ''
 		if (!characters && nativeTrim) return nativeTrim.call(str)
 		characters = defaultToWhiteSpace(characters)
-		return String(str).replace(new RegExp('^' + characters + '+|' + characters + '+$', 'g'), '')
+		return makeString(str).replace(new RegExp('^' + characters + '+|' + characters + '+$', 'g'), '')
 	}
 	str.ltrim = function (str, characters) {
 		if (str == null) return ''
 		if (!characters && nativeTrimLeft) return nativeTrimLeft.call(str)
 		characters = defaultToWhiteSpace(characters)
-		return String(str).replace(new RegExp('^' + characters + '+'), '')
+		return makeString(str).replace(new RegExp('^' + characters + '+'), '')
 	}
 	str.rtrim = function (str, characters) {
 		if (str == null) return ''
 		if (!characters && nativeTrimRight) return nativeTrimRight.call(str)
 		characters = defaultToWhiteSpace(characters)
-		return String(str).replace(new RegExp(characters + '+$'), '')
+		return makeString(str).replace(new RegExp(characters + '+$'), '')
 	}
 
 	// sub-string
-	str.include = function (str, needle) {
+	str.include = function (str, needle, position) {
 		if (needle === '') return true
-		if (str == null) return false
-		return String(str).indexOf(needle) !== -1
+		position = position == null ? 0 : Math.min(toPositive(position), str.length)
+		return makeString(str).slice(position).indexOf(needle) !== -1
 	}
-	str.startsWith = function (str, starts) {
-		if (starts === '') return true
-		if (str == null || starts == null) return false
-		str = String(str)
-		starts = String(starts)
-		return str.length >= starts.length && str.slice(0, starts.length) === starts
+	str.startsWith = function (str, starts, position) {
+		str = makeString(str)
+		starts = '' + starts
+		position = position == null ? 0 : Math.min(toPositive(position), str.length)
+		return str.lastIndexOf(starts, position) === position
 	}
-	str.endsWith = function (str, ends) {
-		if (ends === '') return true
-		if (str == null || ends == null) return false
-		str = String(str)
-		ends = String(ends)
-		return str.length >= ends.length && str.slice(str.length - ends.length) === ends
+	str.endsWith = function (str, ends, position) {
+		str = makeString(str)
+		ends = '' + ends
+		if (typeof position == 'undefined') {
+			position = str.length - ends.length
+		} else {
+			position = Math.min(toPositive(position), str.length) - ends.length
+		}
+		return position >= 0 && str.indexOf(ends, position) === position
 	}
 
 	// aliases

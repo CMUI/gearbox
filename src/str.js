@@ -38,8 +38,11 @@ void function (window, _ext) {
 	}
 
 	// more `toNumber` methods
-	str.toFloat = function (str) {return parseFloat(String(str))}
-	str.toInt = function (str) {return parseInt(String(str), 10)}
+	str.toFloat = function (str) {return parseFloat(str)}
+	str.toInt = function (str) {
+		var n = parseFloat(str)
+		return n < 0 ? Math.ceil(n) : Math.floor(n)
+	}
 	str.toFixed = function (str, i) {return _.str.toFloat(_.str.toFloat(str).toFixed(i || 0))}
 
 	// exports
