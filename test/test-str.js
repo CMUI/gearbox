@@ -9,10 +9,10 @@ describe('String', function () {
 					arg = 'dev' + CHAR_AT + 'cmui.net'
 					expect(_.str.RE_EMAIL.test(arg)).to.be.true
 					// domain can be any level
-					arg = 'dev' + CHAR_AT + 'underscore.ext.by.cmui.net'
+					arg = 'dev' + CHAR_AT + 'gearbox.by.cmui.net'
 					expect(_.str.RE_EMAIL.test(arg)).to.be.true
 					// future proof for unknown domain suffix
-					arg = 'dev' + CHAR_AT + 'underscore.ext'
+					arg = 'dev' + CHAR_AT + 'gearbox.rocks'
 					expect(_.str.RE_EMAIL.test(arg)).to.be.true
 					// username can be numbers
 					arg = '007' + CHAR_AT + 'cmui.net'
@@ -21,7 +21,7 @@ describe('String', function () {
 					arg = 'username' + CHAR_AT + '126.com'
 					expect(_.str.RE_EMAIL.test(arg)).to.be.true
 					// email can be in upper case
-					arg = 'DEV' + CHAR_AT + 'UNDERSCORE.EXT'
+					arg = 'DEV' + CHAR_AT + 'CMUI.NET'
 					expect(_.str.RE_EMAIL.test(arg)).to.be.true
 				})
 				it('recognizes bad value', function () {
