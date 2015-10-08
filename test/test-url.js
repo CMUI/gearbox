@@ -85,7 +85,18 @@ describe('URL', function () {
 				expect(_.url.getParam(arg)).to.be.false
 			})
 			it('re-parses if url changed', function () {
-				var url = '?' + 'foo=%20&bar=%2B&blah%3Dblah=1'
+				var url
+				url = '?' + 'foo=%20&bar=%2B&blah%3Dblah=1'
+				history.replaceState(_state, null, url)
+				expect(_.url.getParam('foo')).to.equal(' ')
+				expect(_.url.getParam('bar')).to.equal('+')
+				expect(_.url.getParam('blah=blah')).to.equal('1')
+				url = '?'
+				history.replaceState(_state, null, url)
+				expect(_.url.getParam('foo')).to.be.undefined
+				expect(_.url.getParam('bar')).to.be.undefined
+				expect(_.url.getParam('blah=blah')).to.be.undefined
+				url = '?' + 'foo=%20&bar=%2B&blah%3Dblah=1'
 				history.replaceState(_state, null, url)
 				expect(_.url.getParam('foo')).to.equal(' ')
 				expect(_.url.getParam('bar')).to.equal('+')
@@ -176,7 +187,6 @@ describe('URL', function () {
 			})
 		})
 	})
-
 
 	/*
 	describe('Parse URL', function () {

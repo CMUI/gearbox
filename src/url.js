@@ -10,7 +10,7 @@ void function (window, _ext) {
 	var loc = window.location
 
 	// url param processing
-	url.parseQuery = function(query) {
+	url.parseQuery = function (query) {
 		var data = {}
 		if (query && _.isString(query)) {
 			var pairs = query.split('&'), pair, name, value
@@ -32,7 +32,7 @@ void function (window, _ext) {
 	}
 	url.getParam = function (s) {
 		if (!s || !_.isString(s)) return false
-		if (!_query) {	// first run
+		if (typeof _query === 'undefined') {	// first run
 			_query = _getQuery()
 		} else {
 			var currentQuery = _getQuery()
@@ -47,7 +47,7 @@ void function (window, _ext) {
 		return _cacheParam[s.toLowerCase()]
 	}
 
-	url.appendParam = function (url, param) {	// append param to (url || current url)
+	url.appendParam = function (url, param) {
 		var s = ''
 		url = _.isString(url) ? url : ''
 		url = _.url.removeHashFromUrl(url)
