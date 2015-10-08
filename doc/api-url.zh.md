@@ -104,8 +104,7 @@ url = _.url.appendParam(url, {test: 1})  // => 'http://domain.com/path/file?foo=
 
 #### 已知问题
 
-* 重复出现的 key 将只解析最后一次出现的值，不会把所有值加入到一个数组中。
-* 不处理复杂模式的 key，比如 `foo[]` 或 `foo[bar]` 都不会被视为特殊含义，只会视为普通的 key。
+* `param` 参数中的 key 会覆盖 `url` 参数中原有的同名 key。
 
 ***
 
