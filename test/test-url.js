@@ -106,11 +106,17 @@ describe('URL', function () {
 
 		describe('_.url.appendParam()', function () {
 			it('does basic functionality', function () {
-				var url = 'http://domain.com/path/file'
-				var url2 = _.url.appendParam(url, {foo: 'bar'})
-				var url3 = _.url.appendParam(url2, {test: 1})
-				expect(url2).to.equal('http://domain.com/path/file?foo=bar')
-				expect(url3).to.equal('http://domain.com/path/file?foo=bar&test=1')
+				var baseUrl = 'http://domain.com/path/file'
+				var url1 = _.url.appendParam(baseUrl, {foo: 'bar'})
+				var url2 = _.url.appendParam(url1, {test: 1})
+				expect(url1).to.equal(baseUrl + '?foo=bar')
+				expect(url2).to.equal(baseUrl + '?foo=bar&test=1')
+
+				var testUrl = baseUrl + '?key=value'
+				var url3 = _.url.appendParam(testUrl, {foo: 'bar'})
+				var url4 = _.url.appendParam(url3, {test: 1})
+				expect(url3).to.equal(baseUrl + '?key=value&foo=bar')
+				expect(url4).to.equal(baseUrl + '?key=value&foo=bar&test=1')
 			})
 		})
 	})
