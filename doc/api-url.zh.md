@@ -104,7 +104,7 @@ url = _.url.appendParam(url, {test: 1})  // => 'http://domain.com/path/file?foo=
 
 #### 已知问题
 
-* `param` 参数中的 key 会覆盖 `url` 参数中原有的同名 key。
+* `param` 参数中的 key 并不会覆盖 `url` 参数中原有的同名 key，只是追加一个同名参数。
 
 ***
 
