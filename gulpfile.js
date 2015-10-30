@@ -30,7 +30,7 @@ var modules = {
 	template: './bower_components/underscore-template/src/underscore-template.js',
 }
 
-gulp.task('default', ['clean', 'prepare-module'], function () {
+gulp.task('default', ['clean'], function () {
 	gulp.start('js')
 })
 
