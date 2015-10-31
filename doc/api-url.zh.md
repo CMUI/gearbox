@@ -102,9 +102,9 @@ url = _.url.appendParam(url, {foo: 'bar'})  // => 'http://domain.com/path/file?f
 url = _.url.appendParam(url, {test: 1})  // => 'http://domain.com/path/file?foo=bar&test=1'
 ```
 
-#### 已知问题
+#### 注意事项
 
-* `param` 参数中的 key 并不会覆盖 `url` 参数中原有的同名 key，只是追加一个同名参数。
+* `param` 参数中的 key 并不会覆盖 `url` 参数中已有的同名 key，只是追加一个同名参数。
 
 ***
 
