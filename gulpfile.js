@@ -34,12 +34,12 @@ gulp.task('default', ['clean'], function () {
 	gulp.start('js')
 })
 
-gulp.task('clean', function () {
-	del(path.join(myPath.dest, '*.*'))
+gulp.task('clean', function (callback) {
+	del(path.join(myPath.dest, '*.*'), callback)
 })
 
-gulp.task('clean-temp', function () {
-	del(path.join(myPath.temp, '*.*'))
+gulp.task('clean-temp', function (callback) {
+	del(path.join(myPath.temp, '*.*'), callback)
 })
 
 gulp.task('prepare-module', ['clean-temp'], function () {
@@ -52,7 +52,7 @@ gulp.task('prepare-module', ['clean-temp'], function () {
 	})
 })
 
-gulp.task('js', ['prepare-module'], function() {
+gulp.task('js', function() {
 	// combine external modules
 	Object.keys(modules).forEach(function (key) {
 		scripts.push(path.join(myPath.temp, key + '.js'))

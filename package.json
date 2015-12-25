@@ -5,9 +5,7 @@
   "description": "Lightweight JavaScript utilities for mobile web development.",
   "license": "MIT",
   "scripts": {
-    "dist": "gulp",
-    "clean": "gulp clean",
-    "js": "gulp js",
+    "dist": "gulp prepare-module && gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {},
