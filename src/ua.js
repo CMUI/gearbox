@@ -23,13 +23,13 @@ void function (window, _ext) {
 				_.str.include(s, 'crios')	// both desktop and mobile version
 
 		// platform version and device
-		ua.osVersion = '0'
+		ua.osVersion = ''
 		ua.isIOS = /\(i(?:phone|pod|pad)\b/.test(s) || /\bios \d+\./.test(s)
 		if (ua.isIOS) {
 			ua.isIPad = /\(ipad\b/.test(s)
 			ua.isIPod = /\(ipod\b/.test(s)
 			ua.isIPhone = /\(iphone\b/.test(s)
-			ua.osVersion = (/[\/; i]os[\/: _](\d+(?:[\._]\d+)?)[\._; ]/.exec(s) || [0,'0'])[1]
+			ua.osVersion = (/[\/; i]os[\/: _](\d+(?:[\._]\d+)?)[\._; ]/.exec(s) || [0, ''])[1]
 				.replace('_', '.')
 		} else {
 			var _includeAndroid = _.str.include(s, 'android')
@@ -39,16 +39,16 @@ void function (window, _ext) {
 			if (_includeAdr || _isJUC) {
 				ua.osVersion = (
 					/\badr[\/: ]?(\d+\.\d)\d*\b/.exec(s) ||
-					/\blinux;\s*u;\s*(\d+\.\d)\d*\b/.exec(s) || [0,'0']
+					/\blinux;\s*u;\s*(\d+\.\d)\d*\b/.exec(s) || [0, '']
 				)[1]
 			} else {
-				ua.osVersion = (/\bandroid(?:_os)?[\/: ]?(\d+\.\d)\d*\b/.exec(s) || [0,'0'])[1]
+				ua.osVersion = (/\bandroid(?:_os)?[\/: ]?(\d+\.\d)\d*\b/.exec(s) || [0, ''])[1]
 			}
 		}
-		if (!_.str.include(ua.osVersion, '.')) ua.osVersion += '.0'
+		if (ua.osVersion && !_.str.include(ua.osVersion, '.')) ua.osVersion += '.0'
 
 		// summery
-		if (ua.isIOS || ua.isAndroid) ua.isMobileDevice = true
+		ua.isMobileDevice = !!(ua.isIOS || ua.isAndroid)
 
 		// get browser info
 		var browser = ''
@@ -70,7 +70,9 @@ void function (window, _ext) {
 			browser = 'firefox'
 		} else if (_.str.include(s, 'opera')) {
 			browser = 'opera'
-		} else if (ua.isChrome) {
+		}
+		// these two must be the last
+		else if (ua.isChrome) {
 			browser = 'chrome'
 			if (ua.isAndroid && /\bwv\b/.test(s)) browser = 'chrome-webview'
 		} else if (ua.isSafari) {
@@ -116,9 +118,7 @@ void function (window, _ext) {
 
 	// TODO: detect size and features of screen
 	/*
-	function __detectScreen(ua) {
-		return ua
-	}
+	function __detectScreen(ua) {}
 	*/
 
 	// util
