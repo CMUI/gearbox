@@ -258,7 +258,7 @@ void function (window, _ext) {
 	// detect by ua string
 	ua.str = navigator.userAgent
 
-	function __detect(ua) {
+	function _detect(ua) {
 		var s = ua.str.toLowerCase()
 
 		ua.isSafari = /\bapple\b/i.test(navigator.vendor) && /\bsafari\b/i.test(s)
@@ -266,13 +266,13 @@ void function (window, _ext) {
 				_.str.include(s, 'crios')	// both desktop and mobile version
 
 		// platform version and device
-		ua.osVersion = '0'
+		ua.osVersion = ''
 		ua.isIOS = /\(i(?:phone|pod|pad)\b/.test(s) || /\bios \d+\./.test(s)
 		if (ua.isIOS) {
 			ua.isIPad = /\(ipad\b/.test(s)
 			ua.isIPod = /\(ipod\b/.test(s)
 			ua.isIPhone = /\(iphone\b/.test(s)
-			ua.osVersion = (/[\/; i]os[\/: _](\d+(?:[\._]\d+)?)[\._; ]/.exec(s) || [0,'0'])[1]
+			ua.osVersion = (/[\/; i]os[\/: _](\d+(?:[\._]\d+)?)[\._; ]/.exec(s) || [0, ''])[1]
 				.replace('_', '.')
 		} else {
 			var _includeAndroid = _.str.include(s, 'android')
@@ -282,33 +282,119 @@ void function (window, _ext) {
 			if (_includeAdr || _isJUC) {
 				ua.osVersion = (
 					/\badr[\/: ]?(\d+\.\d)\d*\b/.exec(s) ||
-					/\blinux;\s*u;\s*(\d+\.\d)\d*\b/.exec(s) || [0,'0']
+					/\blinux;\s*u;\s*(\d+\.\d)\d*\b/.exec(s) || [0, '']
 				)[1]
 			} else {
-				ua.osVersion = (/\bandroid(?:_os)?[\/: ]?(\d+\.\d)\d*\b/.exec(s) || [0,'0'])[1]
+				ua.osVersion = (/\bandroid(?:_os)?[\/: ]?(\d+\.\d)\d*\b/.exec(s) || [0, ''])[1]
 			}
 		}
-		if (!_.str.include(ua.osVersion, '.')) ua.osVersion += '.0'
+		// fix - Windows Phone might pretend to be iOS or Android
+		if (_.str.include(s, 'windows phone')) {
+			ua.isIOS = ua.isAndroid = false
+			ua.osVersion = ''
+		}
+		if (ua.osVersion && !_.str.include(ua.osVersion, '.')) ua.osVersion += '.0'
 
 		// summery
-		if (ua.isIOS || ua.isAndroid) ua.isMobileDevice = true
+		ua.isMobileDevice = !!(ua.isIOS || ua.isAndroid)
 
+		// get browser info
+		var browser = ''
+		if (_.str.include(s, 'micromessenger')) {
+			browser = 'wechat'
+		} else if (_.str.include(s, 'ucbrowser') || _.str.include(s, 'ucweb') || _.str.include(s, ' uc applewebkit')) {
+			browser = 'uc'
+		} else if (_.str.include(s, 'baiduhd') || _.str.include(s, 'baiduboxapp')) {
+			browser = 'baidu-app'
+		} else if (_.str.include(s, 'baidubrowser')) {
+			browser = 'baidu-browser'
+		} else if (_.str.include(s, 'mqqbrowser')) {
+			browser = 'm-qq-browser'
+		} else if (_.str.include(s, 'miuibrowser')) {
+			browser = 'miui'
+		} else if (_.str.include(s, '_weibo_') || _.str.include(s, ' weibo ')) {
+			browser = 'weibo'
+		} else if (_.str.include(s, 'firefox')) {
+			browser = 'firefox'
+		} else if (_.str.include(s, 'opera')) {
+			browser = 'opera'
+		} else if (_.str.include(s, ' edge/')) {
+			browser = 'edge'
+		} else if (_.str.include(s, 'iemobile')) {
+			browser = 'ie-mobile'
+		}
+		// these two must be the last
+		else if (ua.isChrome) {
+			browser = 'chrome'
+			if (ua.isAndroid && /\bwv\b/.test(s)) browser = 'chrome-webview'
+		} else if (ua.isSafari) {
+			browser = 'safari'
+		}
+
+		// fix - some browsers might be detected as Chrome or Safari
+		if (browser !== 'chrome') ua.isChrome = false
+		if (browser !== 'safari') ua.isSafari = false
+
+		// get engine info
+		var engine = ''
+		var engineVersion = ''
+		var testChrome = /chrome[^\d]*([\.\d]*)[ ;\/]/.exec(s)
+		if (testChrome) {
+			engine = 'chrome'
+			engineVersion = _trimVersion(testChrome[1])
+		} else {
+			var testWebKit = /webkit[^\d]*([\.\d]*)\+*[ ;\/]/.exec(s)
+			if (testWebKit) {
+				engine = 'webkit'
+				engineVersion = _trimVersion(testWebKit[1])
+			}
+		}
+		if (!engine) {
+			if (_.str.include(s, 'webkit')) {
+				engine = 'webkit'
+			} else if (ua.isIOS) {
+				engine = 'webkit'
+			} else if (ua.isAndroid && browser === 'm-qq-browser') {
+				engine = 'webkit'
+			}
+			if (browser === 'firefox' && !ua.isIOS) engine = 'gecko'
+			if (browser === 'opera' && !ua.isIOS && _.str.include(s, 'presto')) engine = 'presto'
+		}
+		// fix Windows Phone, IE Mobile and Edge
+		if (browser === 'edge') {
+			engine = 'edge'
+			engineVersion = ''
+		} else if (browser === 'ie-mobile') {
+			engine = engineVersion = ''
+		}
+
+		// output
+		ua.browser = browser
+		ua.engine = engine
+		ua.engineVersion = engineVersion
 		return ua
 	}
 
 	// TODO: detect size and features of screen
 	/*
-	function __detectScreen(ua) {
-		return ua
-	}
+	function __detectScreen(ua) {}
 	*/
 
+	// util
+	// TODO: implement a stricter API: `_.str.formatVersion(ver, length)`, e.g. ('1.2', 3) -> '1.2.0'
+	function _trimVersion(ver, length) {
+		var temp = ver.split('.')
+		temp.length = length || 2
+		return _.compact(temp).join('.')
+	}
+
 	// init
-	__detect(ua)
+	_detect(ua)
 
 	/*
 	// exports for unit test
-	ua.__detect = __detect
+	ua.__detect = _detect
+	ua.__trimVersion = _trimVersion
 	*/
 
 	// exports
@@ -447,16 +533,16 @@ void function (window, _ext) {
  * Released under the MIT license.
  * https://github.com/cssmagic/action
  */
-var action = function () {
+var action = (function () {
 	'use strict'
 
-	//namespace
+	// namespace
 	var action = {}
 
 	var SELECTOR = '[data-action]'
 	var _actionList = {}
 
-	//util
+	// util
 	function _getActionName($elem) {
 		var result = $elem.data('action') || ''
 		if (!result) {
@@ -465,6 +551,7 @@ var action = function () {
 		}
 		return _formatActionName(result)
 	}
+  
 	function _formatActionName(s) {
 		return s ? $.trim(String(s).replace(/^[#!\s]+/, '')) : ''
 	}
@@ -472,7 +559,7 @@ var action = function () {
 	function _init() {
 		var $wrapper = $(document.body || document.documentElement)
 		$wrapper.on('click', SELECTOR, function (ev) {
-			//notice: default click behavior will be prevented.
+			// notice: default click behavior will be prevented.
 			ev.preventDefault()
 
 			var $elem = $(this)
@@ -480,6 +567,7 @@ var action = function () {
 			_handle(actionName, this)
 		})
 	}
+
 	function _handle(actionName, context) {
 		if (!actionName) {
 			/*
@@ -502,55 +590,65 @@ var action = function () {
 		}
 	}
 
-	//api
-	action.add = function (actionSet) {
-		if ($.isPlainObject(actionSet)) {
-			$.each(actionSet, function (key, value) {
-				var actionName = _formatActionName(key)
-				if (actionName) {
-					if ($.isFunction(value)) {
-						/*
-						if (_actionList[actionName]) {
-							console.warn('[Action] The existed action `%s` has been overridden.', actionName)
-						}
-						*/
-
-						_actionList[actionName] = value
-					} else {
-						/*
-						console.error('[Action] The function for action `%s` is invalid.', actionName)
-						*/
-					}
-				} else {
-					/*
-					console.error('[Action] The action name `%s` is invalid.', key)
-					*/
-				}
-			})
-		} else {
+	// API
+	function add(actionSet) {
+		if (!$.isPlainObject(actionSet)) {
 			/*
-			console.warn('[Action] Param must be a plain object.')
+			console.error('[Action] Param must be a plain object.')
 			*/
+
+			return
 		}
+
+		$.each(actionSet, function (key, value) {
+			var actionName = _formatActionName(key)
+
+			if (!actionName) {
+				/*
+				console.error('[Action] The action name `%s` is invalid.', key)
+				*/
+
+				return
+			}
+
+			if (!$.isFunction(value)) {
+				/*
+				console.error('[Action] The function for action `%s` is invalid.', actionName)
+				*/
+
+				return
+			}
+
+			/*
+			if (_actionList[actionName]) {
+				console.warn('[Action] The existed action `%s` has been overridden.', actionName)
+			}
+			*/
+
+			_actionList[actionName] = value
+		})
 	}
-	action.trigger = function (actionName, context) {
+  
+	function trigger(actionName, context) {
 		return _handle(_formatActionName(actionName), context)
 	}
 
-	//init
+	// init
 	_init()
 
 	/*
-	//exports for unit test
+	// exports for unit test
 	action.__actionList = _actionList
 	action.__getActionName = _getActionName
 	action.__formatActionName = _formatActionName
 	*/
 
-	//exports
+	// exports
+	action.add = add
+	action.trigger = trigger
 	return action
 
-}()
+}())
 
 /* =================  END: source code  ================= */
 
@@ -570,132 +668,143 @@ void function (window, _ext) {
  * Released under the MIT license.
  * https://github.com/cssmagic/underscore-template
  */
-var template = function () {
+var template = (function () {
 	'use strict'
 
-	//namespace
+	// namespace
 	var template = {}
 
-	//config
+	// config
 	var ELEM_ID_PREFIX = 'template-'
 
-	//cache
+	// cache
 	var _cacheTemplate = {}
 	var _cacheCompiledTemplate = {}
 
-	//util
+	// util - string
+	function _trim(str) {
+		return str.replace(/^\s+|\s+$/g, '')
+	}
+	function _include(str, substring) {
+		return str.length > substring.length ? str.indexOf(substring) > -1 : false
+	}
+	function _startsWith(str, starts) {
+		return str.length > starts.length ? str.indexOf(starts) === 0 : false
+	}
+	function _endsWith(str, ends) {
+		return str.length > ends.length ? str.indexOf(ends) === (str.length - ends.length) : false
+	}
+
+	// util
 	function _toTemplateId(id) {
-		//`#template-my-tpl-001` -> `my-tpl-001`
-		// `template-my-tpl-001` -> `my-tpl-001`
-		//          `my-tpl-001` -> `my-tpl-001`
-		id = id ? _.str.trim(id).replace(/^[#!]+/, '') : ''
-		return _.str.trim(id).replace(ELEM_ID_PREFIX, '')
+		/** example:
+			`#template-my-tmpl-001` -> `my-tmpl-001`
+			 `template-my-tmpl-001` -> `my-tmpl-001`
+			          `my-tmpl-001` -> `my-tmpl-001`
+		 */
+		id = id && _.isString(id) ? _trim(id).replace(/^[#!]+/, '') : ''
+		return _trim(id).replace(ELEM_ID_PREFIX, '')
 	}
 	function _toElementId(id) {
-		//`template-my-tpl-001` -> `template-my-tpl-001`
-		//         `my-tpl-001` -> `template-my-tpl-001`
-		id = id ? _.str.trim(id) : ''
-		return _.str.startsWith(id, ELEM_ID_PREFIX) ? id : ELEM_ID_PREFIX + id
+		/** example:
+			`template-my-tmpl-001` -> `template-my-tmpl-001`
+			         `my-tmpl-001` -> `template-my-tmpl-001`
+		 */
+		id = id && _.isString(id) ? _trim(id) : ''
+		return _startsWith(id, ELEM_ID_PREFIX) ? id : ELEM_ID_PREFIX + id
 	}
-	function _stripCommentTag(str) {
-		str = String(str)
-		if (_.str.startsWith(str, '<!' + '--') && _.str.endsWith(str, '-->')) {
-			str = str.replace(/^<!\-\-/, '').replace(/\-\->$/, '')
-			str = _.str.trim(str)
-		}
-		return str
-	}
-	//get template by id (of dummy script element in html)
+	// get template by ID (of dummy script element in html)
 	function _getTemplateById(id) {
 		if (!id) return false
-		var result
+		var result = ''
 		var elementId = _toElementId(String(id))
 		var elem = document.getElementById(elementId)
 		if (elem) {
-			var str = _.str.trim(elem.innerHTML)
-			if (str) {
-				//strip html comment tag wrapping template code
-				//especially for jedi 1.0 (https://github.com/baixing/jedi)
-				if (_.templateSettings.shouldUnwrapCommentTag) str = _stripCommentTag(str)
-
-				if (_isTemplateCode(str)) {
-					result = str
-				} else {
-					/*
-					console.warn('[Template] Template code in element "#' + elementId + '" is invalid!')
-					*/
-				}
-			} else {
-				/*
+			result = _trim(elem.innerHTML)
+			/*
+			if (!result) {
 				console.warn('[Template] Element "#' + elementId + '" is empty!')
-				*/
+			} else if (!_isTemplateCode(result)) {
+				console.warn('[Template] Template code in element "#' + elementId + '" is invalid!')
 			}
+			*/
 		} else {
 			/*
 			console.warn('[Template] Element "#' + elementId + '" not found!')
 			*/
 		}
-		return result || false
+		return result
 	}
 	function _isTemplateCode(s) {
 		var code = String(s)
-		return _.str.include(code, '<%') && _.str.include(code, '%>') && /\bdata\b/.test(code)
+		var config = _.templateSettings
+		return (
+			// it must contain any template tags
+			config.escape.test(code) ||
+			config.interpolate.test(code) ||
+			config.evaluate.test(code)
+		) && (
+			// it must contain variable name (if we have specified a variable name)
+			config.variable ? _include(code, config.variable) : true
+		)
 	}
 
-	//fn
+	// API
 	function add(id, templateCode) {
-		//todo: accept second param as a function, to support pre-compiled template.
-		if (arguments.length < 2) return false
+		// TODO: accept second param as a function, to support pre-compiled template.
+		var result = false
+		if (arguments.length < 2) {
+			/*
+			console.error('[Template] Missing param for `.add()` method.')
+			*/
+			return result
+		}
 
-		var result
 		if (templateCode) {
 			var templateId = _toTemplateId(id)
 			/*
-			if (_cacheTemplate[templateId]) {
+			if (_cacheTemplate[templateId] || _cacheCompiledTemplate[templateId]) {
 				console.warn('[Template] Template id "' + templateId + '" already existed.')
 			}
 			*/
-			result = _cacheTemplate[templateId] = templateCode
-		} else {
-			//todo: support `_.template.add(id)` to add from dummy script element
-			//console.error('Missing template code to add to cache.')
+			if (_cacheCompiledTemplate[templateId]) {
+				_cacheCompiledTemplate[templateId] = null
+			}
+			_cacheTemplate[templateId] = String(templateCode)
+			result = true
 		}
-		return !!result
+		return result
 	}
-
-	//api
-	template.remove = function (/* id */) {
-		//todo: remove template from cache (both str and fn)
-		//todo: remove dummy script element
-	}
-	template.add = add
-	template.render = function (id, data) {
-		//todo: support _.template.render(templateCode, templateData)
+	function render(id, data) {
+		var result = ''
 		if (arguments.length < 2) {
-			console.error('Missing data to render template: "' + id + '"')
-			return false
+			/*
+			console.error('[Template] Missing param for `.render()` method.')
+			*/
+			return result
 		}
-		var result
+
 		var templateId = _toTemplateId(id)
 
-		//todo: refactor: use recursion to simplify these codes
-		//search in _cacheCompiledTemplate
+		// TODO: refactor: use recursion to simplify these codes
+		// search in _cacheCompiledTemplate
 		var fn = _cacheCompiledTemplate[templateId]
 		var templateCode = _cacheTemplate[templateId]
 		if (_.isFunction(fn)) {
 			result = fn(data)
 		}
-		//search in _cacheTemplate
-		else if (_.isString(templateCode)) {
+		// search in _cacheTemplate
+		else if (templateCode) {
 			fn = _.template(templateCode)
 			_cacheCompiledTemplate[templateId] = fn
 			result = fn(data)
+			// clear _cacheTemplate
+			_cacheTemplate[templateId] = null
 		}
-		//get template code from dom
+		// get template code from dom
 		else {
 			templateCode = _getTemplateById(templateId)
 			if (templateCode) {
-				_cacheTemplate[templateId] = templateCode
 				fn = _.template(templateCode)
 				_cacheCompiledTemplate[templateId] = fn
 				result = fn(data)
@@ -705,19 +814,24 @@ var template = function () {
 	}
 
 	/*
-	//exports for unit test
+	// exports for unit test
+	template.__trim = _trim
+	template.__include = _include
+	template.__startsWith = _startsWith
+	template.__endsWith = _endsWith
 	template.__toTemplateId = _toTemplateId
 	template.__toElementId = _toElementId
 	template.__isTemplateCode = _isTemplateCode
-	template.__stripCommentTag = _stripCommentTag
 	template.__cacheTemplate = _cacheTemplate
 	template.__cacheCompiledTemplate = _cacheCompiledTemplate
 	*/
 
-	//exports
+	// exports
+	template.add = add
+	template.render = render
 	return template
 
-}()
+}())
 
 /* =================  END: source code  ================= */
 
