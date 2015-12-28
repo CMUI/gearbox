@@ -45,6 +45,11 @@ void function (window, _ext) {
 				ua.osVersion = (/\bandroid(?:_os)?[\/: ]?(\d+\.\d)\d*\b/.exec(s) || [0, ''])[1]
 			}
 		}
+		// fix - Windows Phone might pretend to be iOS or Android
+		if (_.str.include(s, 'windows phone')) {
+			ua.isIOS = ua.isAndroid = false
+			ua.osVersion = ''
+		}
 		if (ua.osVersion && !_.str.include(ua.osVersion, '.')) ua.osVersion += '.0'
 
 		// summery
@@ -61,7 +66,7 @@ void function (window, _ext) {
 		} else if (_.str.include(s, 'baidubrowser')) {
 			browser = 'baidu-browser'
 		} else if (_.str.include(s, 'mqqbrowser')) {
-			browser = 'mqq'
+			browser = 'm-qq-browser'
 		} else if (_.str.include(s, 'miuibrowser')) {
 			browser = 'miui'
 		} else if (_.str.include(s, '_weibo_') || _.str.include(s, ' weibo ')) {
@@ -70,6 +75,10 @@ void function (window, _ext) {
 			browser = 'firefox'
 		} else if (_.str.include(s, 'opera')) {
 			browser = 'opera'
+		} else if (_.str.include(s, ' edge/')) {
+			browser = 'edge'
+		} else if (_.str.include(s, 'iemobile')) {
+			browser = 'ie-mobile'
 		}
 		// these two must be the last
 		else if (ua.isChrome) {
@@ -102,11 +111,18 @@ void function (window, _ext) {
 				engine = 'webkit'
 			} else if (ua.isIOS) {
 				engine = 'webkit'
-			} else if (ua.isAndroid && browser === 'mqq') {
+			} else if (ua.isAndroid && browser === 'm-qq-browser') {
 				engine = 'webkit'
 			}
 			if (browser === 'firefox' && !ua.isIOS) engine = 'gecko'
 			if (browser === 'opera' && !ua.isIOS && _.str.include(s, 'presto')) engine = 'presto'
+		}
+		// fix Windows Phone, IE Mobile and Edge
+		if (browser === 'edge') {
+			engine = 'edge'
+			engineVersion = ''
+		} else if (browser === 'ie-mobile') {
+			engine = engineVersion = ''
 		}
 
 		// output
