@@ -80,7 +80,7 @@ describe('UA', function () {
 		describe('iOS Safari', function () {
 			it('recognizes iphone_ios_40', function () {
 				var ua = _detect(iphone_ios_40)
-				expect(!!ua.isMobileDevice).to.be.true
+				expect(ua.isMobileDevice).to.be.true
 				expect(!!ua.isIOS).to.be.true
 				expect(!!ua.isAndroid).to.be.false
 				expect(!!ua.isIPhone).to.be.true
@@ -93,7 +93,7 @@ describe('UA', function () {
 			})
 			it('recognizes ipod_ios_30', function () {
 				var ua = _detect(ipod_ios_30)
-				expect(!!ua.isMobileDevice).to.be.true
+				expect(ua.isMobileDevice).to.be.true
 				expect(!!ua.isIOS).to.be.true
 				expect(!!ua.isAndroid).to.be.false
 				expect(!!ua.isIPhone).to.be.false
@@ -106,7 +106,7 @@ describe('UA', function () {
 			})
 			it('recognizes ipad_ios_322', function () {
 				var ua = _detect(ipad_ios_322)
-				expect(!!ua.isMobileDevice).to.be.true
+				expect(ua.isMobileDevice).to.be.true
 				expect(!!ua.isIOS).to.be.true
 				expect(!!ua.isAndroid).to.be.false
 				expect(!!ua.isIPhone).to.be.false
@@ -119,7 +119,7 @@ describe('UA', function () {
 			})
 			it('recognizes iphone_ios_60', function () {
 				var ua = _detect(iphone_ios_60)
-				expect(!!ua.isMobileDevice).to.be.true
+				expect(ua.isMobileDevice).to.be.true
 				expect(!!ua.isIOS).to.be.true
 				expect(!!ua.isAndroid).to.be.false
 				expect(!!ua.isIPhone).to.be.true
@@ -146,7 +146,7 @@ describe('UA', function () {
 		describe('iOS Third-Party Browser', function () {
 			it('recognizes uc_ios_421', function () {
 				var ua = _detect(uc_ios_421)
-				expect(!!ua.isMobileDevice).to.be.true
+				expect(ua.isMobileDevice).to.be.true
 				expect(!!ua.isIOS).to.be.true
 				expect(!!ua.isAndroid).to.be.false
 				expect(ua.osVersion).to.equal('4.2')
@@ -156,7 +156,7 @@ describe('UA', function () {
 			})
 			it('recognizes uc_ios_501', function () {
 				var ua = _detect(uc_ios_501)
-				expect(!!ua.isMobileDevice).to.be.true
+				expect(ua.isMobileDevice).to.be.true
 				expect(!!ua.isIOS).to.be.true
 				expect(!!ua.isAndroid).to.be.false
 				expect(ua.osVersion).to.equal('5.0')
@@ -166,21 +166,21 @@ describe('UA', function () {
 			})
 			it('recognizes qq_ios_511', function () {
 				var ua = _detect(qq_ios_511)
-				expect(!!ua.isMobileDevice).to.be.true
+				expect(ua.isMobileDevice).to.be.true
 				expect(!!ua.isIOS).to.be.true
 				expect(!!ua.isAndroid).to.be.false
 				expect(!!ua.isIPhone).to.be.true
 				expect(!!ua.isIPod).to.be.false
 				expect(!!ua.isIPad).to.be.false
 				expect(ua.osVersion).to.equal('5.1')
-				expect(ua.browser).to.equal('mqq')
+				expect(ua.browser).to.equal('m-qq-browser')
 				expect(ua.engine).to.equal('webkit')
 				expect(ua.engineVersion).to.equal('534.46')
 			})
 			it('recognizes gc_ios_511', function () {
 				var ua = _detect(gc_ios_511)
 				expect(!!ua.isChrome).to.be.true
-				expect(!!ua.isMobileDevice).to.be.true
+				expect(ua.isMobileDevice).to.be.true
 				expect(!!ua.isIOS).to.be.true
 				expect(!!ua.isAndroid).to.be.false
 				expect(!!ua.isIPhone).to.be.true
@@ -218,7 +218,7 @@ describe('UA', function () {
 		describe('Android Browser', function () {
 			it('recognizes adr_21', function () {
 				var ua = _detect(adr_21)
-				expect(!!ua.isMobileDevice).to.be.true
+				expect(ua.isMobileDevice).to.be.true
 				expect(!!ua.isIOS).to.be.false
 				expect(!!ua.isAndroid).to.be.true
 				expect(ua.osVersion).to.equal('2.1')
@@ -228,7 +228,7 @@ describe('UA', function () {
 			})
 			it('recognizes adr_22', function () {
 				var ua = _detect(adr_22)
-				expect(!!ua.isMobileDevice).to.be.true
+				expect(ua.isMobileDevice).to.be.true
 				expect(!!ua.isIOS).to.be.false
 				expect(!!ua.isAndroid).to.be.true
 				expect(ua.osVersion).to.equal('2.2')
@@ -238,7 +238,7 @@ describe('UA', function () {
 			})
 			it('recognizes adr_234', function () {
 				var ua = _detect(adr_234)
-				expect(!!ua.isMobileDevice).to.be.true
+				expect(ua.isMobileDevice).to.be.true
 				expect(!!ua.isIOS).to.be.false
 				expect(!!ua.isAndroid).to.be.true
 				expect(ua.osVersion).to.equal('2.3')
@@ -248,7 +248,7 @@ describe('UA', function () {
 			})
 			it('recognizes adr_403', function () {
 				var ua = _detect(adr_403)
-				expect(!!ua.isMobileDevice).to.be.true
+				expect(ua.isMobileDevice).to.be.true
 				expect(!!ua.isIOS).to.be.false
 				expect(!!ua.isAndroid).to.be.true
 				expect(ua.osVersion).to.equal('4.0')
@@ -259,7 +259,7 @@ describe('UA', function () {
 
 			it('recognizes gc_adr_404', function () {
 				var ua = _detect(gc_adr_404)
-				expect(!!ua.isMobileDevice).to.be.true
+				expect(ua.isMobileDevice).to.be.true
 				expect(!!ua.isIOS).to.be.false
 				expect(!!ua.isAndroid).to.be.true
 				expect(ua.osVersion).to.equal('4.0')
@@ -272,7 +272,7 @@ describe('UA', function () {
 		describe('Android Third-Party Browser', function () {
 			it('recognizes uc_adr_233', function () {
 				var ua = _detect(uc_adr_233)
-				expect(!!ua.isMobileDevice).to.be.true
+				expect(ua.isMobileDevice).to.be.true
 				expect(!!ua.isIOS).to.be.false
 				expect(!!ua.isAndroid).to.be.true
 				expect(ua.osVersion).to.equal('2.3')
@@ -282,7 +282,7 @@ describe('UA', function () {
 			})
 			it('recognizes uc_adr_234', function () {
 				var ua = _detect(uc_adr_234)
-				expect(!!ua.isMobileDevice).to.be.true
+				expect(ua.isMobileDevice).to.be.true
 				expect(!!ua.isIOS).to.be.false
 				expect(!!ua.isAndroid).to.be.true
 				expect(ua.osVersion).to.equal('2.3')
@@ -292,7 +292,7 @@ describe('UA', function () {
 			})
 			it('recognizes uc_adr_404', function () {
 				var ua = _detect(uc_adr_404)
-				expect(!!ua.isMobileDevice).to.be.true
+				expect(ua.isMobileDevice).to.be.true
 				expect(!!ua.isIOS).to.be.false
 				expect(!!ua.isAndroid).to.be.true
 				expect(ua.osVersion).to.equal('4.0')
@@ -302,7 +302,7 @@ describe('UA', function () {
 			})
 			it('recognizes uc_adr_00', function () {
 				var ua = _detect(uc_adr_00)
-				expect(!!ua.isMobileDevice).to.be.true
+				expect(ua.isMobileDevice).to.be.true
 				expect(!!ua.isIOS).to.be.false
 				expect(!!ua.isAndroid).to.be.true
 				expect(ua.osVersion).to.equal('')
@@ -313,18 +313,18 @@ describe('UA', function () {
 
 			it('recognizes qq_adr_422', function () {
 				var ua = _detect(qq_adr_422)
-				expect(!!ua.isMobileDevice).to.be.true
+				expect(ua.isMobileDevice).to.be.true
 				expect(!!ua.isIOS).to.be.false
 				expect(!!ua.isAndroid).to.be.true
 				expect(ua.osVersion).to.equal('4.2')
-				expect(ua.browser).to.equal('mqq')
+				expect(ua.browser).to.equal('m-qq-browser')
 				expect(ua.engine).to.equal('webkit')
 				expect(ua.engineVersion).to.equal('')
 			})
 
 			it('recognizes ff_adr_00', function () {
 				var ua = _detect(ff_adr_00)
-				expect(!!ua.isMobileDevice).to.be.true
+				expect(ua.isMobileDevice).to.be.true
 				expect(!!ua.isIOS).to.be.false
 				expect(!!ua.isAndroid).to.be.true
 				expect(ua.osVersion).to.equal('')
@@ -335,7 +335,7 @@ describe('UA', function () {
 
 			it('recognizes op_adr_404', function () {
 				var ua = _detect(op_adr_404)
-				expect(!!ua.isMobileDevice).to.be.true
+				expect(ua.isMobileDevice).to.be.true
 				expect(!!ua.isIOS).to.be.false
 				expect(!!ua.isAndroid).to.be.true
 				expect(ua.osVersion).to.equal('4.0')
@@ -346,7 +346,7 @@ describe('UA', function () {
 
 			it('recognizes xx_adr_235', function () {
 				var ua = _detect(xx_adr_235)
-				expect(!!ua.isMobileDevice).to.be.true
+				expect(ua.isMobileDevice).to.be.true
 				expect(!!ua.isIOS).to.be.false
 				expect(!!ua.isAndroid).to.be.true
 				expect(ua.osVersion).to.equal('2.3')
@@ -356,7 +356,7 @@ describe('UA', function () {
 			})
 			it('recognizes xx_adr_22', function () {
 				var ua = _detect(xx_adr_22)
-				expect(!!ua.isMobileDevice).to.be.true
+				expect(ua.isMobileDevice).to.be.true
 				expect(!!ua.isIOS).to.be.false
 				expect(!!ua.isAndroid).to.be.true
 				expect(ua.osVersion).to.equal('2.2')
@@ -371,13 +371,61 @@ describe('UA', function () {
 		describe('Android Chrome WebView', function () {
 			it('recognizes wv_adr_511', function () {
 				var ua = _detect(wv_adr_511)
-				expect(!!ua.isMobileDevice).to.be.true
+				expect(ua.isMobileDevice).to.be.true
 				expect(!!ua.isIOS).to.be.false
 				expect(!!ua.isAndroid).to.be.true
 				expect(ua.osVersion).to.equal('5.1')
 				expect(ua.browser).to.equal('chrome-webview')
 				expect(ua.engine).to.equal('chrome')
 				expect(ua.engineVersion).to.equal('43.0')
+			})
+		})
+
+		// other
+		var ff_mac = {str: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:41.0) Gecko/20100101 Firefox/41.0'}
+		var chrome_mac = {str: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'}
+		var ie_wp81 = {str: 'Mozilla/5.0 (Mobile; Windows Phone 8.1; Android 4.0; ARM; Trident/7.0; Touch; rv:11.0; IEMobile/11.0; NOKIA; Lumia 520) like iPhone OS 7_0_3 Mac OS X AppleWebKit/537 (KHTML, like Gecko) Mobile Safari/537'}
+		var edge_wp100 = {str: 'Mozilla/5.0 (Windows Phone 10.0; Android 4.2.1; DEVICE INFO) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Mobile Safari/537.36 Edge/12.xx'}
+		describe('Other UA', function () {
+			it('recognizes ff_mac', function () {
+				var ua = _detect(ff_mac)
+				expect(ua.isMobileDevice).to.be.false
+				expect(!!ua.isIOS).to.be.false
+				expect(!!ua.isAndroid).to.be.false
+				expect(ua.osVersion).to.equal('')
+				expect(ua.browser).to.equal('firefox')
+				expect(ua.engine).to.equal('gecko')
+				expect(ua.engineVersion).to.equal('')
+			})
+			it('recognizes chrome_mac', function () {
+				var ua = _detect(chrome_mac)
+				expect(ua.isMobileDevice).to.be.false
+				expect(!!ua.isIOS).to.be.false
+				expect(!!ua.isAndroid).to.be.false
+				expect(ua.osVersion).to.equal('')
+				expect(ua.browser).to.equal('chrome')
+				expect(ua.engine).to.equal('chrome')
+				expect(ua.engineVersion).to.equal('47.0')
+			})
+			it('recognizes ie_wp81', function () {
+				var ua = _detect(ie_wp81)
+				expect(ua.isMobileDevice).to.be.false
+				expect(!!ua.isIOS).to.be.false
+				expect(!!ua.isAndroid).to.be.false
+				expect(ua.osVersion).to.equal('')
+				expect(ua.browser).to.equal('ie-mobile')
+				expect(ua.engine).to.equal('')
+				expect(ua.engineVersion).to.equal('')
+			})
+			it('recognizes edge_wp100', function () {
+				var ua = _detect(edge_wp100)
+				expect(ua.isMobileDevice).to.be.false
+				expect(!!ua.isIOS).to.be.false
+				expect(!!ua.isAndroid).to.be.false
+				expect(ua.osVersion).to.equal('')
+				expect(ua.browser).to.equal('edge')
+				expect(ua.engine).to.equal('edge')
+				expect(ua.engineVersion).to.equal('')
 			})
 		})
 	})

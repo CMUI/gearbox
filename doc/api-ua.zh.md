@@ -64,7 +64,7 @@
 
 * `'7.0'` - 对 iOS 7.0.1 的探测结果。
 * `'4.4'` - 对 Android 4.4.4 的探测结果。
-* `''` - 对 Windows、Mac OS、WinPhone 的探测结果。
+* `''` - 对 Windows、Mac OS、WinPhone 等系统的探测结果。
 
 ***
 
@@ -79,8 +79,10 @@
 * `'uc'` - UC 浏览器
 * `'baidu-app'` - 百度客户端
 * `'baidu-browser'` - 百度浏览器
-* `'mqq'` - 手机 QQ 浏览器
+* `'m-qq-browser'` - 手机 QQ 浏览器
 * `'miui'` - 小米浏览器
+* `'ie-mobile'` - IE 移动版
+* `'edge'` - 微软 Edge 浏览器
 * `'wechat'` - 微信
 * `'weibo'` - 微博
 * `'chrome-webview'` - 采用 Chrome 内核的 WebView
@@ -95,6 +97,7 @@
 * `'chrome'` - Chrome 内核（新版 Android 浏览器与 Opera 的内核）
 * `'gecko'` - Firefox 的内核
 * `'presto'` - 旧版 Opera 的内核
+* `'edge'` - Edge 内核
 
 对于无法识别的引擎，其值一律为空字符串。
 
@@ -111,3 +114,4 @@
 * `'533.1'` - 对 Android 2.2.2 内置浏览器引擎 WebKit 版本的探测结果。
 * `'43.0'` - 对 Chrome 43.0.2357.65 引擎版本的探测结果。
 * `''` - 对 Firefox 引擎版本的探测结果。
+* `''` - 对 Edge 引擎版本的探测结果。
