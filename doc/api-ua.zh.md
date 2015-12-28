@@ -4,9 +4,9 @@
 
 这些探测浏览器内核和类型的接口仅用于底层开发或流量统计，不建议在业务层的常规功能中使用。
 
-## JavaScript 变量<a name="js-var"></a>
+## JavaScript 变量 <a name="js-var">&nbsp;</a>
 
-### `_.ua.isTouchDevice`<a name="js-var-isTouchDevice"></a>
+### `_.ua.isTouchDevice` <a name="js-var--isTouchDevice">&nbsp;</a>
 
 布尔值。当前 UA 是否为触屏设备。Chrome 开启触摸调试之后也将被视为触屏设备。
 
@@ -14,13 +14,13 @@
 
 ***
 
-### `_.ua.isSafari`<a name="js-var-isSafari"></a>
+### `_.ua.isSafari` <a name="js-var--isSafari">&nbsp;</a>
 
 布尔值。当前 UA 是否为 Safari 浏览器（包括桌面版与移动版）。
 
 此探测基于 UA 信息。
 
-### `_.ua.isChrome`<a name="js-var-isChrome"></a>
+### `_.ua.isChrome` <a name="js-var--isChrome">&nbsp;</a>
 
 布尔值。当前 UA 是否为 Chrome 浏览器（包括桌面版与移动版）。
 
@@ -28,7 +28,7 @@
 
 ***
 
-### `_.ua.isIOS`<a name="js-var-isIOS"></a>
+### `_.ua.isIOS` <a name="js-var--isIOS">&nbsp;</a>
 
 布尔值。当前操作系统是否为 iOS 系统。
 
@@ -40,23 +40,23 @@
 
 这些探测均基于 UA 信息。
 
-### `_.ua.isAndroid`<a name="js-var-isAndroid"></a>
+### `_.ua.isAndroid` <a name="js-var--isAndroid">&nbsp;</a>
 
 布尔值。当前 UA 是否为 Android 系统。
 
 此探测基于 UA 信息。
 
-### `_.ua.isMobileDevice`<a name="js-var-isMobileDevice"></a>
+### `_.ua.isMobileDevice` <a name="js-var--isMobileDevice">&nbsp;</a>
 
-布尔值或 `undefined`。当前 UA 是否为移动设备。所有 iOS 和 Android 设备会被识别为移动设备。
+布尔值。当前 UA 是否为移动设备。所有 iOS 和 Android 设备会被识别为移动设备。
 
 此探测基于 UA 信息。
 
 ***
 
-### `_.ua.osVersion`<a name="js-var-osVersion"></a>
+### `_.ua.osVersion` <a name="js-var--osVersion">&nbsp;</a>
 
-字符串。当前移动操作系统的版本号，格式为 `{主版本号}.{次版本号}`。仅可识别 iOS 和 Android 系统的版本号，对于非移动操作系统或不可识别的移动操作系统，其值一律为 `'0.0'`。
+字符串。当前移动操作系统的版本号，格式为 `{主版本号}.{次版本号}`。仅可识别 iOS 和 Android 系统的版本号，对于非移动操作系统或不可识别的移动操作系统，其值一律为空字符串。
 
 此探测基于 UA 信息。
 
@@ -64,5 +64,50 @@
 
 * `'7.0'` - 对 iOS 7.0.1 的探测结果。
 * `'4.4'` - 对 Android 4.4.4 的探测结果。
-* `'0.0'` - 对 Windows、Mac OS、WinPhone 的探测结果。
+* `''` - 对 Windows、Mac OS、WinPhone 的探测结果。
 
+***
+
+### `_.ua.browser` <a name="js-var--browser">&nbsp;</a>
+
+字符串。当前浏览器的名称，可能的值如下：
+
+* `'chrome'` - Chrome（谷歌浏览器）
+* `'safari'` - Safari（苹果浏览器）
+* `'firefox'` - Firefox（火狐浏览器）
+* `'opera'` - Opera 浏览器
+* `'uc'` - UC 浏览器
+* `'baidu-app'` - 百度客户端
+* `'baidu-browser'` - 百度浏览器
+* `'mqq'` - 手机 QQ 浏览器
+* `'miui'` - 小米浏览器
+* `'wechat'` - 微信
+* `'weibo'` - 微博
+* `'chrome-webview'` - 采用 Chrome 内核的 WebView
+
+此探测基于 UA 信息。
+
+### `_.ua.engine` <a name="js-var--engine">&nbsp;</a>
+
+字符串。当前浏览器的引擎（内核）名称，可能的值如下：
+
+* `'webkit'` - iOS 与新版 Android 浏览器的内核
+* `'chrome'` - Chrome 内核（新版 Android 浏览器与 Opera 的内核）
+* `'gecko'` - Firefox 的内核
+* `'presto'` - 旧版 Opera 的内核
+
+对于无法识别的引擎，其值一律为空字符串。
+
+此探测基于 UA 信息。
+
+### `_.ua.engineVersion` <a name="js-var--engineVersion">&nbsp;</a>
+
+字符串。当前浏览器的引擎（内核）版本。对于无法识别的引擎版本，其值一律为空字符串。
+
+此探测基于 UA 信息。
+
+#### 示例
+
+* `'533.1'` - 对 Android 2.2.2 内置浏览器引擎 WebKit 版本的探测结果。
+* `'43.0'` - 对 Chrome 43.0.2357.65 引擎版本的探测结果。
+* `''` - 对 Firefox 引擎版本的探测结果。

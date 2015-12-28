@@ -132,7 +132,7 @@ describe('UA', function () {
 			})
 			it('recognizes iphone_ios_00', function () {
 				var ua = _detect(iphone_ios_00)
-				expect(ua.osVersion).to.equal('0.0')
+				expect(ua.osVersion).to.equal('')
 			})
 			it('recognizes ipod_ios_99900', function () {
 				var ua = _detect(ipod_ios_99900)
@@ -140,7 +140,7 @@ describe('UA', function () {
 			})
 			it('recognizes ipad_ios_00', function () {
 				var ua = _detect(ipad_ios_00)
-				expect(ua.osVersion).to.equal('0.0')
+				expect(ua.osVersion).to.equal('')
 			})
 		})
 		describe('iOS Third-Party Browser', function () {
@@ -305,7 +305,7 @@ describe('UA', function () {
 				expect(!!ua.isMobileDevice).to.be.true
 				expect(!!ua.isIOS).to.be.false
 				expect(!!ua.isAndroid).to.be.true
-				expect(ua.osVersion).to.equal('0.0')
+				expect(ua.osVersion).to.equal('')
 				expect(ua.browser).to.equal('uc')
 				expect(ua.engine).to.equal('webkit')
 				expect(ua.engineVersion).to.equal('530')
@@ -327,7 +327,7 @@ describe('UA', function () {
 				expect(!!ua.isMobileDevice).to.be.true
 				expect(!!ua.isIOS).to.be.false
 				expect(!!ua.isAndroid).to.be.true
-				expect(ua.osVersion).to.equal('0.0')
+				expect(ua.osVersion).to.equal('')
 				expect(ua.browser).to.equal('firefox')
 				expect(ua.engine).to.equal('gecko')
 				expect(ua.engineVersion).to.equal('')
