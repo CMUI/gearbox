@@ -30,7 +30,7 @@
     "zepto.js": "1.*"
   },
   "devDependencies": {
-    "action": "0.3.1",
+    "action": "0.3.2",
     "underscore-template": "0.3.0",
     "underscore.string": "2.*",
     "mocha.css": "0.1.0",

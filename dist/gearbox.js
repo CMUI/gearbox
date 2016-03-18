@@ -544,7 +544,7 @@ var action = (function () {
 
 	// util
 	function _getActionName($elem) {
-		var result = $elem.data('action') || ''
+		var result = $elem.attr('data-action') || ''
 		if (!result) {
 			var href = $.trim($elem.attr('href'))
 			if (href && href.indexOf('#') === 0) result = href
@@ -621,7 +621,7 @@ var action = (function () {
 
 			/*
 			if (_actionList[actionName]) {
-				console.warn('[Action] The existed action `%s` has been overridden.', actionName)
+				console.warn('[Action] The existing action `%s` has been overwritten.', actionName)
 			}
 			*/
 
