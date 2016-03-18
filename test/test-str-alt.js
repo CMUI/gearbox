@@ -78,96 +78,96 @@ describe('String - Alternative to Underscore.string', function () {
 
 	describe('_.str.contains()', function () {
 		it('does basic functionality', function () {
-			expect(_.str.contains('foobar', 'bar')).to.be.true
-			expect(!_.str.contains('foobar', 'buzz')).to.be.true
-			expect(_.str.contains(12345, 34)).to.be.true
-			expect(!_.str.contains(12345, 6)).to.be.true
-			expect(!_.str.contains('', 34)).to.be.true
-			expect(!_.str.contains(null, 34)).to.be.true
-			expect(_.str.contains(null, '')).to.be.true
+			expect(_.str.contains('foobar', 'bar')).to.equal(true)
+			expect(!_.str.contains('foobar', 'buzz')).to.equal(true)
+			expect(_.str.contains(12345, 34)).to.equal(true)
+			expect(!_.str.contains(12345, 6)).to.equal(true)
+			expect(!_.str.contains('', 34)).to.equal(true)
+			expect(!_.str.contains(null, 34)).to.equal(true)
+			expect(_.str.contains(null, '')).to.equal(true)
 		})
 		it('supports additional param - position', function () {
-			expect(_.str.contains('foobar', 'bar', 1)).to.be.true
-			expect(_.str.contains('foobar', 'bar', 2)).to.be.true
-			expect(_.str.contains('foobar', 'bar', 3)).to.be.true
-			expect(_.str.contains('foobar', 'bar', 4)).to.be.false
+			expect(_.str.contains('foobar', 'bar', 1)).to.equal(true)
+			expect(_.str.contains('foobar', 'bar', 2)).to.equal(true)
+			expect(_.str.contains('foobar', 'bar', 3)).to.equal(true)
+			expect(_.str.contains('foobar', 'bar', 4)).to.equal(false)
 		})
 	})
 	describe('_.str.startsWith()', function () {
 		it('does basic functionality', function () {
-			expect(_.str.startsWith('foobar', 'foo')).to.be.true
-			expect(!_.str.startsWith('oobar', 'foo')).to.be.true
-			expect(_.str.startsWith('oobar', 'o')).to.be.true
-			expect(_.str.startsWith(12345, 123)).to.be.true
-			expect(!_.str.startsWith(2345, 123)).to.be.true
-			expect(_.str.startsWith('', '')).to.be.true
-			expect(_.str.startsWith(null, '')).to.be.true
-			expect(!_.str.startsWith(null, 'foo')).to.be.true
+			expect(_.str.startsWith('foobar', 'foo')).to.equal(true)
+			expect(!_.str.startsWith('oobar', 'foo')).to.equal(true)
+			expect(_.str.startsWith('oobar', 'o')).to.equal(true)
+			expect(_.str.startsWith(12345, 123)).to.equal(true)
+			expect(!_.str.startsWith(2345, 123)).to.equal(true)
+			expect(_.str.startsWith('', '')).to.equal(true)
+			expect(_.str.startsWith(null, '')).to.equal(true)
+			expect(!_.str.startsWith(null, 'foo')).to.equal(true)
 
-			expect(_.str.startsWith('-foobar', 'foo', 1)).to.be.true
-			expect(_.str.startsWith('foobar', 'foo', 0)).to.be.true
-			expect(!_.str.startsWith('foobar', 'foo', 1)).to.be.true
+			expect(_.str.startsWith('-foobar', 'foo', 1)).to.equal(true)
+			expect(_.str.startsWith('foobar', 'foo', 0)).to.equal(true)
+			expect(!_.str.startsWith('foobar', 'foo', 1)).to.equal(true)
 
-			expect(_.str.startsWith('Äpfel', 'Ä')).to.be.true
+			expect(_.str.startsWith('Äpfel', 'Ä')).to.equal(true)
 
-			expect(_.str.startsWith('hello', 'hell')).to.be.true
-			expect(_.str.startsWith('HELLO', 'HELL')).to.be.true
-			expect(_.str.startsWith('HELLO', 'hell')).to.be.false
-			expect(_.str.startsWith('HELLO', 'hell')).to.be.false
-			expect(_.str.startsWith('hello', 'hell', 0)).to.be.true
-			expect(_.str.startsWith('HELLO', 'HELL', 0)).to.be.true
-			expect(_.str.startsWith('HELLO', 'hell', 0)).to.be.false
-			expect(_.str.startsWith('HELLO', 'hell', 0)).to.be.false
-			expect(_.str.startsWith('HELLO')).to.be.false
-			expect(_.str.startsWith('undefined')).to.be.true
-			expect(_.str.startsWith('null', null)).to.be.true
-			expect(_.str.startsWith('hello', 'hell', -20)).to.be.true
-			expect(_.str.startsWith('hello', 'hell', 1)).to.be.false
-			expect(_.str.startsWith('hello', 'hell', 2)).to.be.false
-			expect(_.str.startsWith('hello', 'hell', 3)).to.be.false
-			expect(_.str.startsWith('hello', 'hell', 4)).to.be.false
-			expect(_.str.startsWith('hello', 'hell', 5)).to.be.false
-			expect(_.str.startsWith('hello', 'hell', 20)).to.be.false
+			expect(_.str.startsWith('hello', 'hell')).to.equal(true)
+			expect(_.str.startsWith('HELLO', 'HELL')).to.equal(true)
+			expect(_.str.startsWith('HELLO', 'hell')).to.equal(false)
+			expect(_.str.startsWith('HELLO', 'hell')).to.equal(false)
+			expect(_.str.startsWith('hello', 'hell', 0)).to.equal(true)
+			expect(_.str.startsWith('HELLO', 'HELL', 0)).to.equal(true)
+			expect(_.str.startsWith('HELLO', 'hell', 0)).to.equal(false)
+			expect(_.str.startsWith('HELLO', 'hell', 0)).to.equal(false)
+			expect(_.str.startsWith('HELLO')).to.equal(false)
+			expect(_.str.startsWith('undefined')).to.equal(true)
+			expect(_.str.startsWith('null', null)).to.equal(true)
+			expect(_.str.startsWith('hello', 'hell', -20)).to.equal(true)
+			expect(_.str.startsWith('hello', 'hell', 1)).to.equal(false)
+			expect(_.str.startsWith('hello', 'hell', 2)).to.equal(false)
+			expect(_.str.startsWith('hello', 'hell', 3)).to.equal(false)
+			expect(_.str.startsWith('hello', 'hell', 4)).to.equal(false)
+			expect(_.str.startsWith('hello', 'hell', 5)).to.equal(false)
+			expect(_.str.startsWith('hello', 'hell', 20)).to.equal(false)
 		});
 	})
 	describe('_.str.endsWith()', function () {
 		it('does basic functionality', function () {
-			expect(_.str.endsWith('foobar', 'bar')).to.be.true
-			expect(_.str.endsWith('foobarfoobar', 'bar')).to.be.true
-			expect(_.str.endsWith('foo', 'o')).to.be.true
-			expect(_.str.endsWith('foobar', 'bar')).to.be.true
-			expect(_.str.endsWith('00018-0000062.Plone.sdh264.1a7264e6912a91aa4a81b64dc5517df7b8875994.mp4', 'mp4')).to.be.true
-			expect(!_.str.endsWith('fooba', 'bar')).to.be.true
-			expect(_.str.endsWith(12345, 45)).to.be.true
-			expect(!_.str.endsWith(12345, 6)).to.be.true
-			expect(_.str.endsWith('', '')).to.be.true
-			expect(_.str.endsWith(null, '')).to.be.true
-			expect(!_.str.endsWith(null, 'foo')).to.be.true
+			expect(_.str.endsWith('foobar', 'bar')).to.equal(true)
+			expect(_.str.endsWith('foobarfoobar', 'bar')).to.equal(true)
+			expect(_.str.endsWith('foo', 'o')).to.equal(true)
+			expect(_.str.endsWith('foobar', 'bar')).to.equal(true)
+			expect(_.str.endsWith('00018-0000062.Plone.sdh264.1a7264e6912a91aa4a81b64dc5517df7b8875994.mp4', 'mp4')).to.equal(true)
+			expect(!_.str.endsWith('fooba', 'bar')).to.equal(true)
+			expect(_.str.endsWith(12345, 45)).to.equal(true)
+			expect(!_.str.endsWith(12345, 6)).to.equal(true)
+			expect(_.str.endsWith('', '')).to.equal(true)
+			expect(_.str.endsWith(null, '')).to.equal(true)
+			expect(!_.str.endsWith(null, 'foo')).to.equal(true)
 
-			expect(_.str.endsWith('foobar?', 'bar', 6)).to.be.true
-			expect(_.str.endsWith(12345, 34, 4)).to.be.true
-			expect(!_.str.endsWith(12345, 45, 4)).to.be.true
+			expect(_.str.endsWith('foobar?', 'bar', 6)).to.equal(true)
+			expect(_.str.endsWith(12345, 34, 4)).to.equal(true)
+			expect(!_.str.endsWith(12345, 45, 4)).to.equal(true)
 
-			expect(_.str.endsWith('foobä', 'ä')).to.be.true
+			expect(_.str.endsWith('foobä', 'ä')).to.equal(true)
 
-			expect(_.str.endsWith('vader', 'der')).to.be.true
-			expect(_.str.endsWith('VADER', 'DER')).to.be.true
-			expect(_.str.endsWith('VADER', 'der')).to.be.false
-			expect(_.str.endsWith('VADER', 'DeR')).to.be.false
-			expect(_.str.endsWith('VADER')).to.be.false
-			expect(_.str.endsWith('undefined')).to.be.true
-			expect(_.str.endsWith('null', null)).to.be.true
-			expect(_.str.endsWith('vader', 'der', 5)).to.be.true
-			expect(_.str.endsWith('VADER', 'DER', 5)).to.be.true
-			expect(_.str.endsWith('VADER', 'der', 5)).to.be.false
-			expect(_.str.endsWith('VADER', 'DER', 5)).to.be.true
-			expect(_.str.endsWith('VADER', 'der', 5)).to.be.false
-			expect(_.str.endsWith('vader', 'der', -20)).to.be.false
-			expect(_.str.endsWith('vader', 'der', 0)).to.be.false
-			expect(_.str.endsWith('vader', 'der', 1)).to.be.false
-			expect(_.str.endsWith('vader', 'der', 2)).to.be.false
-			expect(_.str.endsWith('vader', 'der', 3)).to.be.false
-			expect(_.str.endsWith('vader', 'der', 4)).to.be.false
+			expect(_.str.endsWith('vader', 'der')).to.equal(true)
+			expect(_.str.endsWith('VADER', 'DER')).to.equal(true)
+			expect(_.str.endsWith('VADER', 'der')).to.equal(false)
+			expect(_.str.endsWith('VADER', 'DeR')).to.equal(false)
+			expect(_.str.endsWith('VADER')).to.equal(false)
+			expect(_.str.endsWith('undefined')).to.equal(true)
+			expect(_.str.endsWith('null', null)).to.equal(true)
+			expect(_.str.endsWith('vader', 'der', 5)).to.equal(true)
+			expect(_.str.endsWith('VADER', 'DER', 5)).to.equal(true)
+			expect(_.str.endsWith('VADER', 'der', 5)).to.equal(false)
+			expect(_.str.endsWith('VADER', 'DER', 5)).to.equal(true)
+			expect(_.str.endsWith('VADER', 'der', 5)).to.equal(false)
+			expect(_.str.endsWith('vader', 'der', -20)).to.equal(false)
+			expect(_.str.endsWith('vader', 'der', 0)).to.equal(false)
+			expect(_.str.endsWith('vader', 'der', 1)).to.equal(false)
+			expect(_.str.endsWith('vader', 'der', 2)).to.equal(false)
+			expect(_.str.endsWith('vader', 'der', 3)).to.equal(false)
+			expect(_.str.endsWith('vader', 'der', 4)).to.equal(false)
 		});
 	})
 

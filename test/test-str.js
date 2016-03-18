@@ -7,90 +7,90 @@ describe('String', function () {
 					var arg
 					// normal email addr
 					arg = 'dev' + CHAR_AT + 'cmui.net'
-					expect(_.str.RE_EMAIL.test(arg)).to.be.true
+					expect(_.str.RE_EMAIL.test(arg)).to.equal(true)
 					// domain can be any level
 					arg = 'dev' + CHAR_AT + 'gearbox.by.cmui.net'
-					expect(_.str.RE_EMAIL.test(arg)).to.be.true
+					expect(_.str.RE_EMAIL.test(arg)).to.equal(true)
 					// future proof for unknown domain suffix
 					arg = 'dev' + CHAR_AT + 'gearbox.rocks'
-					expect(_.str.RE_EMAIL.test(arg)).to.be.true
+					expect(_.str.RE_EMAIL.test(arg)).to.equal(true)
 					// username can be numbers
 					arg = '007' + CHAR_AT + 'cmui.net'
-					expect(_.str.RE_EMAIL.test(arg)).to.be.true
+					expect(_.str.RE_EMAIL.test(arg)).to.equal(true)
 					// domain name can be numbers
 					arg = 'username' + CHAR_AT + '126.com'
-					expect(_.str.RE_EMAIL.test(arg)).to.be.true
+					expect(_.str.RE_EMAIL.test(arg)).to.equal(true)
 					// email can be in upper case
 					arg = 'DEV' + CHAR_AT + 'CMUI.NET'
-					expect(_.str.RE_EMAIL.test(arg)).to.be.true
+					expect(_.str.RE_EMAIL.test(arg)).to.equal(true)
 				})
 				it('recognizes bad value', function () {
 					var arg
 					// domain suffix need at least 2 letters
 					arg = 'a' + CHAR_AT + 'a.a'
-					expect(_.str.RE_EMAIL.test(arg)).to.be.false
+					expect(_.str.RE_EMAIL.test(arg)).to.equal(false)
 					// domain suffix cannot be numbers
 					arg = '007' + CHAR_AT + '007.007'
-					expect(_.str.RE_EMAIL.test(arg)).to.be.false
+					expect(_.str.RE_EMAIL.test(arg)).to.equal(false)
 					// domain cannot be ip addr
 					arg = 'a' + CHAR_AT + '192.168.10.10'
-					expect(_.str.RE_EMAIL.test(arg)).to.be.false
+					expect(_.str.RE_EMAIL.test(arg)).to.equal(false)
 				})
 			})
 			describe('_.str.RE_MOBILE', function () {
 				it('matches mobile number', function () {
 					var arg
 					arg = '13000000000'
-					expect(_.str.RE_MOBILE.test(arg)).to.be.true
+					expect(_.str.RE_MOBILE.test(arg)).to.equal(true)
 					arg = '13322558899'
-					expect(_.str.RE_MOBILE.test(arg)).to.be.true
+					expect(_.str.RE_MOBILE.test(arg)).to.equal(true)
 					arg = '15966558877'
-					expect(_.str.RE_MOBILE.test(arg)).to.be.true
+					expect(_.str.RE_MOBILE.test(arg)).to.equal(true)
 					arg = '18055668899'
-					expect(_.str.RE_MOBILE.test(arg)).to.be.true
+					expect(_.str.RE_MOBILE.test(arg)).to.equal(true)
 					arg = 18978963214
-					expect(_.str.RE_MOBILE.test(arg)).to.be.true
+					expect(_.str.RE_MOBILE.test(arg)).to.equal(true)
 				})
 				it('recognizes bad value', function () {
 					var arg
 					arg = '12000000000'
-					expect(_.str.RE_MOBILE.test(arg)).to.be.false
+					expect(_.str.RE_MOBILE.test(arg)).to.equal(false)
 					arg = '1332255889'
-					expect(_.str.RE_MOBILE.test(arg)).to.be.false
+					expect(_.str.RE_MOBILE.test(arg)).to.equal(false)
 					arg = '133-2255-8899'
-					expect(_.str.RE_MOBILE.test(arg)).to.be.false
+					expect(_.str.RE_MOBILE.test(arg)).to.equal(false)
 					arg = 'foobar'
-					expect(_.str.RE_MOBILE.test(arg)).to.be.false
+					expect(_.str.RE_MOBILE.test(arg)).to.equal(false)
 				})
 			})
 			describe('_.str.RE_POSTCODE', function () {
 				it('matches postcode', function () {
 					var arg
 					arg = '000000'
-					expect(_.str.RE_POSTCODE.test(arg)).to.be.true
+					expect(_.str.RE_POSTCODE.test(arg)).to.equal(true)
 					arg = '001100'
-					expect(_.str.RE_POSTCODE.test(arg)).to.be.true
+					expect(_.str.RE_POSTCODE.test(arg)).to.equal(true)
 					arg = '220000'
-					expect(_.str.RE_POSTCODE.test(arg)).to.be.true
+					expect(_.str.RE_POSTCODE.test(arg)).to.equal(true)
 					arg = '000022'
-					expect(_.str.RE_POSTCODE.test(arg)).to.be.true
+					expect(_.str.RE_POSTCODE.test(arg)).to.equal(true)
 					arg = '336699'
-					expect(_.str.RE_POSTCODE.test(arg)).to.be.true
+					expect(_.str.RE_POSTCODE.test(arg)).to.equal(true)
 					arg = 114477
-					expect(_.str.RE_POSTCODE.test(arg)).to.be.true
+					expect(_.str.RE_POSTCODE.test(arg)).to.equal(true)
 				})
 				it('recognizes bad value', function () {
 					var arg
 					arg = '11111'
-					expect(_.str.RE_POSTCODE.test(arg)).to.be.false
+					expect(_.str.RE_POSTCODE.test(arg)).to.equal(false)
 					arg = '5555555'
-					expect(_.str.RE_POSTCODE.test(arg)).to.be.false
+					expect(_.str.RE_POSTCODE.test(arg)).to.equal(false)
 					arg = '22-55-66'
-					expect(_.str.RE_POSTCODE.test(arg)).to.be.false
+					expect(_.str.RE_POSTCODE.test(arg)).to.equal(false)
 					arg = 077777
-					expect(_.str.RE_POSTCODE.test(arg)).to.be.false
+					expect(_.str.RE_POSTCODE.test(arg)).to.equal(false)
 					arg = 'foobar'
-					expect(_.str.RE_POSTCODE.test(arg)).to.be.false
+					expect(_.str.RE_POSTCODE.test(arg)).to.equal(false)
 				})
 			})
 		})
@@ -116,41 +116,41 @@ describe('String', function () {
 			it('returns `true` if a string starts with `#`', function () {
 				var arg
 				arg = 'foo'
-				expect(_.str.isHash(arg)).to.be.false
+				expect(_.str.isHash(arg)).to.equal(false)
 				arg = '#foo'
-				expect(_.str.isHash(arg)).to.be.true
+				expect(_.str.isHash(arg)).to.equal(true)
 				arg = '###bar'
-				expect(_.str.isHash(arg)).to.be.true
+				expect(_.str.isHash(arg)).to.equal(true)
 				arg = '#!foobar'
-				expect(_.str.isHash(arg)).to.be.true
+				expect(_.str.isHash(arg)).to.equal(true)
 			})
 			it('ignores initial spaces', function () {
 				var arg
 				arg = '  foo  '
-				expect(_.str.isHash(arg)).to.be.false
+				expect(_.str.isHash(arg)).to.equal(false)
 				arg = '  #foo  '
-				expect(_.str.isHash(arg)).to.be.true
+				expect(_.str.isHash(arg)).to.equal(true)
 				arg = '  ###bar  '
-				expect(_.str.isHash(arg)).to.be.true
+				expect(_.str.isHash(arg)).to.equal(true)
 				arg = '  #!foobar  '
-				expect(_.str.isHash(arg)).to.be.true
+				expect(_.str.isHash(arg)).to.equal(true)
 			})
 			it('returns `false` if bad type of param', function () {
 				var arg
 				arg = undefined
-				expect(_.str.isHash(arg)).to.be.false
+				expect(_.str.isHash(arg)).to.equal(false)
 				arg = null
-				expect(_.str.isHash(arg)).to.be.false
+				expect(_.str.isHash(arg)).to.equal(false)
 				arg = 0
-				expect(_.str.isHash(arg)).to.be.false
+				expect(_.str.isHash(arg)).to.equal(false)
 				arg = true
-				expect(_.str.isHash(arg)).to.be.false
+				expect(_.str.isHash(arg)).to.equal(false)
 				arg = {}
-				expect(_.str.isHash(arg)).to.be.false
+				expect(_.str.isHash(arg)).to.equal(false)
 				arg = []
-				expect(_.str.isHash(arg)).to.be.false
+				expect(_.str.isHash(arg)).to.equal(false)
 				arg = function () {}
-				expect(_.str.isHash(arg)).to.be.false
+				expect(_.str.isHash(arg)).to.equal(false)
 			})
 		})
 		describe('_.str.stripHash()', function () {
@@ -207,7 +207,7 @@ describe('String', function () {
 				expect(_.str.toFloat('-2e3')).to.equal(-2000)
 				expect(_.str.toFloat('1.23foo')).to.equal(1.23)
 				expect(_.str.toFloat('-1.23foo')).to.equal(-1.23)
-				expect(isNaN(_.str.toFloat('foo123'))).to.be.true
+				expect(isNaN(_.str.toFloat('foo123'))).to.equal(true)
 			})
 		})
 		describe('_.str.toInt()', function () {
@@ -223,7 +223,7 @@ describe('String', function () {
 				expect(_.str.toInt('-2e100')).to.equal(-2e100)
 				expect(_.str.toInt('1.23foo')).to.equal(1)
 				expect(_.str.toInt('-1.23foo')).to.equal(-1)
-				expect(isNaN(_.str.toInt('foo123'))).to.be.true
+				expect(isNaN(_.str.toInt('foo123'))).to.equal(true)
 			})
 		})
 		describe('_.str.toFixed()', function () {
@@ -239,7 +239,7 @@ describe('String', function () {
 				expect(_.str.toFixed('-2e3', 3)).to.equal(-2000)
 				expect(_.str.toFixed('1.23foo', 1)).to.equal(1.2)
 				expect(_.str.toFixed('-1.23foo', 1)).to.equal(-1.2)
-				expect(isNaN(_.str.toFixed('foo123'))).to.be.true
+				expect(isNaN(_.str.toFixed('foo123'))).to.equal(true)
 			})
 		})
 	})

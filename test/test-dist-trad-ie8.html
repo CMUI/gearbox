@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>UT (Trad) - Gearbox</title>
+<title>UT (Trad) - Gearbox - For IE8</title>
 <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
 <link rel="stylesheet" href="../bower_components/mocha/mocha.css">
 <link rel="stylesheet" href="../bower_components/mocha.css/src/mocha.css">
@@ -15,7 +15,7 @@
 <div id="mocha"></div>
 <!-- deps -->
 <script src="../bower_components/underscore/underscore.js"></script>
-<script src="../bower_components/zepto.js/dist/zepto.js"></script>
+<script src="../bower_components/jquery/dist/jquery.js"></script>
 <!-- testing framework -->
 <script src="../bower_components/mocha/mocha.js"></script>
 <script src="expect.js"></script>
@@ -35,6 +35,12 @@ mocha.checkLeaks()
 <script src="test-action.js"></script>
 <script src="test-template.js"></script>
 <!-- init -->
-<script>mocha.run()</script>
+<script>
+$(function(){
+	mocha
+		.globals(['sandbox'])
+		.run()
+})
+</script>
 </body>
 </html>
