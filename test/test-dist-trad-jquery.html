@@ -2,14 +2,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>UT (Trad) - Gearbox - For IE8</title>
+<title>UT (Trad) (jQuery) - Gearbox</title>
 <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
 <link rel="stylesheet" href="../bower_components/mocha/mocha.css">
 <link rel="stylesheet" href="../bower_components/mocha.css/src/mocha.css">
 </head>
 <body>
 <header>
-	<h1>UT (Trad) - Gearbox</h1>
+	<h1>UT (Trad) (jQuery) - Gearbox</h1>
 	<p><a href="https://github.com/CMUI/gearbox">View on GitHub</a></p>
 </header>
 <div id="mocha"></div>
@@ -18,7 +18,7 @@
 <script src="../bower_components/jquery/dist/jquery.js"></script>
 <!-- testing framework -->
 <script src="../bower_components/mocha/mocha.js"></script>
-<script src="expect.js"></script>
+<script src="../bower_components/expect.js/index.js"></script>
 <script>
 mocha.setup('bdd')
 mocha.checkLeaks()
@@ -36,11 +36,10 @@ mocha.checkLeaks()
 <script src="test-template.js"></script>
 <!-- init -->
 <script>
-$(function(){
-	mocha
-		.globals(['sandbox'])
-		.run()
-})
+// IE 会把 iframe 的 ID 映射为 window 上的一个属性, 导致全局变量泄漏.
+// 因此需要在 mocha 中提前注册一下 iframe 的 ID.
+mocha.globals(['sandbox'])
+mocha.run()
 </script>
 </body>
 </html>

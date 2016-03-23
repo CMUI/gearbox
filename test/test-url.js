@@ -3,11 +3,11 @@ describe('URL', function () {
 		describe('_.url.parseQuery()', function () {
 			it('parses empty str to empty object', function () {
 				var query = ''
-				expect(_.url.parseQuery(query)).to.deepEqual({})
+				expect(_.url.parseQuery(query)).to.eql({})
 			})
 			it('parses key/value pairs to object', function () {
 				var query = 'foo=1&bar=2&alice=&bob&chris=3'
-				expect(_.url.parseQuery(query)).to.deepEqual({
+				expect(_.url.parseQuery(query)).to.eql({
 					foo: '1',
 					bar: '2',
 					alice: '',
@@ -17,7 +17,7 @@ describe('URL', function () {
 			})
 			it('decodes keys and values in query string', function () {
 				var query = 'foo=%20&bar=%2B&blah%3Dblah=1'
-				expect(_.url.parseQuery(query)).to.deepEqual({
+				expect(_.url.parseQuery(query)).to.eql({
 					foo: ' ',
 					bar: '+',
 					'blah=blah': '1'
@@ -26,45 +26,45 @@ describe('URL', function () {
 			it('returns empty object if bad type of param', function () {
 				var arg
 				arg = undefined
-				expect(_.url.parseQuery(arg)).to.deepEqual({})
+				expect(_.url.parseQuery(arg)).to.eql({})
 				arg = null
-				expect(_.url.parseQuery(arg)).to.deepEqual({})
+				expect(_.url.parseQuery(arg)).to.eql({})
 				arg = 0
-				expect(_.url.parseQuery(arg)).to.deepEqual({})
+				expect(_.url.parseQuery(arg)).to.eql({})
 				arg = true
-				expect(_.url.parseQuery(arg)).to.deepEqual({})
+				expect(_.url.parseQuery(arg)).to.eql({})
 				arg = {}
-				expect(_.url.parseQuery(arg)).to.deepEqual({})
+				expect(_.url.parseQuery(arg)).to.eql({})
 				arg = []
-				expect(_.url.parseQuery(arg)).to.deepEqual({})
+				expect(_.url.parseQuery(arg)).to.eql({})
 				arg = it
-				expect(_.url.parseQuery(arg)).to.deepEqual({})
+				expect(_.url.parseQuery(arg)).to.eql({})
 			})
 		})
 
-		var registeredTests={}
-		var src="sandbox.html"
+		var registeredTests = {}
+		var src = "sandbox.html"
 		var $iframeSandbox
 
 		function _getRandomStr() {
 			return (Date.now() + Math.random()).toString(36)
 		}
 
-		function _initSandbox(){
+		function _initSandbox() {
 			$iframeSandbox = $('<iframe></iframe>')
-			.attr({
-				src: 'about:blank',
-				id: "sandbox",
-				frameborder: 0
-			})
-			.css({
-				display: 'block',
-				height: 0
-			})
-			.appendTo(document.body)
+				.attr({
+					src: 'about:blank',
+					id: "sandbox",
+					frameborder: 0
+				})
+				.css({
+					display: 'block',
+					height: 0
+				})
+				.appendTo(document.body)
 		}
 
-		function _cleanSandbox(){
+		function _cleanSandbox() {
 			$iframeSandbox.remove()
 		}
 
@@ -72,33 +72,33 @@ describe('URL', function () {
 			return $iframeSandbox[0].contentWindow
 		}
 
-		function _startSandboxTest(url,testObj,fn) {
+		function _startSandboxTest(url, testObj, fn) {
 			var testId = _getRandomStr()
 			registeredTests[testId] = fn
-			$iframeSandbox.attr('src', src + '?testId=' + testId + "&&" +url)
-			var keyArr=[]
-			for(var key in testObj){
+			$iframeSandbox.attr('src', src + '?testId=' + testId + "&&" + url)
+			var keyArr = []
+			for (var key in testObj) {
 				keyArr.push(key)
 			}
-			_getSandboxWindow().name=keyArr.join(";=;")
+			_getSandboxWindow().name = keyArr.join(";=;")
 		}
 
 		function _listenSandboxMessage() {
-			var handler=function (ev) {
+			var handler = function (ev) {
 				var data = JSON.parse(ev.data || '') || {}
 				var fn = registeredTests[data.testId]
-				if (_.isFunction(fn)) fn(data.content,data.undefinedVar)
+				if (_.isFunction(fn)) fn(data.content, data.undefinedVar)
 			}
-			if(window.addEventListener){
+			if (window.addEventListener) {
 				window.addEventListener('message', handler, false)
-			}else{
-				if(window.attachEvent){
-					window.attachEvent('onmessage',handler)
+			} else {
+				if (window.attachEvent) {
+					window.attachEvent('onmessage', handler)
 				}
 			}
 		}
 
-		function _postMessageCB(result,expectedResult){
+		function _postMessageCB(result, expectedResult) {
 
 		}
 
@@ -106,7 +106,7 @@ describe('URL', function () {
 			var _state = history.state || null
 			var _url = location.href
 
-			before(function(){
+			before(function () {
 				_initSandbox()
 				_listenSandboxMessage()
 			})
@@ -121,36 +121,36 @@ describe('URL', function () {
 
 				var url
 				url = 'foo=1&bar=2&alice=&bob&chris=3'
-				var expectedResult={
-					"foo":"1",
-					"bar":"2",
-					"alice":"",
-					"bob":"",
-					"chris":"3"
+				var expectedResult = {
+					"foo": "1",
+					"bar": "2",
+					"alice": "",
+					"bob": "",
+					"chris": "3"
 				}
-				_startSandboxTest(url,expectedResult,function(result,undefinedVar){
-					for(var item in result){
+				_startSandboxTest(url, expectedResult, function (result, undefinedVar) {
+					for (var item in result) {
 						expect(result[item]).to.equal(expectedResult[item])
 					}
-					for(var i=0;i<undefinedVar.length;i++){
+					for (var i = 0; i < undefinedVar.length; i++) {
 						expect(undefined).to.equal(expectedResult[undefinedVar[i]])
 					}
 					done()
 				})
 			})
 			it('returns `undefined` if getting a missing param key 1', function (done) {
-				
+
 				this.timeout(5000)
 				var url
 				url = ''
-				var expectedResult={
-					"foo":undefined
+				var expectedResult = {
+					"foo": undefined
 				}
-				_startSandboxTest(url,expectedResult,function(result,undefinedVar){
-					for(var item in result){
+				_startSandboxTest(url, expectedResult, function (result, undefinedVar) {
+					for (var item in result) {
 						expect(result[item]).to.equal(expectedResult[item])
 					}
-					for(var i=0;i<undefinedVar.length;i++){
+					for (var i = 0; i < undefinedVar.length; i++) {
 						expect(undefined).to.equal(expectedResult[undefinedVar[i]])
 					}
 					done()
@@ -160,14 +160,14 @@ describe('URL', function () {
 				this.timeout(5000)
 				var url
 				url = 'bar=1'
-				var expectedResult={
-					"blah":undefined				
+				var expectedResult = {
+					"blah": undefined
 				}
-				_startSandboxTest(url,expectedResult,function(result,undefinedVar){
-					for(var item in result){
+				_startSandboxTest(url, expectedResult, function (result, undefinedVar) {
+					for (var item in result) {
 						expect(result[item]).to.equal(expectedResult[item])
 					}
-					for(var i=0;i<undefinedVar.length;i++){
+					for (var i = 0; i < undefinedVar.length; i++) {
 						expect(undefined).to.equal(expectedResult[undefinedVar[i]])
 					}
 					done()
@@ -194,16 +194,16 @@ describe('URL', function () {
 				this.timeout(5000)
 				var url
 				url = 'foo=%20&bar=%2B&blah%3Dblah=1'
-				var expectedResult={
-					"foo":" ",
-					"bar":"+",
-					"blah=blah":"1"
+				var expectedResult = {
+					"foo": " ",
+					"bar": "+",
+					"blah=blah": "1"
 				}
-				_startSandboxTest(url,expectedResult,function(result,undefinedVar){
-					for(var item in result){
+				_startSandboxTest(url, expectedResult, function (result, undefinedVar) {
+					for (var item in result) {
 						expect(result[item]).to.equal(expectedResult[item])
 					}
-					for(var i=0;i<undefinedVar.length;i++){
+					for (var i = 0; i < undefinedVar.length; i++) {
 						expect(undefined).to.equal(expectedResult[undefinedVar[i]])
 					}
 					done()
@@ -213,16 +213,16 @@ describe('URL', function () {
 				this.timeout(5000)
 				var url
 				url = ''
-				var expectedResult={
-					"foo":undefined,
-					"bar":undefined,
-					"blah=blah":undefined
+				var expectedResult = {
+					"foo": undefined,
+					"bar": undefined,
+					"blah=blah": undefined
 				}
-				_startSandboxTest(url,expectedResult,function(result,undefinedVar){
-					for(var item in result){
+				_startSandboxTest(url, expectedResult, function (result, undefinedVar) {
+					for (var item in result) {
 						expect(result[item]).to.equal(expectedResult[item])
 					}
-					for(var i=0;i<undefinedVar.length;i++){
+					for (var i = 0; i < undefinedVar.length; i++) {
 						expect(undefined).to.equal(expectedResult[undefinedVar[i]])
 					}
 					done()
@@ -232,16 +232,16 @@ describe('URL', function () {
 				this.timeout(5000)
 				var url
 				url = 'foo=%20&bar=%2B&blah%3Dblah=1'
-				var expectedResult={
-					"foo":" ",
-					"bar":"+",
-					"blah=blah":"1"
+				var expectedResult = {
+					"foo": " ",
+					"bar": "+",
+					"blah=blah": "1"
 				}
-				_startSandboxTest(url,expectedResult,function(result,undefinedVar){
-					for(var item in result){
+				_startSandboxTest(url, expectedResult, function (result, undefinedVar) {
+					for (var item in result) {
 						expect(result[item]).to.equal(expectedResult[item])
 					}
-					for(var i=0;i<undefinedVar.length;i++){
+					for (var i = 0; i < undefinedVar.length; i++) {
 						expect(undefined).to.equal(expectedResult[undefinedVar[i]])
 					}
 					done()

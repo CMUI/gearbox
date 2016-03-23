@@ -49,7 +49,7 @@ describe('(Root)', function () {
 		it('does basic functionality same as $()', function () {
 			var elem = document.getElementById('mocha')
 			var obj = _.$(elem)
-			expect(obj).to.deepEqual($(elem))
+			expect(obj).to.eql($(elem))
 		})
 		it('returns directly if already $collection', function () {
 			var obj = $('#mocha')
