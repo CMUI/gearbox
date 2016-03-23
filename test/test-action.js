@@ -54,11 +54,11 @@ describe('Action', function () {
 	describe('DOM binding', function () {
 		//polyfill
 		if (!Date.now) {
-		  Date.now = function now() {
-		    return new Date().getTime();
-		  };
+			Date.now = function now() {
+				return new Date().getTime();
+			};
 		}
-		
+
 		var $wrapper, $link
 		var actionName, randomKey
 		before(function () {

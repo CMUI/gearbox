@@ -45,7 +45,7 @@ describe('String - Alternative to Underscore.string', function () {
 			expect(_.str.ltrim('ffooff', 'f'), 'ooff')
 
 			expect(_.str.ltrim('_-foobar-_', '_-'), 'foobar-_')
-			
+
 			expect(_.str.ltrim(123, 1), '23')
 		})
 		it('doesn\'t remove inner spaces', function () {

@@ -59,23 +59,25 @@ describe('Template', function () {
 			// dummy script elements
 			var $elem1
 			var $elem2
-			function prepareDummyScript() {
-				var body= document.getElementsByTagName('body')[0]; 
-				var script1= document.createElement('script'); 
-				script1.type= SCRIPT_TYPE; 
-				script1.id=PREFIX + TEMPLATE_ELEM_ID_1;
-				script1.text= templateCode1; 
-				body.appendChild(script1); 
 
-				var script2= document.createElement('script'); 
-				script2.type= SCRIPT_TYPE; 
-				script2.id=PREFIX + TEMPLATE_ELEM_ID_2;
-				script2.text= templateCode2; 
-				body.appendChild(script2); 
+			function prepareDummyScript() {
+				var body = document.getElementsByTagName('body')[0]
+				var script1 = document.createElement('script')
+				script1.type = SCRIPT_TYPE
+				script1.id = PREFIX + TEMPLATE_ELEM_ID_1
+				script1.text = templateCode1
+				body.appendChild(script1)
+
+				var script2 = document.createElement('script')
+				script2.type = SCRIPT_TYPE
+				script2.id = PREFIX + TEMPLATE_ELEM_ID_2
+				script2.text = templateCode2
+				body.appendChild(script2)
 			}
+
 			function destroyDummyScript() {
-				$elem1=$("#"+PREFIX + TEMPLATE_ELEM_ID_1);
-				$elem2=$("#"+PREFIX + TEMPLATE_ELEM_ID_2);
+				$elem1 = $("#" + PREFIX + TEMPLATE_ELEM_ID_1)
+				$elem2 = $("#" + PREFIX + TEMPLATE_ELEM_ID_2)
 				$elem1.remove()
 				$elem2.remove()
 			}
