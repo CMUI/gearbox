@@ -61,7 +61,7 @@ describe('Template', function () {
 			var $elem2
 
 			function prepareDummyScript() {
-				var body = document.getElementsByTagName('body')[0]
+				var body = document.body
 				var script1 = document.createElement('script')
 				script1.type = SCRIPT_TYPE
 				script1.id = PREFIX + TEMPLATE_ELEM_ID_1
