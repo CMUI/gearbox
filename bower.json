@@ -30,11 +30,12 @@
     "zepto.js": "1.*"
   },
   "devDependencies": {
+    "jquery": "*",
     "action": "0.3.2",
     "underscore-template": "0.3.0",
     "underscore.string": "2.*",
     "mocha.css": "0.1.0",
     "mocha": "1.*",
-    "chai": "1.*"
+    "expect.js": "^0.3.1"
   }
 }

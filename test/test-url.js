@@ -3,11 +3,11 @@ describe('URL', function () {
 		describe('_.url.parseQuery()', function () {
 			it('parses empty str to empty object', function () {
 				var query = ''
-				expect(_.url.parseQuery(query)).to.deep.equal({})
+				expect(_.url.parseQuery(query)).to.eql({})
 			})
 			it('parses key/value pairs to object', function () {
 				var query = 'foo=1&bar=2&alice=&bob&chris=3'
-				expect(_.url.parseQuery(query)).to.deep.equal({
+				expect(_.url.parseQuery(query)).to.eql({
 					foo: '1',
 					bar: '2',
 					alice: '',
@@ -17,7 +17,7 @@ describe('URL', function () {
 			})
 			it('decodes keys and values in query string', function () {
 				var query = 'foo=%20&bar=%2B&blah%3Dblah=1'
-				expect(_.url.parseQuery(query)).to.deep.equal({
+				expect(_.url.parseQuery(query)).to.eql({
 					foo: ' ',
 					bar: '+',
 					'blah=blah': '1'
@@ -26,65 +26,163 @@ describe('URL', function () {
 			it('returns empty object if bad type of param', function () {
 				var arg
 				arg = undefined
-				expect(_.url.parseQuery(arg)).to.deep.equal({})
+				expect(_.url.parseQuery(arg)).to.eql({})
 				arg = null
-				expect(_.url.parseQuery(arg)).to.deep.equal({})
+				expect(_.url.parseQuery(arg)).to.eql({})
 				arg = 0
-				expect(_.url.parseQuery(arg)).to.deep.equal({})
+				expect(_.url.parseQuery(arg)).to.eql({})
 				arg = true
-				expect(_.url.parseQuery(arg)).to.deep.equal({})
+				expect(_.url.parseQuery(arg)).to.eql({})
 				arg = {}
-				expect(_.url.parseQuery(arg)).to.deep.equal({})
+				expect(_.url.parseQuery(arg)).to.eql({})
 				arg = []
-				expect(_.url.parseQuery(arg)).to.deep.equal({})
+				expect(_.url.parseQuery(arg)).to.eql({})
 				arg = it
-				expect(_.url.parseQuery(arg)).to.deep.equal({})
+				expect(_.url.parseQuery(arg)).to.eql({})
 			})
 		})
 
 		describe('_.url.getParam()', function () {
-			var _state = history.state || null
-			var _url = location.href
+			var registeredTests = {}
+			var SANDBOX_FILE = '_sandbox.html'
+			var DUMMY_SRC = 'about:blank'
+			var $sandbox
+
+			function _getRandomStr() {
+				return (new Date().getTime() + Math.random()).toString(36)
+			}
+
+			// old IE don't support `history.replaceState()`, so we need a sandbox to run tests.
+			function _initSandbox() {
+				$sandbox = $('<iframe></iframe>')
+					.attr({
+						src: DUMMY_SRC,
+						id: 'sandbox',
+						frameborder: 0
+					})
+					.css({
+						display: 'block',
+						visibility: 'visible',
+						height: 0
+					})
+					.appendTo(document.body)
+			}
+			function _resetSandbox() {
+				$sandbox.attr('src', DUMMY_SRC)
+			}
+			function _destroySandbox() {
+				$sandbox.remove()
+			}
+			function _getSandboxWindow() {
+				return $sandbox[0].contentWindow
+			}
+			function _startSandboxTest(queryString, keysToBeTested, fn) {
+				var testId = _getRandomStr()
+				registeredTests[testId] = fn
+				// set url to sandbox, this url will be tested when sandbox is ready
+				$sandbox.attr('src', SANDBOX_FILE + '?' + queryString)
+				// send test conditions to sandbox via `window.name`
+				_getSandboxWindow().name = JSON.stringify({
+					keysToBeTested: keysToBeTested,
+					testId: testId
+				})
+			}
+			function _listenSandboxMessage() {
+				var handler = function (ev) {
+					// recover complete data
+					var data = JSON.parse(ev.data || '{}')
+					var result = data.result || {}
+					_.each(data.emptyKeys || [], function (item) {
+						result[item] = undefined
+					})
+
+					var fn = registeredTests[data.testId]
+					if (_.isFunction(fn)) fn(result)
+				}
+				// note: `typeof window.attachEvent` returns 'object'
+				if ('attachEvent' in window) {
+					window.attachEvent('onmessage', handler)
+				} else {
+					window.addEventListener('message', handler, false)
+				}
+			}
+
+			before(function () {
+				_initSandbox()
+				_listenSandboxMessage()
+			})
 			after(function () {
-				history.replaceState(_state, null, _url)
+				_destroySandbox()
 			})
-			it('does basic functionality', function () {
-				var url
-				url = '?' + 'foo=1&bar=2&alice=&bob&chris=3'
-				history.replaceState(_state, null, url)
-				expect(_.url.getParam('foo')).to.equal('1')
-				expect(_.url.getParam('bar')).to.equal('2')
-				expect(_.url.getParam('alice')).to.equal('')
-				expect(_.url.getParam('bob')).to.equal('')
-				expect(_.url.getParam('chris')).to.equal('3')
+			afterEach(function () {
+				_resetSandbox()
 			})
-			it('returns `undefined` if getting a missing param key', function () {
-				var url
-				url = '?'
-				history.replaceState(_state, null, url)
-				expect(_.url.getParam('foo')).to.be.undefined
-				url = '?bar=1'
-				history.replaceState(_state, null, url)
-				expect(_.url.getParam('blah')).to.be.undefined
+
+			it('does basic functionality', function (done) {
+				this.timeout(5000)
+				var queryString = 'foo=1&bar=2&alice=&bob&chris=3'
+				var expectedResult = {
+					'foo': '1',
+					'bar': '2',
+					'alice': '',
+					'bob': '',
+					'chris': '3'
+				}
+				var keysToBeTested = _.keys(expectedResult)
+				_startSandboxTest(queryString, keysToBeTested, function (result) {
+					expect(result).to.eql(expectedResult)
+					done()
+				})
+			})
+			it('returns `undefined` if query string is empty', function (done) {
+				this.timeout(5000)
+				var queryString = ''
+				var expectedResult = {
+					"foo": undefined,
+					"bar": undefined
+				}
+				var keysToBeTested = _.keys(expectedResult)
+				_startSandboxTest(queryString, keysToBeTested, function (result) {
+					expect(result).to.eql(expectedResult)
+					done()
+				})
+			})
+			it('returns `undefined` if getting a missing param key', function (done) {
+				this.timeout(5000)
+				var queryString = 'bar=1'
+				var expectedResult = {
+					"blah": undefined
+				}
+				var keysToBeTested = _.keys(expectedResult)
+				_startSandboxTest(queryString, keysToBeTested, function (result) {
+					expect(result).to.eql(expectedResult)
+					done()
+				})
 			})
 			it('returns `false` if bad type of param', function () {
 				var arg
 				arg = undefined
-				expect(_.url.getParam(arg)).to.be.false
+				expect(_.url.getParam(arg)).to.equal(false)
 				arg = null
-				expect(_.url.getParam(arg)).to.be.false
+				expect(_.url.getParam(arg)).to.equal(false)
 				arg = 0
-				expect(_.url.getParam(arg)).to.be.false
+				expect(_.url.getParam(arg)).to.equal(false)
 				arg = true
-				expect(_.url.getParam(arg)).to.be.false
+				expect(_.url.getParam(arg)).to.equal(false)
 				arg = {}
-				expect(_.url.getParam(arg)).to.be.false
+				expect(_.url.getParam(arg)).to.equal(false)
 				arg = []
-				expect(_.url.getParam(arg)).to.be.false
+				expect(_.url.getParam(arg)).to.equal(false)
 				arg = it
-				expect(_.url.getParam(arg)).to.be.false
+				expect(_.url.getParam(arg)).to.equal(false)
 			})
 			it('re-parses if url changed', function () {
+				// skip this test case on ie9-
+				if (!('replaceState' in history)) return
+
+				var _state = history.state || null
+				var _url = location.href
+
 				var url
 				url = '?' + 'foo=%20&bar=%2B&blah%3Dblah=1'
 				history.replaceState(_state, null, url)
@@ -101,6 +199,9 @@ describe('URL', function () {
 				expect(_.url.getParam('foo')).to.equal(' ')
 				expect(_.url.getParam('bar')).to.equal('+')
 				expect(_.url.getParam('blah=blah')).to.equal('1')
+
+				// restore url
+				history.replaceState(_state, null, _url)
 			})
 		})
 

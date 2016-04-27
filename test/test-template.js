@@ -56,36 +56,38 @@ describe('Template', function () {
 			})
 		})
 		describe('_.template.render()', function () {
-			// dummy script elements
-			var $elem1
-			var $elem2
-			function prepareDummyScript() {
-				$elem1 = $('<script/>', {
-					type: SCRIPT_TYPE,
-					id: PREFIX + TEMPLATE_ELEM_ID_1
-				}).text(templateCode1).appendTo(_.dom.$body)
-				$elem2 = $('<script/>', {
-					type: SCRIPT_TYPE,
-					id: PREFIX + TEMPLATE_ELEM_ID_2
-				}).text(templateCode2).appendTo(_.dom.$body)
+			function _prepareDummyScript() {
+				var body = document.body
+				var script1 = document.createElement('script')
+				script1.type = SCRIPT_TYPE
+				script1.id = PREFIX + TEMPLATE_ELEM_ID_1
+				script1.text = templateCode1
+				body.appendChild(script1)
+
+				var script2 = document.createElement('script')
+				script2.type = SCRIPT_TYPE
+				script2.id = PREFIX + TEMPLATE_ELEM_ID_2
+				script2.text = templateCode2
+				body.appendChild(script2)
 			}
-			function destroyDummyScript() {
-				$elem1.remove()
-				$elem2.remove()
+			function _destroyDummyScript() {
+				$("#" + PREFIX + TEMPLATE_ELEM_ID_1).remove()
+				$("#" + PREFIX + TEMPLATE_ELEM_ID_2).remove()
+			}
+			function _cleanStr(str) {
+				str = String(str)
+				return str.replace(/\s+/g, ' ')
 			}
 
 			it('gets template from dom, then renders it', function () {
-				prepareDummyScript()
+				_prepareDummyScript()
 
 				html1 = _.template.render(TEMPLATE_ELEM_ID_1, templateData1)
 				expect(html1).to.equal(result1)
 				html2 = _.template.render(TEMPLATE_ELEM_ID_2, templateData2)
-				// todo: need `_.str.clean()`
-				html2 = html2.replace(/\s+/g, ' ')
-				result2 = result2.replace(/\s+/g, ' ')
-				expect(html2).to.equal(result2)
+				expect(_cleanStr(html2)).to.equal(_cleanStr(result2))
 
-				destroyDummyScript()
+				_destroyDummyScript()
 			})
 			it('adds template manually, then renders it', function () {
 				// use `add()` api to
@@ -95,10 +97,7 @@ describe('Template', function () {
 				html1 = _.template.render(TEMPLATE_CODE_ID_1, templateData1)
 				expect(html1).to.equal(result1)
 				html2 = _.template.render(TEMPLATE_CODE_ID_2, templateData2)
-				// todo: need `_.str.clean()`
-				html2 = html2.replace(/\s+/g, ' ')
-				result2 = result2.replace(/\s+/g, ' ')
-				expect(html2).to.equal(result2)
+				expect(_cleanStr(html2)).to.equal(_cleanStr(result2))
 			})
 			it('gets template from cache, then renders it', function () {
 				// notice: after above testing, there have been 4 templates in cache
@@ -106,18 +105,12 @@ describe('Template', function () {
 				html1 = _.template.render(TEMPLATE_ELEM_ID_1, templateData1)
 				expect(html1).to.equal(result1)
 				html2 = _.template.render(TEMPLATE_ELEM_ID_2, templateData2)
-				// todo: need `_.str.clean()`
-				html2 = html2.replace(/\s+/g, ' ')
-				result2 = result2.replace(/\s+/g, ' ')
-				expect(html2).to.equal(result2)
+				expect(_cleanStr(html2)).to.equal(_cleanStr(result2))
 
 				html1 = _.template.render(TEMPLATE_CODE_ID_1, templateData1)
 				expect(html1).to.equal(result1)
 				html2 = _.template.render(TEMPLATE_CODE_ID_2, templateData2)
-				// todo: need `_.str.clean()`
-				html2 = html2.replace(/\s+/g, ' ')
-				result2 = result2.replace(/\s+/g, ' ')
-				expect(html2).to.equal(result2)
+				expect(_cleanStr(html2)).to.equal(_cleanStr(result2))
 			})
 		})
 
