@@ -4,14 +4,14 @@
   "authors": [
     "cssmagic <cssmagic.cn@gmail.com>"
   ],
-  "description": "Lightweight JavaScript utilities for mobile web development.",
+  "description": "Lightweight JavaScript utilities for web development.",
   "main": "dist/gearbox.js",
   "moduleType": [
     "globals"
   ],
   "keywords": [
-    "underscore",
-    "mobile",
+    "util",
+    "utilities",
     "web"
   ],
   "license": "MIT",
@@ -26,8 +26,8 @@
     "src"
   ],
   "dependencies": {
-    "underscore": "1.*",
-    "zepto.js": "1.*"
+    "underscore": "^1.6",
+    "zepto.js": "^1.1"
   },
   "devDependencies": {
     "jquery": "*",

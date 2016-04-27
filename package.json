@@ -1,14 +1,24 @@
 {
   "name": "gearbox",
+  "version": "0.5.2",
   "homepage": "https://github.com/CMUI/gearbox",
   "author": "cssmagic <cssmagic.cn@gmail.com>",
-  "description": "Lightweight JavaScript utilities for mobile web development.",
+  "description": "Lightweight JavaScript utilities for web development.",
+  "main": "dist/gearbox.js",
+  "keywords": [
+    "util",
+    "utilities",
+    "web"
+  ],
   "license": "MIT",
   "scripts": {
     "dist": "gulp prepare-module && gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {},
+  "dependencies": {
+    "underscore": "^1.6",
+    "zepto.js": "^1.1"
+  },
   "devDependencies": {
     "gulp": "3.*",
     "del": "1.*",
