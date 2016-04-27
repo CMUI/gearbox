@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Testing Sandbox - UT - Gearbox</title>
+</head>
+
+<body>
+<h1>Testing Sandbox</h1>
+<script src="../bower_components/underscore/underscore.js"></script>
+<script src="../bower_components/jquery/dist/jquery.js"></script>
+<script src="../dist/gearbox.js"></script>
+<script>
+void function () {
+	'use strict'
+
+	var conditions = JSON.parse(window.name || '{}')
+	var testId = conditions.testId
+	var keysToBeTested = conditions.keysToBeTested
+	if (!testId) return
+
+	var result = {}
+	// `JSON.stringify()` drops undefined keys in objects, so we need save these keys separately.
+	var emptyKeys = []
+
+	_.each(keysToBeTested, function (item) {
+		var value = _.url.getParam(item)
+		if (typeof value === 'undefined') {
+			emptyKeys.push(item)
+		} else {
+			result[item] = value
+		}
+	})
+
+	var data = {
+		testId: testId,
+		result: result,
+		emptyKeys: emptyKeys
+	}
+	parent.postMessage(JSON.stringify(data), '*')
+
+}()
+</script>
+</body>
+</html>

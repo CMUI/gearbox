@@ -44,16 +44,19 @@ describe('URL', function () {
 
 		describe('_.url.getParam()', function () {
 			var registeredTests = {}
-			var SANDBOX_FILE = 'sandbox.html'
+			var SANDBOX_FILE = '_sandbox.html'
+			var DUMMY_SRC = 'about:blank'
 			var $sandbox
 
 			function _getRandomStr() {
 				return (new Date().getTime() + Math.random()).toString(36)
 			}
+
+			// old IE don't support `history.replaceState()`, so we need a sandbox to run tests.
 			function _initSandbox() {
 				$sandbox = $('<iframe></iframe>')
 					.attr({
-						src: 'about:blank',
+						src: DUMMY_SRC,
 						id: 'sandbox',
 						frameborder: 0
 					})
@@ -64,24 +67,37 @@ describe('URL', function () {
 					})
 					.appendTo(document.body)
 			}
+			function _resetSandbox() {
+				$sandbox.attr('src', DUMMY_SRC)
+			}
 			function _destroySandbox() {
 				$sandbox.remove()
 			}
 			function _getSandboxWindow() {
 				return $sandbox[0].contentWindow
 			}
-			function _startSandboxTest(url, testObj, fn) {
+			function _startSandboxTest(queryString, keysToBeTested, fn) {
 				var testId = _getRandomStr()
 				registeredTests[testId] = fn
-				$sandbox.attr('src', SANDBOX_FILE + '?testId=' + testId + '&&' + url)
-				var keys = _.keys(testObj)
-				_getSandboxWindow().name = keys.join(';=;')
+				// set url to sandbox, this url will be tested when sandbox is ready
+				$sandbox.attr('src', SANDBOX_FILE + '?' + queryString)
+				// send test conditions to sandbox via `window.name`
+				_getSandboxWindow().name = JSON.stringify({
+					keysToBeTested: keysToBeTested,
+					testId: testId
+				})
 			}
 			function _listenSandboxMessage() {
 				var handler = function (ev) {
-					var data = JSON.parse(ev.data || '') || {}
+					// recover complete data
+					var data = JSON.parse(ev.data || '{}')
+					var result = data.result || {}
+					_.each(data.emptyKeys || [], function (item) {
+						result[item] = undefined
+					})
+
 					var fn = registeredTests[data.testId]
-					if (_.isFunction(fn)) fn(data.content, data.undefinedVar)
+					if (_.isFunction(fn)) fn(result)
 				}
 				// note: `typeof window.attachEvent` returns 'object'
 				if ('attachEvent' in window) {
@@ -91,16 +107,15 @@ describe('URL', function () {
 				}
 			}
 
-			function _postMessageCB(result, expectedResult) {
-
-			}
-
 			before(function () {
 				_initSandbox()
 				_listenSandboxMessage()
 			})
 			after(function () {
 				_destroySandbox()
+			})
+			afterEach(function () {
+				_resetSandbox()
 			})
 
 			it('does basic functionality', function (done) {
@@ -113,45 +128,34 @@ describe('URL', function () {
 					'bob': '',
 					'chris': '3'
 				}
-				_startSandboxTest(queryString, expectedResult, function (result, undefinedVar) {
-					for (var item in result) {
-						expect(result[item]).to.equal(expectedResult[item])
-					}
-					for (var i = 0; i < undefinedVar.length; i++) {
-						expect(undefined).to.equal(expectedResult[undefinedVar[i]])
-					}
+				var keysToBeTested = _.keys(expectedResult)
+				_startSandboxTest(queryString, keysToBeTested, function (result) {
+					expect(result).to.eql(expectedResult)
 					done()
 				})
 			})
-			it('returns `undefined` if getting a missing param key 1', function (done) {
+			it('returns `undefined` if query string is empty', function (done) {
 				this.timeout(5000)
 				var queryString = ''
 				var expectedResult = {
-					"foo": undefined
+					"foo": undefined,
+					"bar": undefined
 				}
-				_startSandboxTest(queryString, expectedResult, function (result, undefinedVar) {
-					for (var item in result) {
-						expect(result[item]).to.equal(expectedResult[item])
-					}
-					for (var i = 0; i < undefinedVar.length; i++) {
-						expect(undefined).to.equal(expectedResult[undefinedVar[i]])
-					}
+				var keysToBeTested = _.keys(expectedResult)
+				_startSandboxTest(queryString, keysToBeTested, function (result) {
+					expect(result).to.eql(expectedResult)
 					done()
 				})
 			})
-			it('returns `undefined` if getting a missing param key 2', function (done) {
+			it('returns `undefined` if getting a missing param key', function (done) {
 				this.timeout(5000)
 				var queryString = 'bar=1'
 				var expectedResult = {
 					"blah": undefined
 				}
-				_startSandboxTest(queryString, expectedResult, function (result, undefinedVar) {
-					for (var item in result) {
-						expect(result[item]).to.equal(expectedResult[item])
-					}
-					for (var i = 0; i < undefinedVar.length; i++) {
-						expect(undefined).to.equal(expectedResult[undefinedVar[i]])
-					}
+				var keysToBeTested = _.keys(expectedResult)
+				_startSandboxTest(queryString, keysToBeTested, function (result) {
+					expect(result).to.eql(expectedResult)
 					done()
 				})
 			})
