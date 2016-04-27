@@ -52,13 +52,6 @@ describe('Action', function () {
 		})
 	})
 	describe('DOM binding', function () {
-		//polyfill
-		if (!Date.now) {
-			Date.now = function now() {
-				return new Date().getTime();
-			};
-		}
-
 		var $wrapper, $link
 		var actionName, randomKey
 		before(function () {
@@ -71,7 +64,7 @@ describe('Action', function () {
 			$wrapper.remove()
 		})
 		beforeEach(function () {
-			actionName = Date.now().toString(36)
+			actionName = new Date().getTime().toString(36)
 			randomKey = Math.random().toString(36)
 		})
 		it('gets action name from `href`', function (done) {

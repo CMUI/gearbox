@@ -47,7 +47,7 @@ describe('URL', function () {
 		var $iframeSandbox
 
 		function _getRandomStr() {
-			return (Date.now() + Math.random()).toString(36)
+			return (new Date().getTime() + Math.random()).toString(36)
 		}
 
 		function _initSandbox() {
