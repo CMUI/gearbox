@@ -1,41 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Gearbox Unit Test Sandbox</title>
+<meta charset="UTF-8">
+<title>Gearbox Unit Test Sandbox</title>
 </head>
 <body>
-	
+
 <script src="../bower_components/underscore/underscore.js"></script>
 <script src="../bower_components/jquery/dist/jquery.js"></script>
 <script src="../dist/gearbox.js"></script>
 <script>
-(function(){
+(function () {
 	'use strict'
 
 	var testId
 
-	if(/testId/.test(location.href)){
-		testId=location.href.split('?testId=')[1].split("&&")[0] || ''
+	if (/testId/.test(location.href)) {
+		testId = location.href.split('?testId=')[1].split("&&")[0] || ''
 	}
 
 	if (testId) {
 
-		var result={}
-		var undefinedVar=[]
+		var result = {}
+		var undefinedVar = []
 		var expected = window.name.split(";=;")
 
-		if(expected.length){
+		if (expected.length) {
 
-			for(var i=0;i<expected.length;i++){
+			for (var i = 0; i < expected.length; i++) {
 
-				var item=expected[i]
-				var res=_.url.getParam(item)
+				var item = expected[i]
+				var res = _.url.getParam(item)
 
-				if(typeof res === "undefined"){
+				if (typeof res === "undefined") {
 					undefinedVar.push(item)
-				}else{
-					result[item]=res
+				} else {
+					result[item] = res
 				}
 			}
 		}
@@ -45,7 +45,7 @@
 			content: result,
 			undefinedVar: undefinedVar
 		}
-		
+
 		parent.postMessage(JSON.stringify(data), '*')
 	}
 })();
