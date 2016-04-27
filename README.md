@@ -1,26 +1,27 @@
 # Gearbox
 
-> Lightweight JavaScript utilities for mobile web, based on Underscore and Zepto.
+> Lightweight JavaScript utilities for web development, based on `_` (Underscore) and `$` (jQuery/Zepto).
 
-> 专注移动端的 Javascript 工具库，基于 Underscore 和 Zepto。
+> 为 Web 开发打造的轻量级 Javascript 工具库，基于 `_`（Underscore）和 `$`（jQuery/Zepto）。
 
 ## 兼容性
 
 #### 浏览器支持
 
 * 支持以下移动平台的主流浏览器：
-	* iOS 5+
-	* Android 2.3+
+	* iOS 7+
+	* Android 4+
 
 * 同样支持以下桌面浏览器：
-	* Firefox (edge)
-	* Chrome (edge)
-	* Safari (edge)
+	* Firefox (Latest)
+	* Chrome (Latest)
+	* Safari (Latest)
+	* IE 8+（需要 jQuery 1.x）
 
 #### 外部依赖
 
-* Underscore 1.6+
-* Zepto 1.1+
+* `_`（Underscore 1.6+）
+* `$`（Zepto 1.1+ 或 jQuery）
 
 ## 安装
 
@@ -73,8 +74,9 @@ Gearbox 的部分功能模块已经分离出去，成为独立项目。这些模
 0. 把本项目的代码 fork 并 clone 到本地。
 0. 在项目根目录执行 `bower install`，安装必要的依赖。
 0. 在浏览器中打开以下文件即可运行单元测试：
-	* `test/test-dev.html` - 测试源码
-	* `test/test-dist-trad.html` - 测试发布文件
+	* `test/test-dev.html` - 测试源码（用于开发阶段的测试）
+	* `test/test-dist-trad.html` - 测试发布文件（用于测试 Zepto 的兼容性）
+	* `test/test-dist-trad-jquery.html` - 测试发布文件（用于测试 jQuery 的兼容性）
 
 ***
 
