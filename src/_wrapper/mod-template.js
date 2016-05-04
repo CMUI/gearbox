@@ -1,14 +1,14 @@
 
-////////////////////  action  ////////////////////
-// include and wrap external module: Action
+////////////////////  template  ////////////////////
+// include and wrap external module: Underscore-template
 
 void function (window, _ext) {
 	'use strict'
 
 /* =================  START: source code  ================= */
-<%= contents %>
+/* <%= contents %> */
 /* =================  END: source code  ================= */
 
-	_ext.exports('action', action)
+	_ext.exports('template', template)
 
 }(window, _ext)

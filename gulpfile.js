@@ -1,21 +1,23 @@
 'use strict'
 
-var path = require('path')
-var gulp = require('gulp')
-var del = require('del')
-var concat = require('gulp-concat')
-var rename = require('gulp-rename')
-var wrap = require('gulp-wrap')
-var replace = require('gulp-replace')
-var uglify = require('gulp-uglify')
+const path = require('path')
+const gulp = require('gulp')
+const del = require('del')
+const concat = require('gulp-concat')
+const rename = require('gulp-rename')
+const wrap = require('gulp-wrap')
+const replace = require('gulp-replace')
+const uglify = require('gulp-uglify')
 
-var myPath = {
+const myPath = {
 	temp: './.tmp/',
 	src: './src/',
 	dest: './dist/',
 }
+const FILENAME = 'gearbox'
+const NS = 'gearbox'
 
-var scripts = [
+const scripts = [
 	'./src/core.js',
 	'./src/str-alt.js',
 	'./src/str.js',
@@ -25,7 +27,7 @@ var scripts = [
 	'./src/dom.js',
 ]
 
-var modules = {
+const modules = {
 	action:   './bower_components/action/src/action.js',
 	template: './bower_components/underscore-template/src/underscore-template.js',
 }
@@ -44,9 +46,10 @@ gulp.task('clean-temp', function (callback) {
 
 gulp.task('prepare-module', ['clean-temp'], function () {
 	Object.keys(modules).forEach(function (key) {
-		var src = modules[key]
+		const src = modules[key]
 		gulp.src(src)
-			.pipe(wrap({src: path.join(myPath.src, '_wrapper/mod-' + key + '.ejs')}))
+			.pipe(wrap('*/\n<%= contents %>\n/*'))
+			.pipe(wrap({src: path.join(myPath.src, '_wrapper/mod-' + key + '.js')}))
 			.pipe(rename(key + '.js'))
 			.pipe(gulp.dest(myPath.temp))
 	})
@@ -59,14 +62,15 @@ gulp.task('js', function() {
 	})
 
 	gulp.src(scripts)
-		.pipe(concat('gearbox.js'))
-		.pipe(wrap({src: path.join(myPath.src, '_wrapper/dist-trad.ejs')}))
+		.pipe(concat(FILENAME + '.js'))
+		.pipe(wrap('*/\n<%= contents %>\n/*'))
+		.pipe(wrap({src: path.join(myPath.src, '_wrapper/dist-trad.js')}))
 		.pipe(replace(/\/\*\* DEBUG_INFO_START \*\*\//g, '/*'))
 		.pipe(replace(/\/\*\* DEBUG_INFO_END \*\*\//g, '*/'))
 		.pipe(gulp.dest(myPath.dest))
 		.pipe(uglify({
 			preserveComments: 'some'
 		}))
-		.pipe(rename('gearbox.min.js'))
+		.pipe(rename(FILENAME + '.min.js'))
 		.pipe(gulp.dest(myPath.dest))
 })

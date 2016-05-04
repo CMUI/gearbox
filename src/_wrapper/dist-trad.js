@@ -10,7 +10,7 @@
 	if (!_ || !$) return false
 
 ////////////////////  START: source code  ////////////////////
-<%= contents %>
+/* <%= contents %> */
 ////////////////////  END: source code  ////////////////////
 
 }(window)
