@@ -1,13 +1,13 @@
 describe('URL', function () {
 	describe('Query String', function () {
-		describe('_.url.parseQuery()', function () {
+		describe('gearbox.url.parseQuery()', function () {
 			it('parses empty str to empty object', function () {
 				var query = ''
-				expect(_.url.parseQuery(query)).to.eql({})
+				expect(gearbox.url.parseQuery(query)).to.eql({})
 			})
 			it('parses key/value pairs to object', function () {
 				var query = 'foo=1&bar=2&alice=&bob&chris=3'
-				expect(_.url.parseQuery(query)).to.eql({
+				expect(gearbox.url.parseQuery(query)).to.eql({
 					foo: '1',
 					bar: '2',
 					alice: '',
@@ -17,7 +17,7 @@ describe('URL', function () {
 			})
 			it('decodes keys and values in query string', function () {
 				var query = 'foo=%20&bar=%2B&blah%3Dblah=1'
-				expect(_.url.parseQuery(query)).to.eql({
+				expect(gearbox.url.parseQuery(query)).to.eql({
 					foo: ' ',
 					bar: '+',
 					'blah=blah': '1'
@@ -26,23 +26,23 @@ describe('URL', function () {
 			it('returns empty object if bad type of param', function () {
 				var arg
 				arg = undefined
-				expect(_.url.parseQuery(arg)).to.eql({})
+				expect(gearbox.url.parseQuery(arg)).to.eql({})
 				arg = null
-				expect(_.url.parseQuery(arg)).to.eql({})
+				expect(gearbox.url.parseQuery(arg)).to.eql({})
 				arg = 0
-				expect(_.url.parseQuery(arg)).to.eql({})
+				expect(gearbox.url.parseQuery(arg)).to.eql({})
 				arg = true
-				expect(_.url.parseQuery(arg)).to.eql({})
+				expect(gearbox.url.parseQuery(arg)).to.eql({})
 				arg = {}
-				expect(_.url.parseQuery(arg)).to.eql({})
+				expect(gearbox.url.parseQuery(arg)).to.eql({})
 				arg = []
-				expect(_.url.parseQuery(arg)).to.eql({})
+				expect(gearbox.url.parseQuery(arg)).to.eql({})
 				arg = it
-				expect(_.url.parseQuery(arg)).to.eql({})
+				expect(gearbox.url.parseQuery(arg)).to.eql({})
 			})
 		})
 
-		describe('_.url.getParam()', function () {
+		describe('gearbox.url.getParam()', function () {
 			var registeredTests = {}
 			var SANDBOX_FILE = '_sandbox.html'
 			var DUMMY_SRC = 'about:blank'
@@ -162,19 +162,19 @@ describe('URL', function () {
 			it('returns `false` if bad type of param', function () {
 				var arg
 				arg = undefined
-				expect(_.url.getParam(arg)).to.equal(false)
+				expect(gearbox.url.getParam(arg)).to.equal(false)
 				arg = null
-				expect(_.url.getParam(arg)).to.equal(false)
+				expect(gearbox.url.getParam(arg)).to.equal(false)
 				arg = 0
-				expect(_.url.getParam(arg)).to.equal(false)
+				expect(gearbox.url.getParam(arg)).to.equal(false)
 				arg = true
-				expect(_.url.getParam(arg)).to.equal(false)
+				expect(gearbox.url.getParam(arg)).to.equal(false)
 				arg = {}
-				expect(_.url.getParam(arg)).to.equal(false)
+				expect(gearbox.url.getParam(arg)).to.equal(false)
 				arg = []
-				expect(_.url.getParam(arg)).to.equal(false)
+				expect(gearbox.url.getParam(arg)).to.equal(false)
 				arg = it
-				expect(_.url.getParam(arg)).to.equal(false)
+				expect(gearbox.url.getParam(arg)).to.equal(false)
 			})
 			it('re-parses if url changed', function () {
 				// skip this test case on ie9-
@@ -186,36 +186,36 @@ describe('URL', function () {
 				var url
 				url = '?' + 'foo=%20&bar=%2B&blah%3Dblah=1'
 				history.replaceState(_state, null, url)
-				expect(_.url.getParam('foo')).to.equal(' ')
-				expect(_.url.getParam('bar')).to.equal('+')
-				expect(_.url.getParam('blah=blah')).to.equal('1')
+				expect(gearbox.url.getParam('foo')).to.equal(' ')
+				expect(gearbox.url.getParam('bar')).to.equal('+')
+				expect(gearbox.url.getParam('blah=blah')).to.equal('1')
 				url = '?'
 				history.replaceState(_state, null, url)
-				expect(_.url.getParam('foo')).to.be.undefined
-				expect(_.url.getParam('bar')).to.be.undefined
-				expect(_.url.getParam('blah=blah')).to.be.undefined
+				expect(gearbox.url.getParam('foo')).to.be.undefined
+				expect(gearbox.url.getParam('bar')).to.be.undefined
+				expect(gearbox.url.getParam('blah=blah')).to.be.undefined
 				url = '?' + 'foo=%20&bar=%2B&blah%3Dblah=1'
 				history.replaceState(_state, null, url)
-				expect(_.url.getParam('foo')).to.equal(' ')
-				expect(_.url.getParam('bar')).to.equal('+')
-				expect(_.url.getParam('blah=blah')).to.equal('1')
+				expect(gearbox.url.getParam('foo')).to.equal(' ')
+				expect(gearbox.url.getParam('bar')).to.equal('+')
+				expect(gearbox.url.getParam('blah=blah')).to.equal('1')
 
 				// restore url
 				history.replaceState(_state, null, _url)
 			})
 		})
 
-		describe('_.url.appendParam()', function () {
+		describe('gearbox.url.appendParam()', function () {
 			it('does basic functionality', function () {
 				var baseUrl = 'http://domain.com/path/file'
-				var url1 = _.url.appendParam(baseUrl, {foo: 'bar'})
-				var url2 = _.url.appendParam(url1, {test: 1})
+				var url1 = gearbox.url.appendParam(baseUrl, {foo: 'bar'})
+				var url2 = gearbox.url.appendParam(url1, {test: 1})
 				expect(url1).to.equal(baseUrl + '?foo=bar')
 				expect(url2).to.equal(baseUrl + '?foo=bar&test=1')
 
 				var testUrl = baseUrl + '?key=value'
-				var url3 = _.url.appendParam(testUrl, {foo: 'bar'})
-				var url4 = _.url.appendParam(url3, {test: 1})
+				var url3 = gearbox.url.appendParam(testUrl, {foo: 'bar'})
+				var url4 = gearbox.url.appendParam(url3, {test: 1})
 				expect(url3).to.equal(baseUrl + '?key=value&foo=bar')
 				expect(url4).to.equal(baseUrl + '?key=value&foo=bar&test=1')
 			})
@@ -223,73 +223,73 @@ describe('URL', function () {
 	})
 
 	describe('Hash Handling', function () {
-		describe('_.url.removeHashFromUrl()', function () {
+		describe('gearbox.url.removeHashFromUrl()', function () {
 			it('does basic functionality', function () {
 				var url
-				url = _.url.removeHashFromUrl('http://domain.com/path/file?query=1#hash')
+				url = gearbox.url.removeHashFromUrl('http://domain.com/path/file?query=1#hash')
 				expect(url).to.equal('http://domain.com/path/file?query=1')
-				url = _.url.removeHashFromUrl('http://domain.com/path/file#hash')
+				url = gearbox.url.removeHashFromUrl('http://domain.com/path/file#hash')
 				expect(url).to.equal('http://domain.com/path/file')
-				url = _.url.removeHashFromUrl('//domain.com/path/file#hash')
+				url = gearbox.url.removeHashFromUrl('//domain.com/path/file#hash')
 				expect(url).to.equal('//domain.com/path/file')
-				url = _.url.removeHashFromUrl('/path/file#hash')
+				url = gearbox.url.removeHashFromUrl('/path/file#hash')
 				expect(url).to.equal('/path/file')
-				url = _.url.removeHashFromUrl('file#hash')
+				url = gearbox.url.removeHashFromUrl('file#hash')
 				expect(url).to.equal('file')
-				url = _.url.removeHashFromUrl('#hash')
+				url = gearbox.url.removeHashFromUrl('#hash')
 				expect(url).to.equal('')
-				url = _.url.removeHashFromUrl('http://domain.com/path/file#hash#foo')
+				url = gearbox.url.removeHashFromUrl('http://domain.com/path/file#hash#foo')
 				expect(url).to.equal('http://domain.com/path/file')
 			})
 			it('converts param to string if it\'s not a string', function () {
 				var url
-				url = _.url.removeHashFromUrl(null)
+				url = gearbox.url.removeHashFromUrl(null)
 				expect(url).to.equal('null')
-				url = _.url.removeHashFromUrl(undefined)
+				url = gearbox.url.removeHashFromUrl(undefined)
 				expect(url).to.equal('undefined')
-				url = _.url.removeHashFromUrl(3.1415)
+				url = gearbox.url.removeHashFromUrl(3.1415)
 				expect(url).to.equal('3.1415')
-				url = _.url.removeHashFromUrl(false)
+				url = gearbox.url.removeHashFromUrl(false)
 				expect(url).to.equal('false')
 			})
 			it('returns empty string if no param', function () {
 				var url
-				url = _.url.removeHashFromUrl()
+				url = gearbox.url.removeHashFromUrl()
 				expect(url).to.equal('')
 			})
 		})
-		describe('_.url.getHashFromUrl()', function () {
+		describe('gearbox.url.getHashFromUrl()', function () {
 			it('does basic functionality', function () {
 				var url
-				url = _.url.getHashFromUrl('http://domain.com/path/file?query=1#hash')
+				url = gearbox.url.getHashFromUrl('http://domain.com/path/file?query=1#hash')
 				expect(url).to.equal('#hash')
-				url = _.url.getHashFromUrl('http://domain.com/path/file#hash')
+				url = gearbox.url.getHashFromUrl('http://domain.com/path/file#hash')
 				expect(url).to.equal('#hash')
-				url = _.url.getHashFromUrl('//domain.com/path/file#hash')
+				url = gearbox.url.getHashFromUrl('//domain.com/path/file#hash')
 				expect(url).to.equal('#hash')
-				url = _.url.getHashFromUrl('/path/file#hash')
+				url = gearbox.url.getHashFromUrl('/path/file#hash')
 				expect(url).to.equal('#hash')
-				url = _.url.getHashFromUrl('file#hash')
+				url = gearbox.url.getHashFromUrl('file#hash')
 				expect(url).to.equal('#hash')
-				url = _.url.getHashFromUrl('#hash')
+				url = gearbox.url.getHashFromUrl('#hash')
 				expect(url).to.equal('#hash')
-				url = _.url.getHashFromUrl('http://domain.com/path/file#hash#foo')
+				url = gearbox.url.getHashFromUrl('http://domain.com/path/file#hash#foo')
 				expect(url).to.equal('#hash#foo')
 			})
 			it('converts param to string if it\'s not a string', function () {
 				var url
-				url = _.url.getHashFromUrl(null)
+				url = gearbox.url.getHashFromUrl(null)
 				expect(url).to.equal('')
-				url = _.url.getHashFromUrl(undefined)
+				url = gearbox.url.getHashFromUrl(undefined)
 				expect(url).to.equal('')
-				url = _.url.getHashFromUrl(3.1415)
+				url = gearbox.url.getHashFromUrl(3.1415)
 				expect(url).to.equal('')
-				url = _.url.getHashFromUrl(false)
+				url = gearbox.url.getHashFromUrl(false)
 				expect(url).to.equal('')
 			})
 			it('returns empty string if no param', function () {
 				var url
-				url = _.url.getHashFromUrl()
+				url = gearbox.url.getHashFromUrl()
 				expect(url).to.equal('')
 			})
 		})
@@ -297,7 +297,7 @@ describe('URL', function () {
 
 	/*
 	describe('Parse URL', function () {
-		describe('_.url.parseUrl()', function () {
+		describe('gearbox.url.parseUrl()', function () {
 			it('(dummy test)', function () {
 				//
 			})

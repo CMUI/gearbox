@@ -24,7 +24,7 @@ void function () {
 	var emptyKeys = []
 
 	_.each(keysToBeTested, function (item) {
-		var value = _.url.getParam(item)
+		var value = gearbox.url.getParam(item)
 		if (typeof value === 'undefined') {
 			emptyKeys.push(item)
 		} else {
