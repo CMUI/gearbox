@@ -30,7 +30,8 @@
     "zepto.js": "^1.1"
   },
   "devDependencies": {
-    "jquery": "*",
+    "html5shiv": "^3.7.3",
+    "jquery": "1.*",
     "action": "0.3.2",
     "underscore-template": "0.3.0",
     "underscore.string": "2.*",
