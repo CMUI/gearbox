@@ -2,13 +2,13 @@
 ////////////////////  template  ////////////////////
 // include and wrap external module: Underscore-template
 
-void function (window, _ext) {
+void function (window, gearbox) {
 	'use strict'
 
 /* =================  START: source code  ================= */
 /* <%= contents %> */
 /* =================  END: source code  ================= */
 
-	_ext.exports('template', template)
+	gearbox.__defineModule('template', template)
 
-}(window, _ext)
+}(window, gearbox)

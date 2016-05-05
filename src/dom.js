@@ -1,6 +1,6 @@
 
 ////////////////////  dom  ////////////////////
-void function (window, _ext) {
+void function (window, gearbox) {
 	'use strict'
 
 	// namespace
@@ -25,6 +25,6 @@ void function (window, _ext) {
 	}
 
 	// exports
-	_ext.exports('dom', dom)
+	gearbox.__defineModule('dom', dom)
 
-}(window, _ext)
+}(window, gearbox)

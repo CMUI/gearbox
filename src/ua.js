@@ -1,6 +1,6 @@
 
 ////////////////////  ua  ////////////////////
-void function (window, _ext) {
+void function (window, gearbox) {
 	'use strict'
 
 	// namespace
@@ -19,8 +19,8 @@ void function (window, _ext) {
 		var s = ua.str.toLowerCase()
 
 		ua.isSafari = /\bapple\b/i.test(navigator.vendor) && /\bsafari\b/i.test(s)
-		ua.isChrome = _.str.include(s, 'chrome') ||
-				_.str.include(s, 'crios')	// both desktop and mobile version
+		ua.isChrome = gearbox.str.include(s, 'chrome') ||
+				gearbox.str.include(s, 'crios')	// both desktop and mobile version
 
 		// platform version and device
 		ua.osVersion = ''
@@ -32,7 +32,7 @@ void function (window, _ext) {
 			ua.osVersion = (/[\/; i]os[\/: _](\d+(?:[\._]\d+)?)[\._; ]/.exec(s) || [0, ''])[1]
 				.replace('_', '.')
 		} else {
-			var _includeAndroid = _.str.include(s, 'android')
+			var _includeAndroid = gearbox.str.include(s, 'android')
 			var _includeAdr = /\badr\b/.test(s) && /\blinux;\s*u;/.test(s)
 			var _isJUC = /juc\s*\(linux;\s*u;\s*\d+\.\d+/.test(s)
 			ua.isAndroid = _includeAndroid || _includeAdr || _isJUC
@@ -46,38 +46,38 @@ void function (window, _ext) {
 			}
 		}
 		// fix - Windows Phone might pretend to be iOS or Android
-		if (_.str.include(s, 'windows phone')) {
+		if (gearbox.str.include(s, 'windows phone')) {
 			ua.isIOS = ua.isAndroid = false
 			ua.osVersion = ''
 		}
-		if (ua.osVersion && !_.str.include(ua.osVersion, '.')) ua.osVersion += '.0'
+		if (ua.osVersion && !gearbox.str.include(ua.osVersion, '.')) ua.osVersion += '.0'
 
 		// summery
 		ua.isMobileDevice = !!(ua.isIOS || ua.isAndroid)
 
 		// get browser info
 		var browser = ''
-		if (_.str.include(s, 'micromessenger')) {
+		if (gearbox.str.include(s, 'micromessenger')) {
 			browser = 'wechat'
-		} else if (_.str.include(s, 'ucbrowser') || _.str.include(s, 'ucweb') || _.str.include(s, ' uc applewebkit')) {
+		} else if (gearbox.str.include(s, 'ucbrowser') || gearbox.str.include(s, 'ucweb') || gearbox.str.include(s, ' uc applewebkit')) {
 			browser = 'uc'
-		} else if (_.str.include(s, 'baiduhd') || _.str.include(s, 'baiduboxapp')) {
+		} else if (gearbox.str.include(s, 'baiduhd') || gearbox.str.include(s, 'baiduboxapp')) {
 			browser = 'baidu-app'
-		} else if (_.str.include(s, 'baidubrowser')) {
+		} else if (gearbox.str.include(s, 'baidubrowser')) {
 			browser = 'baidu-browser'
-		} else if (_.str.include(s, 'mqqbrowser')) {
+		} else if (gearbox.str.include(s, 'mqqbrowser')) {
 			browser = 'm-qq-browser'
-		} else if (_.str.include(s, 'miuibrowser')) {
+		} else if (gearbox.str.include(s, 'miuibrowser')) {
 			browser = 'miui'
-		} else if (_.str.include(s, '_weibo_') || _.str.include(s, ' weibo ')) {
+		} else if (gearbox.str.include(s, '_weibo_') || gearbox.str.include(s, ' weibo ')) {
 			browser = 'weibo'
-		} else if (_.str.include(s, 'firefox')) {
+		} else if (gearbox.str.include(s, 'firefox')) {
 			browser = 'firefox'
-		} else if (_.str.include(s, 'opera')) {
+		} else if (gearbox.str.include(s, 'opera')) {
 			browser = 'opera'
-		} else if (_.str.include(s, ' edge/')) {
+		} else if (gearbox.str.include(s, ' edge/')) {
 			browser = 'edge'
-		} else if (_.str.include(s, 'iemobile')) {
+		} else if (gearbox.str.include(s, 'iemobile')) {
 			browser = 'ie-mobile'
 		}
 		// these two must be the last
@@ -107,7 +107,7 @@ void function (window, _ext) {
 			}
 		}
 		if (!engine) {
-			if (_.str.include(s, 'webkit')) {
+			if (gearbox.str.include(s, 'webkit')) {
 				engine = 'webkit'
 			} else if (ua.isIOS) {
 				engine = 'webkit'
@@ -115,7 +115,7 @@ void function (window, _ext) {
 				engine = 'webkit'
 			}
 			if (browser === 'firefox' && !ua.isIOS) engine = 'gecko'
-			if (browser === 'opera' && !ua.isIOS && _.str.include(s, 'presto')) engine = 'presto'
+			if (browser === 'opera' && !ua.isIOS && gearbox.str.include(s, 'presto')) engine = 'presto'
 		}
 		// fix Windows Phone, IE Mobile and Edge
 		if (browser === 'edge') {
@@ -138,7 +138,7 @@ void function (window, _ext) {
 	*/
 
 	// util
-	// TODO: implement a stricter API: `_.str.formatVersion(ver, length)`, e.g. ('1.2', 3) -> '1.2.0'
+	// TODO: implement a stricter API: `gearbox.str.formatVersion(ver, length)`, e.g. ('1.2', 3) -> '1.2.0'
 	function _trimVersion(ver, length) {
 		var temp = ver.split('.')
 		temp.length = length || 2
@@ -155,6 +155,6 @@ void function (window, _ext) {
 	/** DEBUG_INFO_END **/
 
 	// exports
-	_ext.exports('ua', ua)
+	gearbox.__defineModule('ua', ua)
 
-}(window, _ext)
+}(window, gearbox)

@@ -19,7 +19,6 @@ const NS = 'gearbox'
 
 const scripts = [
 	'./src/core.js',
-	'./src/str-alt.js',
 	'./src/str.js',
 	'./src/root.js',
 	'./src/ua.js',

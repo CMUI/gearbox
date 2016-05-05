@@ -1,7 +1,7 @@
 describe('UA', function () {
 
-	var _detect = _.ua.__detect
-	var _trimVersion = _.ua.__trimVersion
+	var _detect = gearbox.ua.__detect
+	var _trimVersion = gearbox.ua.__trimVersion
 
 	describe('Util', function () {
 		if (!_trimVersion) {
@@ -43,10 +43,10 @@ describe('UA', function () {
 	})
 
 	describe('Detect Feature', function () {
-		describe('_.ua.isTouchDevice', function () {
+		describe('gearbox.ua.isTouchDevice', function () {
 			it('means element has `touch-` event', function () {
 				// this test case is based on the idea of feature detection.
-				if (_.ua.isTouchDevice) {
+				if (gearbox.ua.isTouchDevice) {
 					expect('TouchEvent' in window).to.equal(true)
 					expect('ontouchstart' in window).to.equal(true)
 					expect('ontouchmove' in window).to.equal(true)

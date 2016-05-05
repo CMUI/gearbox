@@ -1,6 +1,7 @@
 /*! Gearbox | MIT | https://github.com/CMUI/gearbox */
 !function (window, undefined) {
-	'use strict'
+	// check conflict
+	if (window.gearbox) return false
 
 	// shortcut
 	var _ = window._
@@ -12,5 +13,7 @@
 ////////////////////  START: source code  ////////////////////
 /* <%= contents %> */
 ////////////////////  END: source code  ////////////////////
+
+	window.gearbox = gearbox
 
 }(window)

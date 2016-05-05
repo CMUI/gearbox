@@ -1,6 +1,6 @@
 
 ////////////////////  url  ////////////////////
-void function (window, _ext) {
+void function (window, gearbox) {
 	'use strict'
 
 	// namespace
@@ -50,19 +50,19 @@ void function (window, _ext) {
 	url.appendParam = function (url, param) {
 		var s = ''
 		url = _.isString(url) ? url : ''
-		url = _.url.removeHashFromUrl(url)
-		if (_.isPlainObject(param)) {
+		url = gearbox.url.removeHashFromUrl(url)
+		if (gearbox.isPlainObject(param)) {
 			param = $.param(param)
 		} else if (_.isString(param)) {
 			// fix param string
-			if (_.str.startsWith(param, '&') || _.str.startsWith(param, '?')) {
+			if (gearbox.str.startsWith(param, '&') || gearbox.str.startsWith(param, '?')) {
 				param = param.slice(1)
 			}
 		} else {
 			param = null
 		}
 		// append
-		s = param ? url + (_.str.include(url, '?') ? '&' : '?') + param : s
+		s = param ? url + (gearbox.str.include(url, '?') ? '&' : '?') + param : s
 		return s || false
 	}
 
@@ -77,10 +77,10 @@ void function (window, _ext) {
 	}
 
 	// aliases
-	url.isHash = _.str.isHash
-	url.stripHash = _.str.stripHash
+	url.isHash = gearbox.str.isHash
+	url.stripHash = gearbox.str.stripHash
 
 	// exports
-	_ext.exports('url', url)
+	gearbox.__defineModule('url', url)
 
-}(window, _ext)
+}(window, gearbox)

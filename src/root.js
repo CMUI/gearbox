@@ -1,6 +1,6 @@
 
 ////////////////////  root  ////////////////////
-void function (window, _ext) {
+void function (window, gearbox) {
 	'use strict'
 
 	var root = {
@@ -8,7 +8,7 @@ void function (window, _ext) {
 			var result
 			if (_.isElement(input)) {
 				result = input.__$__ = input.__$__ || $(input)
-			} else if (_.dom.is$Element(input)) {
+			} else if (gearbox.dom.is$Element(input)) {
 				result = input
 			} else {
 				result = $(input)
@@ -18,6 +18,6 @@ void function (window, _ext) {
 		isPlainObject: $.isPlainObject
 	}
 
-	_ext.exports('root', root)
+	gearbox.__defineModule('root', root)
 
-}(window, _ext)
+}(window, gearbox)

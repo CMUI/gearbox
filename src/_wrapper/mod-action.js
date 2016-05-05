@@ -2,13 +2,13 @@
 ////////////////////  action  ////////////////////
 // include and wrap external module: Action
 
-void function (window, _ext) {
+void function (window, gearbox) {
 	'use strict'
 
 /* =================  START: source code  ================= */
 /* <%= contents %> */
 /* =================  END: source code  ================= */
 
-	_ext.exports('action', action)
+	gearbox.__defineModule('action', action)
 
-}(window, _ext)
+}(window, gearbox)

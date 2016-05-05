@@ -8,7 +8,7 @@ describe('Template', function () {
 		_.extend(_.templateSettings, _config)
 
 		// for source code testing
-		if (!_.template.render) _.extend(_.template, template)
+		if (!gearbox.template) gearbox.template = template
 	})
 
 	describe('APIs', function () {
@@ -50,12 +50,12 @@ describe('Template', function () {
 		// test data
 		var html1, html2
 
-		describe('_.template.add()', function () {
+		describe('gearbox.template.add()', function () {
 			it('(this api will be tested in below test cases)', function () {
 				//
 			})
 		})
-		describe('_.template.render()', function () {
+		describe('gearbox.template.render()', function () {
 			function _prepareDummyScript() {
 				var body = document.body
 				var script1 = document.createElement('script')
@@ -82,34 +82,34 @@ describe('Template', function () {
 			it('gets template from dom, then renders it', function () {
 				_prepareDummyScript()
 
-				html1 = _.template.render(TEMPLATE_ELEM_ID_1, templateData1)
+				html1 = gearbox.template.render(TEMPLATE_ELEM_ID_1, templateData1)
 				expect(html1).to.equal(result1)
-				html2 = _.template.render(TEMPLATE_ELEM_ID_2, templateData2)
+				html2 = gearbox.template.render(TEMPLATE_ELEM_ID_2, templateData2)
 				expect(_cleanStr(html2)).to.equal(_cleanStr(result2))
 
 				_destroyDummyScript()
 			})
 			it('adds template manually, then renders it', function () {
 				// use `add()` api to
-				_.template.add(TEMPLATE_CODE_ID_1, templateCode1)
-				_.template.add(TEMPLATE_CODE_ID_2, templateCode2)
+				gearbox.template.add(TEMPLATE_CODE_ID_1, templateCode1)
+				gearbox.template.add(TEMPLATE_CODE_ID_2, templateCode2)
 
-				html1 = _.template.render(TEMPLATE_CODE_ID_1, templateData1)
+				html1 = gearbox.template.render(TEMPLATE_CODE_ID_1, templateData1)
 				expect(html1).to.equal(result1)
-				html2 = _.template.render(TEMPLATE_CODE_ID_2, templateData2)
+				html2 = gearbox.template.render(TEMPLATE_CODE_ID_2, templateData2)
 				expect(_cleanStr(html2)).to.equal(_cleanStr(result2))
 			})
 			it('gets template from cache, then renders it', function () {
 				// notice: after above testing, there have been 4 templates in cache
 
-				html1 = _.template.render(TEMPLATE_ELEM_ID_1, templateData1)
+				html1 = gearbox.template.render(TEMPLATE_ELEM_ID_1, templateData1)
 				expect(html1).to.equal(result1)
-				html2 = _.template.render(TEMPLATE_ELEM_ID_2, templateData2)
+				html2 = gearbox.template.render(TEMPLATE_ELEM_ID_2, templateData2)
 				expect(_cleanStr(html2)).to.equal(_cleanStr(result2))
 
-				html1 = _.template.render(TEMPLATE_CODE_ID_1, templateData1)
+				html1 = gearbox.template.render(TEMPLATE_CODE_ID_1, templateData1)
 				expect(html1).to.equal(result1)
-				html2 = _.template.render(TEMPLATE_CODE_ID_2, templateData2)
+				html2 = gearbox.template.render(TEMPLATE_CODE_ID_2, templateData2)
 				expect(_cleanStr(html2)).to.equal(_cleanStr(result2))
 			})
 		})
