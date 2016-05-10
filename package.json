@@ -1,6 +1,6 @@
 {
   "name": "cmui-gearbox",
-  "version": "0.5.2",
+  "version": "0.6.0-rc.1",
   "homepage": "https://github.com/CMUI/gearbox",
   "author": "cssmagic <cssmagic.cn@gmail.com>",
   "description": "Lightweight JavaScript utilities for web development.",

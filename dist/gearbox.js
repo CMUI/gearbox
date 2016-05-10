@@ -1,6 +1,7 @@
 /*! Gearbox | MIT | https://github.com/CMUI/gearbox */
 !function (window, undefined) {
-	'use strict'
+	// check conflict
+	if (window.gearbox) return false
 
 	// shortcut
 	var _ = window._
@@ -10,85 +11,54 @@
 	if (!_ || !$) return false
 
 ////////////////////  START: source code  ////////////////////
+/* */
 
 ////////////////////  core  ////////////////////
 // namespace
-var _ext = {}
+var gearbox = {}
 
 // shortcut
 var document = window.document
 
-void function (window, _ext) {
+void function (window, gearbox) {
 	'use strict'
 
 	/**
 	 * bind a set of apis to a key of `_` as namespace
-	 * @param key {string}
+	 * @param moduleName {string}
 	 * @param apiSet {object}
 	 */
-	_ext.exports = function (key, apiSet) {
-		if (!key || !_.isString(key) || !apiSet || !_.isObject(apiSet)) {
-			/*
-			console.error('[Gearbox] [exports] missing or wrong param.')
-			*/
+	gearbox.__defineModule = function (moduleName, apiSet) {
+		if (!moduleName || !_.isString(moduleName) || !apiSet || !_.isObject(apiSet)) return
 
-			return
-		}
-
-		if (key === 'root') {
-			// {apiSet}.xxx => _.xxx
+		if (moduleName === 'root') {
+			// {apiSet}.xxx => gearbox.xxx
 			_.each(apiSet, function (value, key) {
-				exportKey(key, value)
+				gearbox[key] = value
 			})
 		} else {
-			// {apiSet}.xxx => _.{key}.xxx
-			exportKey(key, apiSet)
+			// {apiSet}.xxx => gearbox.{key}.xxx
+			gearbox[moduleName] = apiSet
 		}
 
-		function exportKey(key, apiSet) {
-			if (checkKey(key)) {
-				_.extend(_[key], apiSet)
-			} else {
-				_[key] = apiSet
-			}
-		}
-		function checkKey(key) {
-			if (_[key]) {
-				/*
-				// warn if going to modify existed key unintentionally
-				var knownKeysToBeExtended = ['template', 'str']
-				if (!_.include(knownKeysToBeExtended, key)) {
-					console.warn('[Gearbox] [exports] `_` already has key: ' + key)
-				}
-				*/
-				return true
-			} else {
-				return false
-			}
-		}
 	}
 
-}(window, _ext)
+}(window, gearbox)
 
 
-////////////////////  str - alternative to underscore.string  ////////////////////
-// this file contains apis same as underscore.string's.
-// heavily inspired by [underscore.string](https://github.com/epeli/underscore.string)
-
-// if you has underscore.string in your project,
-// just skip this file when building your own package.
-
-void function (window, _ext) {
+////////////////////  str  ////////////////////
+void function (window, gearbox) {
 	'use strict'
 
 	// namespace
-	var str = _.str || {}
-	// check underscore.string - quit if underscore.string existed
-	if (str.VERSION && typeof str.trim === 'function') return
+	var str = {}
 
+	////////////////////  START: alternative to underscore.string  ////////////////////
+	// this section contains apis same as underscore.string's.
+	// heavily inspired by [underscore.string](https://github.com/epeli/underscore.string)
 	// source: https://github.com/epeli/underscore.string/blob/master/lib/underscore.string.js
+
 	// util
-	var _s = str
 	var nativeTrim = String.prototype.trim
 	var nativeTrimRight = String.prototype.trimRight
 	var nativeTrimLeft = String.prototype.trimLeft
@@ -107,7 +77,7 @@ void function (window, _ext) {
 		else if (characters.source)
 			return characters.source
 		else
-			return '[' + _s.escapeRegExp(characters) + ']'
+			return '[' + str.escapeRegExp(characters) + ']'
 	}
 	str.escapeRegExp = function (str) {
 		if (str == null) return ''
@@ -158,20 +128,11 @@ void function (window, _ext) {
 	}
 
 	// aliases
-	_s.contains = _s.include
+	str.contains = str.include
+	str.includes = str.include
 
-	// exports
-	_ext.exports('str', str)
+	////////////////////  END: alternative to underscore.string  ////////////////////
 
-}(window, _ext)
-
-
-////////////////////  str  ////////////////////
-void function (window, _ext) {
-	'use strict'
-
-	// namespace
-	var str = _.str || {}
 
 	// shortcuts for frequently-used characters
 	str.CNY = str.RMB = '\xA5'	// CNY(RMB) symbol
@@ -184,13 +145,13 @@ void function (window, _ext) {
 
 	// hash
 	str.isHash = function (str) {
-		str = _.str.trim(str)
-		return _.str.startsWith(str, '#')
+		str = gearbox.str.trim(str)
+		return gearbox.str.startsWith(str, '#')
 	}
 	str.stripHash = function (str) {
-		str = _.str.trim(str)
-		str = _.str.ltrim(str, '#')
-		if (_.str.startsWith(str, '!')) str = str.slice(1)
+		str = gearbox.str.trim(str)
+		str = gearbox.str.ltrim(str, '#')
+		if (gearbox.str.startsWith(str, '!')) str = str.slice(1)
 		return str
 	}
 
@@ -210,16 +171,16 @@ void function (window, _ext) {
 		var n = parseFloat(str)
 		return n < 0 ? Math.ceil(n) : Math.floor(n)
 	}
-	str.toFixed = function (str, i) {return _.str.toFloat(_.str.toFloat(str).toFixed(i || 0))}
+	str.toFixed = function (str, i) {return gearbox.str.toFloat(gearbox.str.toFloat(str).toFixed(i || 0))}
 
 	// exports
-	_ext.exports('str', str)
+	gearbox.__defineModule('str', str)
 
-}(window, _ext)
+}(window, gearbox)
 
 
 ////////////////////  root  ////////////////////
-void function (window, _ext) {
+void function (window, gearbox) {
 	'use strict'
 
 	var root = {
@@ -227,7 +188,7 @@ void function (window, _ext) {
 			var result
 			if (_.isElement(input)) {
 				result = input.__$__ = input.__$__ || $(input)
-			} else if (_.dom.is$Element(input)) {
+			} else if (gearbox.dom.is$Element(input)) {
 				result = input
 			} else {
 				result = $(input)
@@ -237,13 +198,13 @@ void function (window, _ext) {
 		isPlainObject: $.isPlainObject
 	}
 
-	_ext.exports('root', root)
+	gearbox.__defineModule('root', root)
 
-}(window, _ext)
+}(window, gearbox)
 
 
 ////////////////////  ua  ////////////////////
-void function (window, _ext) {
+void function (window, gearbox) {
 	'use strict'
 
 	// namespace
@@ -262,8 +223,8 @@ void function (window, _ext) {
 		var s = ua.str.toLowerCase()
 
 		ua.isSafari = /\bapple\b/i.test(navigator.vendor) && /\bsafari\b/i.test(s)
-		ua.isChrome = _.str.include(s, 'chrome') ||
-				_.str.include(s, 'crios')	// both desktop and mobile version
+		ua.isChrome = gearbox.str.include(s, 'chrome') ||
+				gearbox.str.include(s, 'crios')	// both desktop and mobile version
 
 		// platform version and device
 		ua.osVersion = ''
@@ -275,7 +236,7 @@ void function (window, _ext) {
 			ua.osVersion = (/[\/; i]os[\/: _](\d+(?:[\._]\d+)?)[\._; ]/.exec(s) || [0, ''])[1]
 				.replace('_', '.')
 		} else {
-			var _includeAndroid = _.str.include(s, 'android')
+			var _includeAndroid = gearbox.str.include(s, 'android')
 			var _includeAdr = /\badr\b/.test(s) && /\blinux;\s*u;/.test(s)
 			var _isJUC = /juc\s*\(linux;\s*u;\s*\d+\.\d+/.test(s)
 			ua.isAndroid = _includeAndroid || _includeAdr || _isJUC
@@ -289,38 +250,38 @@ void function (window, _ext) {
 			}
 		}
 		// fix - Windows Phone might pretend to be iOS or Android
-		if (_.str.include(s, 'windows phone')) {
+		if (gearbox.str.include(s, 'windows phone')) {
 			ua.isIOS = ua.isAndroid = false
 			ua.osVersion = ''
 		}
-		if (ua.osVersion && !_.str.include(ua.osVersion, '.')) ua.osVersion += '.0'
+		if (ua.osVersion && !gearbox.str.include(ua.osVersion, '.')) ua.osVersion += '.0'
 
 		// summery
 		ua.isMobileDevice = !!(ua.isIOS || ua.isAndroid)
 
 		// get browser info
 		var browser = ''
-		if (_.str.include(s, 'micromessenger')) {
+		if (gearbox.str.include(s, 'micromessenger')) {
 			browser = 'wechat'
-		} else if (_.str.include(s, 'ucbrowser') || _.str.include(s, 'ucweb') || _.str.include(s, ' uc applewebkit')) {
+		} else if (gearbox.str.include(s, 'ucbrowser') || gearbox.str.include(s, 'ucweb') || gearbox.str.include(s, ' uc applewebkit')) {
 			browser = 'uc'
-		} else if (_.str.include(s, 'baiduhd') || _.str.include(s, 'baiduboxapp')) {
+		} else if (gearbox.str.include(s, 'baiduhd') || gearbox.str.include(s, 'baiduboxapp')) {
 			browser = 'baidu-app'
-		} else if (_.str.include(s, 'baidubrowser')) {
+		} else if (gearbox.str.include(s, 'baidubrowser')) {
 			browser = 'baidu-browser'
-		} else if (_.str.include(s, 'mqqbrowser')) {
+		} else if (gearbox.str.include(s, 'mqqbrowser')) {
 			browser = 'm-qq-browser'
-		} else if (_.str.include(s, 'miuibrowser')) {
+		} else if (gearbox.str.include(s, 'miuibrowser')) {
 			browser = 'miui'
-		} else if (_.str.include(s, '_weibo_') || _.str.include(s, ' weibo ')) {
+		} else if (gearbox.str.include(s, '_weibo_') || gearbox.str.include(s, ' weibo ')) {
 			browser = 'weibo'
-		} else if (_.str.include(s, 'firefox')) {
+		} else if (gearbox.str.include(s, 'firefox')) {
 			browser = 'firefox'
-		} else if (_.str.include(s, 'opera')) {
+		} else if (gearbox.str.include(s, 'opera')) {
 			browser = 'opera'
-		} else if (_.str.include(s, ' edge/')) {
+		} else if (gearbox.str.include(s, ' edge/')) {
 			browser = 'edge'
-		} else if (_.str.include(s, 'iemobile')) {
+		} else if (gearbox.str.include(s, 'iemobile')) {
 			browser = 'ie-mobile'
 		}
 		// these two must be the last
@@ -350,7 +311,7 @@ void function (window, _ext) {
 			}
 		}
 		if (!engine) {
-			if (_.str.include(s, 'webkit')) {
+			if (gearbox.str.include(s, 'webkit')) {
 				engine = 'webkit'
 			} else if (ua.isIOS) {
 				engine = 'webkit'
@@ -358,7 +319,7 @@ void function (window, _ext) {
 				engine = 'webkit'
 			}
 			if (browser === 'firefox' && !ua.isIOS) engine = 'gecko'
-			if (browser === 'opera' && !ua.isIOS && _.str.include(s, 'presto')) engine = 'presto'
+			if (browser === 'opera' && !ua.isIOS && gearbox.str.include(s, 'presto')) engine = 'presto'
 		}
 		// fix Windows Phone, IE Mobile and Edge
 		if (browser === 'edge') {
@@ -381,7 +342,7 @@ void function (window, _ext) {
 	*/
 
 	// util
-	// TODO: implement a stricter API: `_.str.formatVersion(ver, length)`, e.g. ('1.2', 3) -> '1.2.0'
+	// TODO: implement a stricter API: `gearbox.str.formatVersion(ver, length)`, e.g. ('1.2', 3) -> '1.2.0'
 	function _trimVersion(ver, length) {
 		var temp = ver.split('.')
 		temp.length = length || 2
@@ -398,13 +359,13 @@ void function (window, _ext) {
 	*/
 
 	// exports
-	_ext.exports('ua', ua)
+	gearbox.__defineModule('ua', ua)
 
-}(window, _ext)
+}(window, gearbox)
 
 
 ////////////////////  url  ////////////////////
-void function (window, _ext) {
+void function (window, gearbox) {
 	'use strict'
 
 	// namespace
@@ -454,19 +415,19 @@ void function (window, _ext) {
 	url.appendParam = function (url, param) {
 		var s = ''
 		url = _.isString(url) ? url : ''
-		url = _.url.removeHashFromUrl(url)
-		if (_.isPlainObject(param)) {
+		url = gearbox.url.removeHashFromUrl(url)
+		if (gearbox.isPlainObject(param)) {
 			param = $.param(param)
 		} else if (_.isString(param)) {
 			// fix param string
-			if (_.str.startsWith(param, '&') || _.str.startsWith(param, '?')) {
+			if (gearbox.str.startsWith(param, '&') || gearbox.str.startsWith(param, '?')) {
 				param = param.slice(1)
 			}
 		} else {
 			param = null
 		}
 		// append
-		s = param ? url + (_.str.include(url, '?') ? '&' : '?') + param : s
+		s = param ? url + (gearbox.str.include(url, '?') ? '&' : '?') + param : s
 		return s || false
 	}
 
@@ -481,17 +442,17 @@ void function (window, _ext) {
 	}
 
 	// aliases
-	url.isHash = _.str.isHash
-	url.stripHash = _.str.stripHash
+	url.isHash = gearbox.str.isHash
+	url.stripHash = gearbox.str.stripHash
 
 	// exports
-	_ext.exports('url', url)
+	gearbox.__defineModule('url', url)
 
-}(window, _ext)
+}(window, gearbox)
 
 
 ////////////////////  dom  ////////////////////
-void function (window, _ext) {
+void function (window, gearbox) {
 	'use strict'
 
 	// namespace
@@ -516,18 +477,19 @@ void function (window, _ext) {
 	}
 
 	// exports
-	_ext.exports('dom', dom)
+	gearbox.__defineModule('dom', dom)
 
-}(window, _ext)
+}(window, gearbox)
 
 
 ////////////////////  action  ////////////////////
 // include and wrap external module: Action
 
-void function (window, _ext) {
+void function (window, gearbox) {
 	'use strict'
 
 /* =================  START: source code  ================= */
+/* */
 /**
  * Action - Easy and lazy solution for click-event-binding.
  * Released under the MIT license.
@@ -650,19 +612,21 @@ var action = (function () {
 
 }())
 
+/* */
 /* =================  END: source code  ================= */
 
-	_ext.exports('action', action)
+	gearbox.__defineModule('action', action)
 
-}(window, _ext)
+}(window, gearbox)
 
 ////////////////////  template  ////////////////////
 // include and wrap external module: Underscore-template
 
-void function (window, _ext) {
+void function (window, gearbox) {
 	'use strict'
 
 /* =================  START: source code  ================= */
+/* */
 /**
  * Underscore-template - More APIs for Underscore's template engine - template fetching, rendering and caching.
  * Released under the MIT license.
@@ -833,11 +797,15 @@ var template = (function () {
 
 }())
 
+/* */
 /* =================  END: source code  ================= */
 
-	_ext.exports('template', template)
+	gearbox.__defineModule('template', template)
 
-}(window, _ext)
+}(window, gearbox)
+/* */
 ////////////////////  END: source code  ////////////////////
+
+	window.gearbox = gearbox
 
 }(window)
