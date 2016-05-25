@@ -1,5 +1,24 @@
 
 // Gearbox Migrate Plugin
+
+////////////////////  shim  ////////////////////
+// shim deprecated APIs
+gearbox.isPlainObject = function () {
+	/** DEBUG_INFO_START **/
+	console.warn('[Gearbox] [Migrate] This API `gearbox.isPlainObject()` is deprecated, use `$.isPlainObject()` instead!')
+	/** DEBUG_INFO_END **/
+
+	return $.isPlainObject.apply($, arguments)
+}
+gearbox.str.include = function () {
+	/** DEBUG_INFO_START **/
+	console.warn('[Gearbox] [Migrate] This API `gearbox.str.include()` is deprecated, use `gearbox.str.includes()` instead!')
+	/** DEBUG_INFO_END **/
+
+	return gearbox.str.includes.apply(gearbox.str, arguments)
+}
+
+////////////////////  ns  ////////////////////
 // clone modules on `gearbox` namespace to `_`
 
 /** DEBUG_INFO_START **/
