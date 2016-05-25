@@ -58,7 +58,7 @@ void function (window, gearbox) {
 	}
 
 	// sub-string
-	str.include = function (str, needle, position) {
+	str.includes = function (str, needle, position) {
 		if (needle === '') return true
 		position = position == null ? 0 : Math.min(toPositive(position), str.length)
 		return makeString(str).slice(position).indexOf(needle) !== -1
@@ -81,8 +81,9 @@ void function (window, gearbox) {
 	}
 
 	// aliases
-	str.contains = str.include
-	str.includes = str.include
+	str.contains = str.includes
+	// @DEPRECATED
+	str.include = str.includes
 
 	////////////////////  END: alternative to underscore.string  ////////////////////
 

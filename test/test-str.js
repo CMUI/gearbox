@@ -77,21 +77,21 @@ describe('String', function () {
 			})
 		})
 
-		describe('gearbox.str.contains()', function () {
+		describe('gearbox.str.includes()', function () {
 			it('does basic functionality', function () {
-				expect(gearbox.str.contains('foobar', 'bar')).to.equal(true)
-				expect(!gearbox.str.contains('foobar', 'buzz')).to.equal(true)
-				expect(gearbox.str.contains(12345, 34)).to.equal(true)
-				expect(!gearbox.str.contains(12345, 6)).to.equal(true)
-				expect(!gearbox.str.contains('', 34)).to.equal(true)
-				expect(!gearbox.str.contains(null, 34)).to.equal(true)
-				expect(gearbox.str.contains(null, '')).to.equal(true)
+				expect(gearbox.str.includes('foobar', 'bar')).to.equal(true)
+				expect(!gearbox.str.includes('foobar', 'buzz')).to.equal(true)
+				expect(gearbox.str.includes(12345, 34)).to.equal(true)
+				expect(!gearbox.str.includes(12345, 6)).to.equal(true)
+				expect(!gearbox.str.includes('', 34)).to.equal(true)
+				expect(!gearbox.str.includes(null, 34)).to.equal(true)
+				expect(gearbox.str.includes(null, '')).to.equal(true)
 			})
 			it('supports additional param - position', function () {
-				expect(gearbox.str.contains('foobar', 'bar', 1)).to.equal(true)
-				expect(gearbox.str.contains('foobar', 'bar', 2)).to.equal(true)
-				expect(gearbox.str.contains('foobar', 'bar', 3)).to.equal(true)
-				expect(gearbox.str.contains('foobar', 'bar', 4)).to.equal(false)
+				expect(gearbox.str.includes('foobar', 'bar', 1)).to.equal(true)
+				expect(gearbox.str.includes('foobar', 'bar', 2)).to.equal(true)
+				expect(gearbox.str.includes('foobar', 'bar', 3)).to.equal(true)
+				expect(gearbox.str.includes('foobar', 'bar', 4)).to.equal(false)
 			})
 		})
 		describe('gearbox.str.startsWith()', function () {
