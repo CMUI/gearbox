@@ -105,7 +105,7 @@ void function (window, gearbox) {
 	}
 
 	// sub-string
-	str.include = function (str, needle, position) {
+	str.includes = function (str, needle, position) {
 		if (needle === '') return true
 		position = position == null ? 0 : Math.min(toPositive(position), str.length)
 		return makeString(str).slice(position).indexOf(needle) !== -1
@@ -128,8 +128,9 @@ void function (window, gearbox) {
 	}
 
 	// aliases
-	str.contains = str.include
-	str.includes = str.include
+	str.contains = str.includes
+	// @DEPRECATED
+	str.include = str.includes
 
 	////////////////////  END: alternative to underscore.string  ////////////////////
 
@@ -195,7 +196,6 @@ void function (window, gearbox) {
 			}
 			return result
 		},
-		isPlainObject: $.isPlainObject
 	}
 
 	gearbox.__defineModule('root', root)
@@ -221,10 +221,11 @@ void function (window, gearbox) {
 
 	function _detect(ua) {
 		var s = ua.str.toLowerCase()
+		var _includes = gearbox.str.includes
 
 		ua.isSafari = /\bapple\b/i.test(navigator.vendor) && /\bsafari\b/i.test(s)
-		ua.isChrome = gearbox.str.include(s, 'chrome') ||
-				gearbox.str.include(s, 'crios')	// both desktop and mobile version
+		ua.isChrome = _includes(s, 'chrome') ||
+				_includes(s, 'crios')	// both desktop and mobile version
 
 		// platform version and device
 		ua.osVersion = ''
@@ -236,7 +237,7 @@ void function (window, gearbox) {
 			ua.osVersion = (/[\/; i]os[\/: _](\d+(?:[\._]\d+)?)[\._; ]/.exec(s) || [0, ''])[1]
 				.replace('_', '.')
 		} else {
-			var _includeAndroid = gearbox.str.include(s, 'android')
+			var _includeAndroid = _includes(s, 'android')
 			var _includeAdr = /\badr\b/.test(s) && /\blinux;\s*u;/.test(s)
 			var _isJUC = /juc\s*\(linux;\s*u;\s*\d+\.\d+/.test(s)
 			ua.isAndroid = _includeAndroid || _includeAdr || _isJUC
@@ -250,38 +251,38 @@ void function (window, gearbox) {
 			}
 		}
 		// fix - Windows Phone might pretend to be iOS or Android
-		if (gearbox.str.include(s, 'windows phone')) {
+		if (_includes(s, 'windows phone')) {
 			ua.isIOS = ua.isAndroid = false
 			ua.osVersion = ''
 		}
-		if (ua.osVersion && !gearbox.str.include(ua.osVersion, '.')) ua.osVersion += '.0'
+		if (ua.osVersion && !_includes(ua.osVersion, '.')) ua.osVersion += '.0'
 
 		// summery
 		ua.isMobileDevice = !!(ua.isIOS || ua.isAndroid)
 
 		// get browser info
 		var browser = ''
-		if (gearbox.str.include(s, 'micromessenger')) {
+		if (_includes(s, 'micromessenger')) {
 			browser = 'wechat'
-		} else if (gearbox.str.include(s, 'ucbrowser') || gearbox.str.include(s, 'ucweb') || gearbox.str.include(s, ' uc applewebkit')) {
+		} else if (_includes(s, 'ucbrowser') || _includes(s, 'ucweb') || _includes(s, ' uc applewebkit')) {
 			browser = 'uc'
-		} else if (gearbox.str.include(s, 'baiduhd') || gearbox.str.include(s, 'baiduboxapp')) {
+		} else if (_includes(s, 'baiduhd') || _includes(s, 'baiduboxapp')) {
 			browser = 'baidu-app'
-		} else if (gearbox.str.include(s, 'baidubrowser')) {
+		} else if (_includes(s, 'baidubrowser')) {
 			browser = 'baidu-browser'
-		} else if (gearbox.str.include(s, 'mqqbrowser')) {
+		} else if (_includes(s, 'mqqbrowser')) {
 			browser = 'm-qq-browser'
-		} else if (gearbox.str.include(s, 'miuibrowser')) {
+		} else if (_includes(s, 'miuibrowser')) {
 			browser = 'miui'
-		} else if (gearbox.str.include(s, '_weibo_') || gearbox.str.include(s, ' weibo ')) {
+		} else if (_includes(s, '_weibo_') || _includes(s, ' weibo ')) {
 			browser = 'weibo'
-		} else if (gearbox.str.include(s, 'firefox')) {
+		} else if (_includes(s, 'firefox')) {
 			browser = 'firefox'
-		} else if (gearbox.str.include(s, 'opera')) {
+		} else if (_includes(s, 'opera')) {
 			browser = 'opera'
-		} else if (gearbox.str.include(s, ' edge/')) {
+		} else if (_includes(s, ' edge/')) {
 			browser = 'edge'
-		} else if (gearbox.str.include(s, 'iemobile')) {
+		} else if (_includes(s, 'iemobile')) {
 			browser = 'ie-mobile'
 		}
 		// these two must be the last
@@ -311,7 +312,7 @@ void function (window, gearbox) {
 			}
 		}
 		if (!engine) {
-			if (gearbox.str.include(s, 'webkit')) {
+			if (_includes(s, 'webkit')) {
 				engine = 'webkit'
 			} else if (ua.isIOS) {
 				engine = 'webkit'
@@ -319,7 +320,7 @@ void function (window, gearbox) {
 				engine = 'webkit'
 			}
 			if (browser === 'firefox' && !ua.isIOS) engine = 'gecko'
-			if (browser === 'opera' && !ua.isIOS && gearbox.str.include(s, 'presto')) engine = 'presto'
+			if (browser === 'opera' && !ua.isIOS && _includes(s, 'presto')) engine = 'presto'
 		}
 		// fix Windows Phone, IE Mobile and Edge
 		if (browser === 'edge') {
@@ -416,7 +417,7 @@ void function (window, gearbox) {
 		var s = ''
 		url = _.isString(url) ? url : ''
 		url = gearbox.url.removeHashFromUrl(url)
-		if (gearbox.isPlainObject(param)) {
+		if ($.isPlainObject(param)) {
 			param = $.param(param)
 		} else if (_.isString(param)) {
 			// fix param string
@@ -427,7 +428,7 @@ void function (window, gearbox) {
 			param = null
 		}
 		// append
-		s = param ? url + (gearbox.str.include(url, '?') ? '&' : '?') + param : s
+		s = param ? url + (gearbox.str.includes(url, '?') ? '&' : '?') + param : s
 		return s || false
 	}
 
