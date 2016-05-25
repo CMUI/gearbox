@@ -15,7 +15,6 @@ void function (window, gearbox) {
 			}
 			return result
 		},
-		isPlainObject: $.isPlainObject
 	}
 
 	gearbox.__defineModule('root', root)

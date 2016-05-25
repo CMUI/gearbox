@@ -51,7 +51,7 @@ void function (window, gearbox) {
 		var s = ''
 		url = _.isString(url) ? url : ''
 		url = gearbox.url.removeHashFromUrl(url)
-		if (gearbox.isPlainObject(param)) {
+		if ($.isPlainObject(param)) {
 			param = $.param(param)
 		} else if (_.isString(param)) {
 			// fix param string
