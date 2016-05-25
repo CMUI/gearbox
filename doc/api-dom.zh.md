@@ -1,10 +1,10 @@
 # API 文档 - `dom` 模块
 
-## JavaScript 变量<a name="js-var"></a>
+## JavaScript 变量 <a name="js-var">&nbsp;</a>
 
 为减少业务层对常用 DOM 元素的重复获取和包装，`dom` 模块预先缓存了这些元素的 Zepto 包装对象。在业务层可以直接使用。
 
-### `_.dom.$win`<a name="js-var-$win"></a>
+### `.$win` <a name="js-var--$win">&nbsp;</a>
 
 `window` 对象的 Zepto 包装对象。
 
@@ -13,16 +13,16 @@
 监听 `resize` 事件：
 
 ```js
-_.dom.$win.on('resize', function (ev) {
+gearbox.dom.$win.on('resize', function (ev) {
     //...
 })
 ```
 
-### `_.dom.$root`<a name="js-var-$root"></a>
+### `.$root` <a name="js-var--$root">&nbsp;</a>
 
 `document.documentElement` 对象（即 `<html>` 元素）的 Zepto 包装对象。
 
-### `_.dom.$body`<a name="js-var-$body"></a>
+### `.$body` <a name="js-var--$body">&nbsp;</a>
 
 `document.body` 对象（即 `<body>` 元素）的 Zepto 包装对象。
 
@@ -35,14 +35,14 @@ _.dom.$win.on('resize', function (ev) {
 <head>...</head>
 <body>
     ...
-    <script src="..."></script>
+    <script src="gearbox.js"></script>
 </body>
 </html>
 ```
 
-## JavaScript 接口<a name="js-api"></a>
+## JavaScript 接口 <a name="js-api">&nbsp;</a>
 
-### `_.dom.is$Element(obj)`<a name="js-api-is$Element"></a>
+### `.is$Element(obj)` <a name="js-api--is$Element">&nbsp;</a>
 
 判断是否为 Zepto 包装对象（或 Zepto 集合）。
 
@@ -59,5 +59,5 @@ _.dom.$win.on('resize', function (ev) {
 #### 示例
 
 ```js
-_.dom.is$Element(_.dom.$win)  // => true
+gearbox.dom.is$Element(gearbox.dom.$win)  // => true
 ```
