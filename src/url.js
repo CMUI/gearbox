@@ -62,7 +62,7 @@ void function (window, gearbox) {
 			param = null
 		}
 		// append
-		s = param ? url + (gearbox.str.include(url, '?') ? '&' : '?') + param : s
+		s = param ? url + (gearbox.str.includes(url, '?') ? '&' : '?') + param : s
 		return s || false
 	}
 

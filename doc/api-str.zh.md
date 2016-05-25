@@ -251,7 +251,9 @@ gearbox.str.toFixed('foo123')  // => NaN
 
 	> **别名**： `.contains()`
 
-	请参考 Underscore.string 的文档： [`include`](https://epeli.github.io/underscore.string/#include-string-substring-gt-boolean)（**注意**：从 Gearbox v0.6 开始，`str` 模块的 `.include()` 已弃用，已改名为 `.includes()`。）
+	请参考 Underscore.string 的文档： [`include`](https://epeli.github.io/underscore.string/#include-string-substring-gt-boolean)
+
+	**注意**：从 Gearbox v0.6 开始，`.include()` 已弃用，已改名为 `.includes()`。
 
 * `.startsWith(string, starts, [position])` <a name="js-api--include">&nbsp;</a>
 
