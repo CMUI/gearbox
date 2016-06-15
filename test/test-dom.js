@@ -22,7 +22,7 @@ describe('DOM', function () {
 	})
 
 	describe('Methods', function () {
-		describe('gearbox.dom.is$Element', function () {
+		describe('gearbox.dom.is$Element()', function () {
 			it('checks if it\'s $collection', function () {
 				var arg
 				arg = $()

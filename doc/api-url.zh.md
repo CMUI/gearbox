@@ -69,9 +69,9 @@ gearbox.url.parseQuery('')  // => {}
 假设当前页面的 URL 为 `http://domain.com/path/file?foo&bar=2`，此时：
 
 ```js
-gearbox.url.parseQuery('foo')  // => ''
-gearbox.url.parseQuery('bar')  // => '2'
-gearbox.url.parseQuery('absentKey')  // => undefined
+gearbox.url.getParam('foo')  // => ''
+gearbox.url.getParam('bar')  // => '2'
+gearbox.url.getParam('absentKey')  // => undefined
 ```
 
 #### 注意事项
