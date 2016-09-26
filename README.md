@@ -25,18 +25,18 @@
 
 ## 安装
 
-0. 通过 Bower 安装：
+0. 通过 npm 3 安装：
 
 	```sh
-	$ bower install gearbox
+	$ npm install cmui-gearbox
 	```
 
 0. 在页面中加载 Gearbox 以及必要的依赖：
 
 	```html
-	<script src="bower_components/underscore/underscore-min.js"></script>
-	<script src="bower_components/zepto.js/dist/zepto.min.js"></script>
-	<script src="bower_components/gearbox/dist/gearbox.min.js"></script>
+	<script src="node_modules/underscore/underscore-min.js"></script>
+	<script src="node_modules/zepto.js/dist/zepto.min.js"></script>
+	<script src="node_modules/cmui-gearbox/dist/gearbox.min.js"></script>
 	```
 
 ## API 文档
