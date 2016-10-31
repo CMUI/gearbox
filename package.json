@@ -1,6 +1,6 @@
 {
   "name": "cmui-gearbox",
-  "version": "0.6.0-rc.2",
+  "version": "0.6.0",
   "homepage": "https://github.com/CMUI/gearbox",
   "author": "cssmagic <cssmagic.cn@gmail.com>",
   "description": "Lightweight JavaScript utilities for web development.",
@@ -13,7 +13,7 @@
   "license": "MIT",
   "scripts": {
     "dist": "gulp prepare-module && gulp",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"See README.md to run tests in browsers.\" && exit 1"
   },
   "dependencies": {
     "underscore": "^1.6",
