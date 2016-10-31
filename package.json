@@ -13,6 +13,7 @@
   "license": "MIT",
   "scripts": {
     "dist": "gulp prepare-module && gulp",
+    "prepublish": "npm run dist",
     "test": "echo \"See README.md to run tests in browsers.\" && exit 1"
   },
   "dependencies": {
