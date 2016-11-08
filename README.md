@@ -59,8 +59,8 @@
 
 Gearbox 的部分功能模块已经分离出去，成为独立项目。这些模块以开发依赖的方式引入，并打包到发布文件中。因此，参与这些独立项目的开发即可修改这些模块。
 
-* `_.action` - [Action](https://github.com/cssmagic/action)
-* `_.template` - [Underscore-template](https://github.com/cssmagic/underscore-template)
+* `gearbox.action` - [Action](https://github.com/cssmagic/action)
+* `gearbox.template` - [Underscore-template](https://github.com/cssmagic/underscore-template)
 
 #### 构建
 
