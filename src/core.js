@@ -9,11 +9,6 @@ var document = window.document
 void function (window, gearbox) {
 	'use strict'
 
-	/**
-	 * bind a set of apis to a key of `_` as namespace
-	 * @param moduleName {string}
-	 * @param apiSet {object}
-	 */
 	gearbox.__defineModule = function (moduleName, apiSet) {
 		if (!moduleName || !_.isString(moduleName) || !apiSet || !_.isObject(apiSet)) return
 
