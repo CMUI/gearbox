@@ -1,4 +1,4 @@
-/*! Gearbox | MIT | https://github.com/CMUI/gearbox */
+/*! Gearbox | MIT License | https://github.com/CMUI/gearbox */
 !function (window, undefined) {
 	// check conflict
 	if (window.gearbox) return false
