@@ -12,7 +12,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "dist": "gulp prepare-module && gulp",
+    "dist": "gulp",
     "prepublish": "npm run dist",
     "test": "echo \"See README.md to run tests in browsers.\" && exit 1"
   },
@@ -21,13 +21,8 @@
     "zepto.js": "^1.1"
   },
   "devDependencies": {
-    "gulp": "3.*",
-    "del": "1.*",
-    "gulp-stylus": "2.*",
-    "gulp-concat": "2.*",
-    "gulp-rename": "1.*",
-    "gulp-wrap": "^0.11.0",
-    "gulp-replace": "^0.5.3",
-    "gulp-uglify": "1.*"
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-stream-to-promise": "^0.1.0",
+    "gulpfiles": "^0.3.0"
   }
 }
