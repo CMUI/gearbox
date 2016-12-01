@@ -262,8 +262,6 @@ describe('String', function () {
 					expect(gearbox.str.RE_POSTCODE.test(arg)).to.equal(false)
 					arg = '22-55-66'
 					expect(gearbox.str.RE_POSTCODE.test(arg)).to.equal(false)
-					arg = 077777
-					expect(gearbox.str.RE_POSTCODE.test(arg)).to.equal(false)
 					arg = 'foobar'
 					expect(gearbox.str.RE_POSTCODE.test(arg)).to.equal(false)
 				})
