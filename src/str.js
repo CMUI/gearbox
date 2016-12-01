@@ -109,16 +109,6 @@ void function (window, gearbox) {
 		return str
 	}
 
-	// array of string
-	str.uniq = str.unique = function (arr) {
-		if (!_.isArray(arr)) return false
-		var obj = {}
-		_.each(arr, function (str) {
-			obj[String(str)] = null
-		})
-		return _.keys(obj)
-	}
-
 	// more `toNumber` methods
 	str.toFloat = function (str) {return parseFloat(str)}
 	str.toInt = function (str) {

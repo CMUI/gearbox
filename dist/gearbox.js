@@ -1,4 +1,4 @@
-/*! Gearbox | MIT | https://github.com/CMUI/gearbox */
+/*! Gearbox | MIT License | https://github.com/CMUI/gearbox */
 !function (window, undefined) {
 	// check conflict
 	if (window.gearbox) return false
@@ -23,11 +23,6 @@ var document = window.document
 void function (window, gearbox) {
 	'use strict'
 
-	/**
-	 * bind a set of apis to a key of `_` as namespace
-	 * @param moduleName {string}
-	 * @param apiSet {object}
-	 */
 	gearbox.__defineModule = function (moduleName, apiSet) {
 		if (!moduleName || !_.isString(moduleName) || !apiSet || !_.isObject(apiSet)) return
 
@@ -45,6 +40,7 @@ void function (window, gearbox) {
 
 }(window, gearbox)
 
+;
 
 ////////////////////  str  ////////////////////
 void function (window, gearbox) {
@@ -156,16 +152,6 @@ void function (window, gearbox) {
 		return str
 	}
 
-	// array of string
-	str.uniq = str.unique = function (arr) {
-		if (!_.isArray(arr)) return false
-		var obj = {}
-		_.each(arr, function (str) {
-			obj[String(str)] = null
-		})
-		return _.keys(obj)
-	}
-
 	// more `toNumber` methods
 	str.toFloat = function (str) {return parseFloat(str)}
 	str.toInt = function (str) {
@@ -179,6 +165,7 @@ void function (window, gearbox) {
 
 }(window, gearbox)
 
+;
 
 ////////////////////  root  ////////////////////
 void function (window, gearbox) {
@@ -202,6 +189,7 @@ void function (window, gearbox) {
 
 }(window, gearbox)
 
+;
 
 ////////////////////  ua  ////////////////////
 void function (window, gearbox) {
@@ -364,6 +352,7 @@ void function (window, gearbox) {
 
 }(window, gearbox)
 
+;
 
 ////////////////////  url  ////////////////////
 void function (window, gearbox) {
@@ -451,6 +440,7 @@ void function (window, gearbox) {
 
 }(window, gearbox)
 
+;
 
 ////////////////////  dom  ////////////////////
 void function (window, gearbox) {
@@ -482,6 +472,7 @@ void function (window, gearbox) {
 
 }(window, gearbox)
 
+;
 
 ////////////////////  action  ////////////////////
 // include and wrap external module: Action
@@ -619,6 +610,7 @@ var action = (function () {
 	gearbox.__defineModule('action', action)
 
 }(window, gearbox)
+;
 
 ////////////////////  template  ////////////////////
 // include and wrap external module: Underscore-template

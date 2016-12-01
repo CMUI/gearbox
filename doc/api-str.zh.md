@@ -119,31 +119,6 @@ gearbox.str.stripHash('  #foo-bar')  // => 'foo-bar'
 
 ***
 
-### `.uniq(array)` <a name="js-api--uniq">&nbsp;</a>
-
-从字符串数组中去除重复的项。
-
-#### 注意事项
-
-* 非字符串的值会被转换为字符串后进行比对，即 `null` 和 `'null'` 会被视为重复。
-* 去重后的各个字符串在数组中的排序无法保证。
-
-#### 参数
-
-* `array` -- 字符串数组。
-
-#### 返回值
-
-数组。去重之后的结果。
-
-#### 示例
-
-```js
-gearbox.str.uniq(['foo', 'foo', 'bar'])  // => ['foo', 'bar']
-```
-
-***
-
 ### `.toFloat(string)` <a name="js-api--toFloat">&nbsp;</a>
 
 转换为浮点数。

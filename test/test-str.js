@@ -364,12 +364,6 @@ describe('String', function () {
 		})
 	})
 
-	describe('String Array', function () {
-		describe('gearbox.str.uniq()', function () {
-			it('(dummy test)', function () {})
-		})
-	})
-
 	describe('To Number', function () {
 		describe('gearbox.str.toFloat()', function () {
 			it('does basic functionality', function () {
