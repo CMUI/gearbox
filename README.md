@@ -48,8 +48,7 @@
 移动 UI 框架 [CMUI](https://github.com/CMUI/CMUI) 采用 Gearbox 作为全局的工具库，因此所有 CMUI 用户都在使用它：
 
 * [百姓网 - 手机版](http://m.baixing.com/)
-* [薇姿官方电子商城 - 手机版](http://m.vichy.com.cn/)
-* [优e网 - 手机版](http://m.uemall.com/)
+* （其它案例已改版或下线）
 
 ***
 
