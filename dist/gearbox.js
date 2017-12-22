@@ -137,7 +137,7 @@ void function (window, gearbox) {
 
 	// shortcuts for frequently-used regexp
 	str.RE_EMAIL = /^(?:[a-z\d]+[_\-\+\.]?)*[a-z\d]+@(?:([a-z\d]+\-?)*[a-z\d]+\.)+([a-z]{2,})+$/i
-	str.RE_MOBILE = /^1[34578]\d{9}$/
+	str.RE_MOBILE = /^1[3456789]\d{9}$/
 	str.RE_POSTCODE = /^\d{6}$/
 
 	// hash
